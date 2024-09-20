@@ -16,3 +16,11 @@ To learn more about it read our documentation available [here](https://fleek.xyz
 - Nodejs as runtime
 - NPM, Yarn to install the SDK, or PNPM for development
 - Familiarity with Nodejs, Frontend/Client side development
+
+## Installation
+
+Install the package by executing:
+
+```sh
+npm i -g @fleek-platform/sdk
+```
