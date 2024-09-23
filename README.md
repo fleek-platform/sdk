@@ -35,7 +35,7 @@ To learn more about it read our documentation available [here](https://fleek.xyz
 Install the package by executing:
 
 ```sh
-npm i -g @fleek-platform/sdk
+npm i @fleek-platform/sdk
 ```
 
 ⚠️ If you're planning to contribute as a developer, you must install [pnpm](https://pnpm.io), otherwise most commands will fail.
