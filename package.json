@@ -47,15 +47,12 @@
   "devDependencies": {
     "@fleek-platform/errors": "^2.5.1",
     "@fleek-platform/utils-genql-client": "^0.1.0",
-    "@fleek-platform/graphql": "workspace:*",
     "@fleek-platform/sites": "workspace:^1.5.24",
-    "@fleek-platform/tester": "workspace:*",
     "@jspm/core": "^2.0.1",
     "@types/detect-node": "^2.0.0",
     "@types/lodash": "^4.14.191",
     "@types/luxon": "^3.1.0",
     "@types/whatwg-fetch": "^0.0.33",
-    "@vitest/coverage-v8": "1.3.1",
     "@web3-storage/upload-client": "^17.0.1",
     "bun": "^1.1.20",
     "concurrently": "^7.6.0",
@@ -68,8 +65,7 @@
     "ipfs-http-client": "56.0.3",
     "multiformats": "^12.1.3",
     "native-fetch": "^4.0.2",
-    "typescript": "5.5.3",
-    "vitest": "1.3.1"
+    "typescript": "5.5.3"
   },
   "engines": {
     "node": ">=18.18.2"
