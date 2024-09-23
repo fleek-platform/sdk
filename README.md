@@ -29,6 +29,47 @@ npm i -g @fleek-platform/sdk
 
 For a quick start, learn the [basic usage](#basic-usage), or alternatively visit our [documentation](https://fleek.xyz/docs/sdk)
 
+## Development
+
+For developers looking to contribute to the `@fleek-platform/SDK`, [clone](https://github.com/fleekxyz/sdk) the repository and follow the [contribution guide](#contributing).
+
+Once cloned, you'll have to set up the local development environment, e.g. to have access to the source-code, iterate, run tests and much more.
+
+For runtime we utilize [Nodejs](https://nodejs.org/en/download) and [PNPM](https://pnpm.io/installation) as the package manager.
+
+Create a new file named .env in the root directory of your project. This file will store environment variables needed for local development.
+
+```sh
+touch .env.production
+```
+
+Open the .env.production file in a text editor and add the following:
+
+```sh
+SDK__AUTH_APPS_URL="https://auth-apps.service.fleek.xyz"
+SDK__IPFS__STORAGE_API_URL="https://storage-ipfs.service.fleek.xyz"
+SDK__GRAPHQL_API_URL="https://graphql.service.fleek.xyz/graphql"
+SDK__UPLOAD_PROXY_API_URL="https://uploads.service.fleek.xyz"
+```
+
+💡 The variables above point to our production environment, the same you interact with as an end-user.
+
+Next, install the project dependencies:
+
+```sh
+pnpm i
+```
+
+Next, prepare your local changes and execute the commands to compute it.
+
+Everytime you prepare and save a change, you have to rebuild the binary:
+
+```sh
+pnpm build
+```
+
+Learn the Fleek-platform SDK basic usage [here](#basic-usage). For extended documentation visit our [documentation site](https://fleek.xyz/docs/sdk).
+
 ## Basic usage
 
 The following provides a basic example of how to import the web browser or node SDK versions into your project and run a few simple commands.
