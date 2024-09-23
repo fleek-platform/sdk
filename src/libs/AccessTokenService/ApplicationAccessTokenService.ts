@@ -1,4 +1,4 @@
-import { constants, decodeAccessToken } from '@fleek-platform/auth';
+import { decodeAccessToken } from '@fleek-platform/utils-genql-client';
 import fetch from 'cross-fetch';
 import { DateTime } from 'luxon';
 
@@ -29,7 +29,7 @@ export class ApplicationAccessTokenService extends AccessTokenService {
   }
 
   private refreshAccessToken = async () => {
-    const params = [constants.CLIENT_ID_QUERY_STRING_FIELD_NAME, this.clientId].join('=');
+    const params = ['clientId', this.clientId].join('=');
     const url = `${this.authAppsServiceUrl}/token?${params}`;
     const headers = new Headers();
 

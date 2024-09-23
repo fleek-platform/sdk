@@ -1,4 +1,3 @@
-import { constants } from '@fleek-platform/auth';
 import {
   FolderNotFoundError,
   StorageIpfsUploadFailedError,
@@ -117,7 +116,7 @@ export class UploadProxyClient {
       const response = await axios.post<StoragePin>(`${this.uploadProxyApiUrl}/upload/private`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          [constants.AUTHORIZATION_HEADER_NAME]: `${constants.AUTHORIZATION_BEARER} ${accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
         onUploadProgress: (progressEvent) => {
           if (progressEvent.lengthComputable && onUploadProgress) {
@@ -184,7 +183,7 @@ export class UploadProxyClient {
                     body,
                     headers: {
                       'Content-Type': 'application/vnd.ipld.car',
-                      [constants.AUTHORIZATION_HEADER_NAME]: `${constants.AUTHORIZATION_BEARER} ${accessToken}`,
+                      'Authorization': `Bearer ${accessToken}`,
                     },
                   }),
                   parentFolderId,
@@ -236,7 +235,7 @@ export class UploadProxyClient {
               body,
               headers: {
                 'Content-Type': 'application/json',
-                [constants.AUTHORIZATION_HEADER_NAME]: `${constants.AUTHORIZATION_BEARER} ${accessToken}`,
+                'Authorization': `Bearer ${accessToken}`,
               },
             }),
             parentFolderId,
@@ -260,7 +259,7 @@ export class UploadProxyClient {
     return fetch(url, {
       method: 'DELETE',
       headers: {
-        [constants.AUTHORIZATION_HEADER_NAME]: `${constants.AUTHORIZATION_BEARER} ${accessToken}`,
+        'Authorization': ` ${accessToken}`,
       },
     });
   };
@@ -314,7 +313,7 @@ export class UploadProxyClient {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        [constants.AUTHORIZATION_HEADER_NAME]: `${constants.AUTHORIZATION_BEARER} ${accessToken}`,
+        'Authorization': `Bearer ${accessToken}`,
       },
     });
 

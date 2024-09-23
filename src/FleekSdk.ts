@@ -1,4 +1,3 @@
-import { constants } from '@fleek-platform/auth';
 import { AuthorizationError, SdkRequiredNodeRuntimeError } from '@fleek-platform/errors';
 import { Client, createClient } from '@fleek-platform/gql-client-utils';
 
@@ -198,7 +197,7 @@ export class FleekSdk {
       }
 
       const headers: Headers = {
-        [constants.AUTHORIZATION_HEADER_NAME]: `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${accessToken}`,
       };
 
       return headers;
@@ -209,7 +208,7 @@ export class FleekSdk {
 
   private getCustomHeaders = () => {
     const headers: Headers = {
-      [constants.CUSTOM_HEADERS.clientType]: constants.SDK_CLIENT_TYPE_NAME,
+      'X-Client-Type': 'sdk',
     };
 
     return headers;

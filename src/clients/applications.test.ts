@@ -4,12 +4,6 @@ import { describe, expect, vi } from 'vitest';
 import { mockDatabasesAndGraphqlWithBrowserSdkForEachTest } from '../testTools/mockDatabasesAndGraphqlWithBrowserSdkForEachTest';
 import { mockDatabasesAndGraphqlWithNodeSdkForEachTest } from '../testTools/mockDatabasesAndGraphqlWithNodeSdkForEachTest';
 
-vi.mock('@fleek-platform/auth', async (importOriginal) => {
-  const original = await importOriginal<typeof import('@fleek-platform/auth')>();
-
-  return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
-});
-
 describe('[Node.js] ApplicationsClient', () => {
   const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });
 

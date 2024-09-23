@@ -1,4 +1,3 @@
-import { constants } from '@fleek-platform/auth';
 import { AuthorizationError, SdkRequiredNodeRuntimeError,StorageIpfsUploadFailedError } from '@fleek-platform/errors';
 import { filesFromPaths } from 'files-from-path';
 import type { ReadStream } from 'fs';
@@ -188,7 +187,7 @@ export class IpfsClient {
       const client = await this.getClient();
       const iterable = client.addAll(globSource(path, '**/*'), {
         headers: {
-          [constants.AUTHORIZATION_HEADER_NAME]: `Bearer ${accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
         },
         ...options,
         wrapWithDirectory: true,
