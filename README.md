@@ -11,13 +11,25 @@ It's distributed as an ESM module for Web browsers, or CJS module for NodeJs Ser
 
 To learn more about it read our documentation available [here](https://fleek.xyz/docs).
 
+## Overview
+
+* [🤖 Install](#install)
+* [👷‍♀️Development](#development)
+  - [Code format](#code-format)
+  - [Changeset](#changeset)
+* [📖 Docs](https://fleek.xyz/docs/sdk)
+* [🙏 Contributing](#contributing)
+  - [Branching strategy](#branching-strategy)
+  - [Contributing](#conventional-commits)
+* [⏱️ Changelog](./CHANGELOG.md)
+
 ## Requirements
 
 - Nodejs as runtime
 - NPM, Yarn to install the SDK, or PNPM for development
 - Familiarity with Nodejs, Frontend/Client side development
 
-## Installation
+## Install
 
 Install the package by executing:
 
@@ -69,6 +81,54 @@ pnpm build
 ```
 
 Learn the Fleek-platform SDK basic usage [here](#basic-usage). For extended documentation visit our [documentation site](https://fleek.xyz/docs/sdk).
+
+### Code Format
+
+Formatting and linting are facilitated by [BiomeJS](https://biomejs.dev). Configuration details can be found in:
+
+```
+biome.json
+```
+
+To format source code and apply changes directly in the file:
+
+```sh
+pnpm format
+```
+
+For checking source code formatting only:
+
+```sh
+pnpm format:check
+```
+
+To lint and apply changes directly in the file:
+
+```sh
+pnpm lint
+```
+
+For lint checks only:
+
+```sh
+pnpm lint:check
+```
+
+To both format and lint source code (with writes):
+
+```sh
+pnpm format:unsafe
+```
+
+### Changeset
+
+Manage the versioning of changelog entries.
+
+Declare an intent to release by executing the command and answering the wizard's questions:
+
+```sh
+pnpm changeset:add
+```
 
 ## Basic usage
 
