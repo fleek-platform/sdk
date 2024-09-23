@@ -47,7 +47,6 @@
   "devDependencies": {
     "@fleek-platform/errors": "^2.5.1",
     "@fleek-platform/utils-genql-client": "^0.1.0",
-    "@fleek-platform/sites": "workspace:^1.5.24",
     "@jspm/core": "^2.0.1",
     "@types/detect-node": "^2.0.0",
     "@types/lodash": "^4.14.191",
