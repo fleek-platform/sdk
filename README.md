@@ -17,6 +17,7 @@ To learn more about it read our documentation available [here](https://fleek.xyz
 * [👷‍♀️Development](#development)
   - [Code format](#code-format)
   - [Changeset](#changeset)
+* [🧸 Basic Usage](#basic-usage)
 * [📖 Docs](https://fleek.xyz/docs/sdk)
 * [🙏 Contributing](#contributing)
   - [Branching strategy](#branching-strategy)
