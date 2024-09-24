@@ -29,9 +29,9 @@ const requiredBuilds: BuildHandlerArgs[] = [
       'IS_NODE': '"true"',
     },
     bundle: true,
-    minify: false,
+    minify: true,
     outdir: './dist/node',
-    sourcemap: false,
+    sourcemap: true,
     plugins: [
       replaceDynamicImportPlugin,
     ],
@@ -46,9 +46,9 @@ const requiredBuilds: BuildHandlerArgs[] = [
       ...define,
     },
     bundle: true,
-    minify: false,
+    minify: true,
     outdir: './dist/browser',
-    sourcemap: false,
+    sourcemap: true,
     plugins: [
       replaceDynamicImportPlugin,
       mockNodeNative,
