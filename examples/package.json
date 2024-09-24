@@ -1,16 +1,10 @@
 {
-  "name": "temp",
+  "name": "Examples",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Fleek Platform SDK practical examples",
+  "type": "module",
   "dependencies": {
-    "@fleek-platform/sdk": "link:..",
-    "bun": "^1.1.20"
+    "bun": "^1.1.20",
+    "@fleek-platform/sdk": "workspace:*"
   }
 }
