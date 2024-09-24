@@ -5,7 +5,7 @@ import {
   DomainGenqlSelection,
   Zone as ZoneWithRelations,
   ZoneGenqlSelection,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 
 import { isDomainResponseQuery, isDomainsResponseQuery } from '../utils/graphql';
 

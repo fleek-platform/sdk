@@ -3,7 +3,7 @@ export { PersonalAccessTokenService } from './libs/AccessTokenService/PersonalAc
 export { StaticAccessTokenService } from './libs/AccessTokenService/StaticAccessTokenService';
 export { ApplicationAccessTokenService } from './libs/AccessTokenService/ApplicationAccessTokenService';
 // TODO: decide what to do with createClient exposure shall it be open to users?
-export { createClient } from '@fleek-platform/gql-client-utils';
+export { createClient } from '@fleek-platform/utils-genql-client';
 
 export type { Application } from './clients/applications';
 export type { Project } from './clients/projects';
@@ -21,5 +21,5 @@ export type {
   Client,
   DomainStatus,
   FleekFunctionStatus,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 export type { UploadPinResponse, UploadProgress, UploadContentOptions } from './clients/uploadProxy';

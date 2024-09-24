@@ -1,5 +1,5 @@
 import { Client, IpnsRecord as IpnsRecordWithRelations,
-  IpnsRecordGenqlSelection } from '@fleek-platform/gql-client-utils';
+  IpnsRecordGenqlSelection } from '@fleek-platform/utils-genql-client';
 
 type IpnsClientOptions = {
   graphqlClient: Client;

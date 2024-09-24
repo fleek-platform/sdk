@@ -4,7 +4,7 @@ import {
   PrivateGateway as PrivateGatewayWithRelations,
   PrivateGatewayGenqlSelection,
   Project,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 
 import { isPrivateGatewayResponseQuery, isPrivateGatewaysResponseQuery } from '../utils/graphql';
 

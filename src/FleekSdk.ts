@@ -1,5 +1,5 @@
 import { AuthorizationError, SdkRequiredNodeRuntimeError } from '@fleek-platform/errors';
-import { Client, createClient } from '@fleek-platform/gql-client-utils';
+import { Client, createClient } from '@fleek-platform/utils-genql-client';
 
 import { ApplicationsClient } from './clients/applications';
 import { DomainsClient } from './clients/domains';

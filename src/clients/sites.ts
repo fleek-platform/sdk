@@ -6,7 +6,7 @@ import {
   Domain as DomainWithRelations,
   Site as SiteWithRelations,
   SiteGenqlSelection,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 
 import { isDeploymentResponseQuery, isSiteResponseQuery, isSitesResponseQuery } from '../utils/graphql';
 

@@ -1,4 +1,4 @@
-import { Client, Project as ProjectWithRelations, ProjectGenqlSelection } from '@fleek-platform/gql-client-utils';
+import { Client, Project as ProjectWithRelations, ProjectGenqlSelection } from '@fleek-platform/utils-genql-client';
 import { File } from '@web-std/file';
 
 type ProjectsClientOptions = {

@@ -1,4 +1,4 @@
-import type { Deployment, Domain, FilecoinDeal, Pin, PrivateGateway, Site } from '@fleek-platform/gql-client-utils';
+import type { Deployment, Domain, FilecoinDeal, Pin, PrivateGateway, Site } from '@fleek-platform/utils-genql-client';
 
 type ResponseWithTypename = {
   __typename?: string;

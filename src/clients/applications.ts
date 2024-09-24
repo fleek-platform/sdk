@@ -3,7 +3,7 @@ import {
   ApplicationGenqlSelection,
   ApplicationWhitelistDomainGenqlSelection,
   Client,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 
 export type Application = Omit<ApplicationWithRelations, '__typename' | 'whitelistDomains'> & {
   whitelistDomains: string[];

@@ -1,4 +1,4 @@
-import { Client, EnsRecord as EnsRecordWithRelations, EnsRecordGenqlSelection } from '@fleek-platform/gql-client-utils';
+import { Client, EnsRecord as EnsRecordWithRelations, EnsRecordGenqlSelection } from '@fleek-platform/utils-genql-client';
 
 export type EnsRecord = Omit<EnsRecordWithRelations, 'site' | 'ipnsRecord'> & {
   site: Pick<EnsRecordWithRelations['site'], 'id'>;

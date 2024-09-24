@@ -7,7 +7,7 @@ import {
   UploadProxyStoreAsCarError,
   UploadProxyUploadFileError,
 } from '@fleek-platform/errors';
-import { Pin } from '@fleek-platform/gql-client-utils';
+import { Pin } from '@fleek-platform/utils-genql-client';
 import { FormData } from '@web-std/form-data';
 import type { Block } from '@web3-storage/upload-client/car';
 // TODO: The project has `axios`, thus the `isomorphic-fetch`
@@ -16,7 +16,7 @@ import type { Block } from '@web3-storage/upload-client/car';
 import axios from 'axios';
 import { base32 } from 'multiformats/bases/base32';
 
-import { StoragePin } from '../../../prisma/generated';
+import { StoragePin } from '../clients/storage';
 import { AccessTokenService } from '../libs/AccessTokenService/AccessTokenService';
 import { retry } from '../libs/retry';
 

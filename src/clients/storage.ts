@@ -13,7 +13,7 @@ import {
   PinGenqlSelection,
   PinsWithAggregationGenqlSelection,
   SiteGenqlSelection,
-} from '@fleek-platform/gql-client-utils';
+} from '@fleek-platform/utils-genql-client';
 import { File } from '@web-std/file';
 import { UnixFS } from '@web3-storage/upload-client';
 import { FileLike } from '@web3-storage/upload-client/types';
