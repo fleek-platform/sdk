@@ -24,13 +24,14 @@ export class PersonalAccessTokenService extends AccessTokenService {
     projectId,
     graphqlServiceApiUrl = getDefined('SDK__GRAPHQL_API_URL'),
   }: PersonalAccessTokenServiceOptions) {
+    super();
+
     requireNodeEnv();
 
     if (!personalAccessToken) {
       throw new AuthorizationError();
     }
 
-    super();
     this.personalAccessToken = personalAccessToken;
     this.projectId = projectId;
     this.client = createClient({

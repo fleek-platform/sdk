@@ -15,7 +15,6 @@ import type { Block } from '@web3-storage/upload-client/car';
 // Try to understand what the original author was trying to do
 import axios from 'axios';
 import { base32 } from 'multiformats/bases/base32';
-
 import { StoragePin } from '../clients/storage';
 import { AccessTokenService } from '../libs/AccessTokenService/AccessTokenService';
 import { retry } from '../libs/retry';

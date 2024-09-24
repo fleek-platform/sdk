@@ -4,8 +4,6 @@ import { File } from '@web-std/file';
 import { FormData } from '@web-std/form-data';
 import { traverse } from 'object-traversal';
 
-import { isNode } from '../utils/node';
-
 export type GraphqlOperation = {
   query: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,14 +36,7 @@ export const graphqlFetcher = async ({ endpoint, headers, operation }: GraphqlFe
 
   files.forEach((file, index) => body.append(`${index}`, file));
 
-  // TODO: When hosted in a project that has polyfills
-  // `fetch` seems to not be handled correctly by `cross-fetch`
-  // this requires investigation. Also, we might not need
-  // to keep `axios` if using the native fetch of v18
-  // and the the browser `cross-fetch`
-  const fetchHandler = !isNode ? (await import('cross-fetch')).default : fetch;
-
-  const response = await fetchHandler(endpoint, {
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

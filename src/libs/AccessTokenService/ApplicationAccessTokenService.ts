@@ -1,5 +1,4 @@
-import { decodeAccessToken } from '@fleek-platform/utils-genql-client';
-import fetch from 'cross-fetch';
+import { decodeAccessToken } from '@fleek-platform/utils-token';
 import { DateTime } from 'luxon';
 
 import { getDefined } from '../../defined';
@@ -23,6 +22,7 @@ export class ApplicationAccessTokenService extends AccessTokenService {
     origin = window.location.origin,
   }: ApplicationAccessTokenServiceOptions) {
     super();
+    
     this.clientId = clientId;
     this.authAppsServiceUrl = authAppsServiceUrl;
     this.origin = origin;
