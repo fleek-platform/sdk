@@ -24,4 +24,16 @@ export const defined: Defined = {
 // e.g. FLEEK__UI_APP_URL
 const override_env_var_prefix = '';
 
-export const getDefined = (key: keyof typeof defined) => process?.env?.[`${override_env_var_prefix}${key}`] || defined[key];
+export const getDefined = (key: keyof typeof defined): string => {
+  const value = process?.env?.[`${override_env_var_prefix}${key}`] || defined[key];
+  
+  if (value === undefined || value === null) {
+    throw new Error(`Expected key "${key}" to be defined but got ${typeof value}`);
+  }
+  
+  if (typeof value !== 'string') {
+    throw new Error(`Expected key "${key}" to be string but got ${typeof value}`);
+  }
+  
+  return value;
+};
