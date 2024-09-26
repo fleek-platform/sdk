@@ -1,5 +1,6 @@
 import { AuthorizationError, SdkRequiredNodeRuntimeError } from '@fleek-platform/errors';
 import { Client, createClient } from '@fleek-platform/utils-genql-client';
+import { EnvNotSetError } from '@fleek-platform/errors';
 
 import { ApplicationsClient } from './clients/applications';
 import { DomainsClient } from './clients/domains';
@@ -56,6 +57,14 @@ export class FleekSdk {
     uploadProxyApiUrl = getDefined('SDK__UPLOAD_PROXY_API_URL'),
     accessTokenService,
   }: FleekSdkOptions) {
+    if (!ipfsStorageApiUrl) {
+      throw new EnvNotSetError('SDK__IPFS__STORAGE_API_URL');
+    }
+
+    if (!uploadProxyApiUrl) {
+      throw new EnvNotSetError('SDK__UPLOAD_PROXY_API_URL');
+    }
+    
     if (!accessTokenService) {
       throw new AuthorizationError();
     }
@@ -71,9 +80,9 @@ export class FleekSdk {
         }),
     });
 
-    this.graphqlServiceApiUrl = graphqlServiceApiUrl ?? getDefined('SDK__GRAPHQL_API_URL');
-    this.ipfsStorageApiUrl = ipfsStorageApiUrl ?? getDefined('SDK__IPFS__STORAGE_API_URL');
-    this.uploadProxyApiUrl = uploadProxyApiUrl ?? getDefined('SDK__UPLOAD_PROXY_API_URL');
+    this.graphqlServiceApiUrl = graphqlServiceApiUrl;
+    this.ipfsStorageApiUrl = ipfsStorageApiUrl;
+    this.uploadProxyApiUrl = uploadProxyApiUrl;
 
     this.uploadProxyClient = new UploadProxyClient({
       uploadProxyApiUrl: this.uploadProxyApiUrl,
