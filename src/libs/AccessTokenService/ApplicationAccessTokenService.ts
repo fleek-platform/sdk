@@ -1,4 +1,6 @@
 import { decodeAccessToken } from '@fleek-platform/utils-token';
+import { EnvNotSetError } from '@fleek-platform/errors';
+
 import { DateTime } from 'luxon';
 
 import { getDefined } from '../../defined';
@@ -22,6 +24,10 @@ export class ApplicationAccessTokenService extends AccessTokenService {
     origin = window.location.origin,
   }: ApplicationAccessTokenServiceOptions) {
     super();
+
+    if (!authAppsServiceUrl) {
+      throw new EnvNotSetError('SDK__AUTH_APPS_URL');
+    }
     
     this.clientId = clientId;
     this.authAppsServiceUrl = authAppsServiceUrl;
