@@ -1,4 +1,4 @@
-![](public/images/repo/banner.png?202409201714)
+![](.repo/images/repo/banner.png?202409201714)
 
 # ⚡️Fleek Platform SDK
 
