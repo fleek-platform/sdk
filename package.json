@@ -24,6 +24,11 @@
     "clean": "pnpm \"/^clean:.*/\"",
     "clean:dist": "rm -rf dist",
     "clean:node_modules": "rm -rf node_modules",
+    "format": "pnpm exec biome format --write ./src",
+    "format:check": "pnpm exec biome format ./src",
+    "format:unsafe": "pnpm exec biome check --write --unsafe ./src",
+    "lint": "pnpm exec biome lint --write --changed ./src",
+    "lint:check": "pnpm exec biome lint ./src",
     "transpile": "pnpm exec tsc -p tsconfig.json",
     "tsc": "tsc --noEmit",
     "watch": "tsc --watch"
@@ -42,6 +47,7 @@
     "parallel-transform-web": "^1.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@fleek-platform/errors": "^2.5.1",
     "@fleek-platform/utils-genql-client": "^0.1.1",
     "@fleek-platform/utils-token": "^0.2.0",

@@ -1,225 +1,245 @@
-import { AuthorizationError, SdkRequiredNodeRuntimeError } from '@fleek-platform/errors';
-import { Client, createClient } from '@fleek-platform/utils-genql-client';
-import { EnvNotSetError } from '@fleek-platform/errors';
+import {
+	AuthorizationError,
+	SdkRequiredNodeRuntimeError,
+} from "@fleek-platform/errors";
+import { Client, createClient } from "@fleek-platform/utils-genql-client";
+import { EnvNotSetError } from "@fleek-platform/errors";
 
-import { ApplicationsClient } from './clients/applications';
-import { DomainsClient } from './clients/domains';
-import { EnsClient } from './clients/ens';
-import { FunctionsClient } from './clients/functions';
-import { IpfsClient } from './clients/ipfs';
-import { IpnsClient } from './clients/ipns';
-import { PrivateGatewayClient } from './clients/privateGateway';
-import { ProjectsClient } from './clients/projects';
-import { SitesClient } from './clients/sites';
-import { StorageClient } from './clients/storage';
-import { UploadProxyClient } from './clients/uploadProxy';
-import { UserClient } from './clients/user';
-import { getDefined } from './defined';
-import { AccessTokenService } from './libs/AccessTokenService/AccessTokenService';
-import { graphqlFetcher } from './libs/graphqlFetcher';
-import { isNode } from './utils/node';
+import { ApplicationsClient } from "./clients/applications";
+import { DomainsClient } from "./clients/domains";
+import { EnsClient } from "./clients/ens";
+import { FunctionsClient } from "./clients/functions";
+import { IpfsClient } from "./clients/ipfs";
+import { IpnsClient } from "./clients/ipns";
+import { PrivateGatewayClient } from "./clients/privateGateway";
+import { ProjectsClient } from "./clients/projects";
+import { SitesClient } from "./clients/sites";
+import { StorageClient } from "./clients/storage";
+import { UploadProxyClient } from "./clients/uploadProxy";
+import { UserClient } from "./clients/user";
+import { getDefined } from "./defined";
+import { AccessTokenService } from "./libs/AccessTokenService/AccessTokenService";
+import { graphqlFetcher } from "./libs/graphqlFetcher";
+import { isNode } from "./utils/node";
 
 type Headers = Record<string, string>;
 
 type FleekSdkOptions = {
-  graphqlServiceApiUrl?: string;
-  ipfsStorageApiUrl?: string;
-  uploadProxyApiUrl?: string;
-  accessTokenService: AccessTokenService;
+	graphqlServiceApiUrl?: string;
+	ipfsStorageApiUrl?: string;
+	uploadProxyApiUrl?: string;
+	accessTokenService: AccessTokenService;
 };
 
 export class FleekSdk {
-  private accessTokenService: AccessTokenService;
-  private graphqlClient: Client;
-  private uploadProxyClient: UploadProxyClient;
+	private accessTokenService: AccessTokenService;
+	private graphqlClient: Client;
+	private uploadProxyClient: UploadProxyClient;
 
-  private userClient?: UserClient;
-  private projectsClient?: ProjectsClient;
-  private ipnsClient?: IpnsClient;
-  private sitesClient?: SitesClient;
-  private domainsClient?: DomainsClient;
-  private applicationsClient?: ApplicationsClient;
-  private privateGatewayClient?: PrivateGatewayClient;
-  private ensClient?: EnsClient;
+	private userClient?: UserClient;
+	private projectsClient?: ProjectsClient;
+	private ipnsClient?: IpnsClient;
+	private sitesClient?: SitesClient;
+	private domainsClient?: DomainsClient;
+	private applicationsClient?: ApplicationsClient;
+	private privateGatewayClient?: PrivateGatewayClient;
+	private ensClient?: EnsClient;
 
-  private storageClient?: StorageClient;
-  private uploadProxyApiUrl: string;
+	private storageClient?: StorageClient;
+	private uploadProxyApiUrl: string;
 
-  private graphqlServiceApiUrl: string;
+	private graphqlServiceApiUrl: string;
 
-  private ipfsClient?: IpfsClient;
-  private ipfsStorageApiUrl: string;
-  private functionsClient?: FunctionsClient;
+	private ipfsClient?: IpfsClient;
+	private ipfsStorageApiUrl: string;
+	private functionsClient?: FunctionsClient;
 
-  constructor({
-    graphqlServiceApiUrl = getDefined('SDK__GRAPHQL_API_URL'),
-    ipfsStorageApiUrl = getDefined('SDK__IPFS__STORAGE_API_URL'),
-    uploadProxyApiUrl = getDefined('SDK__UPLOAD_PROXY_API_URL'),
-    accessTokenService,
-  }: FleekSdkOptions) {
-    if (!ipfsStorageApiUrl) {
-      throw new EnvNotSetError('SDK__IPFS__STORAGE_API_URL');
-    }
+	constructor({
+		graphqlServiceApiUrl = getDefined("SDK__GRAPHQL_API_URL"),
+		ipfsStorageApiUrl = getDefined("SDK__IPFS__STORAGE_API_URL"),
+		uploadProxyApiUrl = getDefined("SDK__UPLOAD_PROXY_API_URL"),
+		accessTokenService,
+	}: FleekSdkOptions) {
+		if (!ipfsStorageApiUrl) {
+			throw new EnvNotSetError("SDK__IPFS__STORAGE_API_URL");
+		}
 
-    if (!uploadProxyApiUrl) {
-      throw new EnvNotSetError('SDK__UPLOAD_PROXY_API_URL');
-    }
-    
-    if (!accessTokenService) {
-      throw new AuthorizationError();
-    }
+		if (!uploadProxyApiUrl) {
+			throw new EnvNotSetError("SDK__UPLOAD_PROXY_API_URL");
+		}
 
-    this.accessTokenService = accessTokenService;
+		if (!accessTokenService) {
+			throw new AuthorizationError();
+		}
 
-    this.graphqlClient = createClient({
-      fetcher: async (operation) =>
-        graphqlFetcher({
-          operation,
-          headers: { ...(await this.getAuthenticationHeaders()), ...this.getCustomHeaders() },
-          endpoint: this.graphqlServiceApiUrl,
-        }),
-    });
+		this.accessTokenService = accessTokenService;
 
-    this.graphqlServiceApiUrl = graphqlServiceApiUrl;
-    this.ipfsStorageApiUrl = ipfsStorageApiUrl;
-    this.uploadProxyApiUrl = uploadProxyApiUrl;
+		this.graphqlClient = createClient({
+			fetcher: async (operation) =>
+				graphqlFetcher({
+					operation,
+					headers: {
+						...(await this.getAuthenticationHeaders()),
+						...this.getCustomHeaders(),
+					},
+					endpoint: this.graphqlServiceApiUrl,
+				}),
+		});
 
-    this.uploadProxyClient = new UploadProxyClient({
-      uploadProxyApiUrl: this.uploadProxyApiUrl,
-      accessTokenService: this.accessTokenService,
-    });
-  }
+		this.graphqlServiceApiUrl = graphqlServiceApiUrl;
+		this.ipfsStorageApiUrl = ipfsStorageApiUrl;
+		this.uploadProxyApiUrl = uploadProxyApiUrl;
 
-  public getVersion = async () => {
-    const response = await this.graphqlClient.query({ version: { __scalar: true } });
+		this.uploadProxyClient = new UploadProxyClient({
+			uploadProxyApiUrl: this.uploadProxyApiUrl,
+			accessTokenService: this.accessTokenService,
+		});
+	}
 
-    return response;
-  };
+	public getVersion = async () => {
+		const response = await this.graphqlClient.query({
+			version: { __scalar: true },
+		});
 
-  public user = (): UserClient => {
-    if (!this.userClient) {
-      this.userClient = new UserClient({ graphqlClient: this.graphqlClient });
-    }
+		return response;
+	};
 
-    return this.userClient;
-  };
+	public user = (): UserClient => {
+		if (!this.userClient) {
+			this.userClient = new UserClient({ graphqlClient: this.graphqlClient });
+		}
 
-  public ipns = (): IpnsClient => {
-    if (!this.ipnsClient) {
-      this.ipnsClient = new IpnsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.userClient;
+	};
 
-    return this.ipnsClient;
-  };
+	public ipns = (): IpnsClient => {
+		if (!this.ipnsClient) {
+			this.ipnsClient = new IpnsClient({ graphqlClient: this.graphqlClient });
+		}
 
-  public ipfs = (): IpfsClient => {
-    if (!isNode) {
-      throw new SdkRequiredNodeRuntimeError();
-    }
+		return this.ipnsClient;
+	};
 
-    if (!this.ipfsClient) {
-      this.ipfsClient = new IpfsClient({
-        uploadProxyClient: this.uploadProxyClient,
-        accessTokenService: this.accessTokenService,
-        ipfsStorageApiUrl: this.ipfsStorageApiUrl,
-      });
-    }
+	public ipfs = (): IpfsClient => {
+		if (!isNode) {
+			throw new SdkRequiredNodeRuntimeError();
+		}
 
-    console.warn('Warning: The `ipfs` service in Fleek SDK will be deprecated. Please use `storage` service instead');
+		if (!this.ipfsClient) {
+			this.ipfsClient = new IpfsClient({
+				uploadProxyClient: this.uploadProxyClient,
+				accessTokenService: this.accessTokenService,
+				ipfsStorageApiUrl: this.ipfsStorageApiUrl,
+			});
+		}
 
-    return this.ipfsClient;
-  };
+		console.warn(
+			"Warning: The `ipfs` service in Fleek SDK will be deprecated. Please use `storage` service instead",
+		);
 
-  public sites = (): SitesClient => {
-    if (!this.sitesClient) {
-      this.sitesClient = new SitesClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.ipfsClient;
+	};
 
-    return this.sitesClient;
-  };
+	public sites = (): SitesClient => {
+		if (!this.sitesClient) {
+			this.sitesClient = new SitesClient({ graphqlClient: this.graphqlClient });
+		}
 
-  public projects = (): ProjectsClient => {
-    if (!this.projectsClient) {
-      this.projectsClient = new ProjectsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.sitesClient;
+	};
 
-    return this.projectsClient;
-  };
+	public projects = (): ProjectsClient => {
+		if (!this.projectsClient) {
+			this.projectsClient = new ProjectsClient({
+				graphqlClient: this.graphqlClient,
+			});
+		}
 
-  public domains = (): DomainsClient => {
-    if (!this.domainsClient) {
-      this.domainsClient = new DomainsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.projectsClient;
+	};
 
-    return this.domainsClient;
-  };
+	public domains = (): DomainsClient => {
+		if (!this.domainsClient) {
+			this.domainsClient = new DomainsClient({
+				graphqlClient: this.graphqlClient,
+			});
+		}
 
-  public applications = (): ApplicationsClient => {
-    if (!this.applicationsClient) {
-      this.applicationsClient = new ApplicationsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.domainsClient;
+	};
 
-    return this.applicationsClient;
-  };
+	public applications = (): ApplicationsClient => {
+		if (!this.applicationsClient) {
+			this.applicationsClient = new ApplicationsClient({
+				graphqlClient: this.graphqlClient,
+			});
+		}
 
-  public ens = (): EnsClient => {
-    if (!this.ensClient) {
-      this.ensClient = new EnsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.applicationsClient;
+	};
 
-    return this.ensClient;
-  };
+	public ens = (): EnsClient => {
+		if (!this.ensClient) {
+			this.ensClient = new EnsClient({ graphqlClient: this.graphqlClient });
+		}
 
-  public privateGateways = (): PrivateGatewayClient => {
-    if (!this.privateGatewayClient) {
-      this.privateGatewayClient = new PrivateGatewayClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.ensClient;
+	};
 
-    return this.privateGatewayClient;
-  };
+	public privateGateways = (): PrivateGatewayClient => {
+		if (!this.privateGatewayClient) {
+			this.privateGatewayClient = new PrivateGatewayClient({
+				graphqlClient: this.graphqlClient,
+			});
+		}
 
-  public storage = (): StorageClient => {
-    if (!this.storageClient) {
-      this.storageClient = new StorageClient({
-        graphqlClient: this.graphqlClient,
-        uploadProxyClient: this.uploadProxyClient,
-      });
-    }
+		return this.privateGatewayClient;
+	};
 
-    return this.storageClient;
-  };
+	public storage = (): StorageClient => {
+		if (!this.storageClient) {
+			this.storageClient = new StorageClient({
+				graphqlClient: this.graphqlClient,
+				uploadProxyClient: this.uploadProxyClient,
+			});
+		}
 
-  public functions = (): FunctionsClient => {
-    if (!this.functionsClient) {
-      this.functionsClient = new FunctionsClient({ graphqlClient: this.graphqlClient });
-    }
+		return this.storageClient;
+	};
 
-    return this.functionsClient;
-  };
+	public functions = (): FunctionsClient => {
+		if (!this.functionsClient) {
+			this.functionsClient = new FunctionsClient({
+				graphqlClient: this.graphqlClient,
+			});
+		}
 
-  private getAuthenticationHeaders = async () => {
-    try {
-      const accessToken = await this.accessTokenService.getAccessToken();
+		return this.functionsClient;
+	};
 
-      if (!accessToken) {
-        return {};
-      }
+	private getAuthenticationHeaders = async () => {
+		try {
+			const accessToken = await this.accessTokenService.getAccessToken();
 
-      const headers: Headers = {
-        'Authorization': `Bearer ${accessToken}`,
-      };
+			if (!accessToken) {
+				return {};
+			}
 
-      return headers;
-    } catch {
-      return {};
-    }
-  };
+			const headers: Headers = {
+				Authorization: `Bearer ${accessToken}`,
+			};
 
-  private getCustomHeaders = () => {
-    const headers: Headers = {
-      'X-Client-Type': 'sdk',
-    };
+			return headers;
+		} catch {
+			return {};
+		}
+	};
 
-    return headers;
-  };
+	private getCustomHeaders = () => {
+		const headers: Headers = {
+			"X-Client-Type": "sdk",
+		};
+
+		return headers;
+	};
 }

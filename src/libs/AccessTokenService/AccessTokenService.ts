@@ -1,3 +1,3 @@
 export abstract class AccessTokenService {
-  abstract getAccessToken: () => Promise<string>;
+	abstract getAccessToken: () => Promise<string>;
 }
