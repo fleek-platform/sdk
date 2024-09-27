@@ -44,7 +44,7 @@ For a quick start, learn the [basic usage](#basic-usage), or alternatively visit
 
 ## Development
 
-For developers looking to contribute to the `@fleek-platform/SDK`, [clone](https://github.com/fleekxyz/sdk) the repository and follow the [contribution guide](#contributing).
+For developers looking to contribute to the `@fleek-platform/sdk`, [clone](https://github.com/fleekxyz/sdk) the repository and follow the [contribution guide](#contributing).
 
 Once cloned, you'll have to set up the local development environment, e.g. to have access to the source-code, iterate, run tests and much more.
 
@@ -71,14 +71,6 @@ Next, install the project dependencies:
 
 ```sh
 pnpm i
-```
-
-Next, prepare your local changes and execute the commands to compute it.
-
-Everytime you prepare and save a change, you have to rebuild the binary:
-
-```sh
-pnpm build
 ```
 
 Learn the Fleek-platform SDK basic usage [here](#basic-usage). For extended documentation visit our [documentation site](https://fleek.xyz/docs/sdk).
