@@ -1,69 +1,64 @@
-import { decodeAccessToken } from "@fleek-platform/utils-token";
-import { EnvNotSetError } from "@fleek-platform/errors";
+import { constants, decodeAccessToken } from '@fleek-platform/auth';
+import fetch from 'cross-fetch';
+import { DateTime } from 'luxon';
 
-import { DateTime } from "luxon";
-
-import { getDefined } from "../../defined";
-import { AccessTokenService } from "./AccessTokenService";
+import { getDefined } from '../../defined';
+import { AccessTokenService } from './AccessTokenService';
 
 type ApplicationAccessTokenServiceOptions = {
-	clientId: string;
-	authAppsServiceUrl?: string;
-	origin?: string;
+  clientId: string;
+  authAppsServiceUrl?: string;
+  origin?: string;
 };
 
 export class ApplicationAccessTokenService extends AccessTokenService {
-	private authAppsServiceUrl: string;
-	private clientId: string;
-	private accessToken?: string;
-	private origin?: string;
+  private authAppsServiceUrl: string;
+  private clientId: string;
+  private accessToken?: string;
+  private origin?: string;
 
-	constructor({
-		clientId,
-		authAppsServiceUrl = getDefined("SDK__AUTH_APPS_URL"),
-		origin = window.location.origin,
-	}: ApplicationAccessTokenServiceOptions) {
-		super();
+  constructor({
+    clientId,
+    authAppsServiceUrl = getDefined('SDK__AUTH_APPS_URL'),
+    origin = window.location.origin,
+  }: ApplicationAccessTokenServiceOptions) {
+    super();
+    this.clientId = clientId;
+    this.authAppsServiceUrl = authAppsServiceUrl;
+    this.origin = origin;
+  }
 
-		if (!authAppsServiceUrl) {
-			throw new EnvNotSetError("SDK__AUTH_APPS_URL");
-		}
+  private refreshAccessToken = async () => {
+    const params = [constants.CLIENT_ID_QUERY_STRING_FIELD_NAME, this.clientId].join('=');
+    const url = `${this.authAppsServiceUrl}/token?${params}`;
+    const headers = new Headers();
 
-		this.clientId = clientId;
-		this.authAppsServiceUrl = authAppsServiceUrl;
-		this.origin = origin;
-	}
+    if (this.origin) {
+      headers.set('Origin', this.origin);
+    }
+    
+    const response = await fetch(url, {
+        method: 'GET',
+        headers,
+      },
+    );
 
-	private refreshAccessToken = async () => {
-		const params = ["clientId", this.clientId].join("=");
-		const url = `${this.authAppsServiceUrl}/token?${params}`;
-		const headers = new Headers();
+    this.accessToken = await response.text();
+  };
 
-		if (this.origin) {
-			headers.set("Origin", this.origin);
-		}
+  public getAccessToken = async () => {
+    if (!this.accessToken) {
+      await this.refreshAccessToken();
 
-		const response = await fetch(url, {
-			method: "GET",
-			headers,
-		});
+      return this.accessToken!;
+    }
 
-		this.accessToken = await response.text();
-	};
+    const payload = decodeAccessToken({ token: this.accessToken });
 
-	public getAccessToken = async () => {
-		if (!this.accessToken) {
-			await this.refreshAccessToken();
+    if (payload.exp < DateTime.now().toSeconds()) {
+      await this.refreshAccessToken();
+    }
 
-			return this.accessToken!;
-		}
-
-		const payload = decodeAccessToken({ token: this.accessToken });
-
-		if (payload.exp < DateTime.now().toSeconds()) {
-			await this.refreshAccessToken();
-		}
-
-		return this.accessToken;
-	};
+    return this.accessToken;
+  };
 }

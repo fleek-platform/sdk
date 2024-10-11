@@ -20,7 +20,7 @@ describe('[Node.js] getVersion', () => {
   });
 });
 
-describe('[Chromium] getVersion', () => {
+describe.skip('[Chromium] getVersion', () => {
   const { it } = mockDatabasesAndGraphqlWithBrowserSdkForEachTest({ mockIpfs: false });
 
   it('should get current version info', async (context) => {

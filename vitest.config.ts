@@ -7,11 +7,9 @@ export default defineConfig(
     test: {
       setupFiles: ['vitest.setup.ts'],
       globalSetup: ['vitest.globalSetup.ts'],
-      server: {
-        deps: {
-          // Because of https://github.com/vitest-dev/vitest/issues/2806
-          inline: [/^(?!.*vitest).*$/],
-        },
+      sequence: {
+        shuffle: true,
+        hooks: 'list',
       },
     },
     resolve: {
