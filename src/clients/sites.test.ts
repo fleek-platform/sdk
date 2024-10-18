@@ -363,6 +363,8 @@ describe('[Node.js] SitesClient', () => {
       name: 'new-site',
     });
 
+    console.log(`[debug] sites.test.ts: ${JSON.stringify(response)}`)
+
     expect(response).toMatchInlineSnapshot(
       { id: expect.any(String) }, `
       Object {

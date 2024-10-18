@@ -1,5 +1,5 @@
-import { constants } from '@fleek-platform/auth';
 import { AuthorizationError, SdkRequiredNodeRuntimeError,StorageIpfsUploadFailedError } from '@fleek-platform/errors';
+import { constants } from '@fleek-platform/utils-permissions';
 import { filesFromPaths } from 'files-from-path';
 import type { ReadStream } from 'fs';
 import type { CID, globSource,IPFSHTTPClient } from 'ipfs-http-client';

@@ -1,4 +1,5 @@
-import { constants, decodeAccessToken } from '@fleek-platform/auth';
+import { constants } from '@fleek-platform/utils-permissions';
+import { decodeAccessToken } from '@fleek-platform/utils-token';
 import fetch from 'cross-fetch';
 import { DateTime } from 'luxon';
 

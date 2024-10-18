@@ -12,8 +12,8 @@ vi.hoisted(() => {
   vi.resetModules();
 });
 
-vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/auth', async (importOriginal) => {
-  const original = await importOriginal<typeof import('@fleek-platform/auth')>();
+vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-token', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@fleek-platform/utils-token')>();
 
   return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
 });

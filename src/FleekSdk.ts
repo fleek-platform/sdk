@@ -1,6 +1,6 @@
-import { constants } from '@fleek-platform/auth';
 import { AuthorizationError, SdkRequiredNodeRuntimeError } from '@fleek-platform/errors';
 import { Client, createClient } from '@fleek-platform/utils-genql-client';
+import { constants } from '@fleek-platform/utils-permissions';
 
 import { ApplicationsClient } from './clients/applications';
 import { DomainsClient } from './clients/domains';

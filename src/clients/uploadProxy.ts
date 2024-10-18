@@ -1,4 +1,3 @@
-import { constants } from '@fleek-platform/auth';
 import {
   FolderNotFoundError,
   StorageIpfsUploadFailedError,
@@ -9,6 +8,7 @@ import {
   UploadProxyUploadFileError,
 } from '@fleek-platform/errors';
 import { Pin } from '@fleek-platform/utils-genql-client';
+import { constants } from '@fleek-platform/utils-permissions';
 import { FormData } from '@web-std/form-data';
 import type { Block } from '@web3-storage/upload-client/car';
 // TODO: The project has `axios`, thus the `isomorphic-fetch`
