@@ -128,6 +128,7 @@ export class ApplicationsClient {
 
 	public delete = async ({ id }: DeleteApplicationArgs) => {
 		const response = await this.graphqlClient.mutation({
+			__name: "DeleteApplication",
 			deleteApplication: {
 				__args: {
 					where: {
