@@ -72,7 +72,10 @@ export class ApplicationsClient {
 
 	public list = async () => {
 		const response = await this.graphqlClient.query({
-			applications: { data: ApplicationsClient.APPLICATION_MAPPED_PROPERTIES },
+			__name: "GetApplications",
+			applications: {
+				data: ApplicationsClient.APPLICATION_MAPPED_PROPERTIES,
+			},
 		});
 
 		return response.applications.data;
