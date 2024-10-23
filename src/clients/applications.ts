@@ -98,8 +98,6 @@ export class ApplicationsClient {
 			},
 		});
 
-		console.log(`[debug] createApplication: ${JSON.stringify(response)}`)
-
 		return response.createApplication;
 	};
 
@@ -109,6 +107,7 @@ export class ApplicationsClient {
 		whitelistDomains,
 	}: UpdateApplicationArgs) => {
 		const response = await this.graphqlClient.mutation({
+			__name: "UpdateApplication",
 			updateApplication: {
 				__args: {
 					where: { id },
