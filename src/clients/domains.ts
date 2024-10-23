@@ -77,6 +77,7 @@ export class DomainsClient {
 	// Promise<DomainsWithAggregation["data"]> fails for some reason
 	public list = async () => {
 		const response = await this.graphqlClient.query({
+			__name: "GetDomains",
 			domains: {
 				data: {
 					...DomainsClient.DOMAIN_MAPPED_PROPERTIES,
@@ -84,7 +85,7 @@ export class DomainsClient {
 				__typename: true,
 			},
 		});
-
+		
 		// TODO: The genql provides `isDomain`
 		// But found that for the concurrent `isDomainWithAggregation`
 		// used in other parts of the source, would not be

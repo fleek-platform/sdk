@@ -1,7 +1,5 @@
-import { graphql, HttpResponse } from 'msw';
-
-export const mockGraphqlServiceApiUrl = 'https://fleek.mock.server/graphql';
-const localhost = graphql.link(mockGraphqlServiceApiUrl);
+import { HttpResponse } from 'msw';
+import { localhost } from '../config';
 
 const queries = [
   localhost.query('GetApplication', () => 

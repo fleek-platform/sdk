@@ -11,7 +11,7 @@ import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from '../mocks/grap
 import { FleekSdk } from '../FleekSdk';
 import state from '../mocks/state';
 
-describe('FleekSDK', () => {
+describe('Applications', () => {
   const sdk = new FleekSdk({
     graphqlServiceApiUrl,
     accessTokenService: {} as any,
