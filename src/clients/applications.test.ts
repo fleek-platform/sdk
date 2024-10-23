@@ -14,6 +14,12 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-token', asyn
   return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
 });
 
+vi.mock('@fleek-platform/utils-token', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@fleek-platform/utils-token')>();
+
+  return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
+});
+
 describe('[Node.js] ApplicationsClient', () => {
   const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });
 

@@ -119,6 +119,7 @@ export class PrivateGatewayClient {
   };
 
   public delete = async ({ id }: DeletePrivateGatewayArgs) => {
+    process.stdout.write(`[debug] privateGateway.ts: 1\n`)
     const response = await this.graphqlClient.mutation({
       deletePrivateGateway: {
         __args: {

@@ -186,6 +186,8 @@ describe('[Node.js] PrivateGatewayClient', () => {
   it('delete private gateway', async (context) => {
     const response = await context.sdks.josh.privateGateways().delete({ id: seeds.storageIpfs.privateGateways.electronicCoPhotos.id });
 
+    console.log(`[debug] /privateGateway.test.ts/response: ${JSON.stringify(response)}`)
+
     expect(response).toMatchInlineSnapshot(
       { updatedAt: expect.any(String) },
       `

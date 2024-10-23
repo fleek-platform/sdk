@@ -12,6 +12,10 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-text', () =>
   generateSlug: vi.fn().mockReturnValue('crooked-bland-jackal'),
 }));
 
+vi.mock('@fleek-platform/utils-text', () => ({
+  generateSlug: vi.fn().mockReturnValue('crooked-bland-jackal'),
+}));
+
 vi.mock('@aws-sdk/client-sfn', () => ({
   SFNClient: vi.fn(() => ({
     send: vi.fn().mockResolvedValue({}),

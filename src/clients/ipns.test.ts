@@ -18,13 +18,19 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-token', asyn
   return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
 });
 
+vi.mock('@fleek-platform/utils-token', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@fleek-platform/utils-token')>();
+
+  return { ...original, createApplicationClientId: vi.fn().mockReturnValue('client_testtesttest') };
+});
+
 vi.mock('@fleek-platform/graphql/node_modules/axios', () => {
   const post = vi.fn().mockResolvedValue({ data: { id: 'k51qzi5uqu5dgsc1bvsuk1x84bptdvp8cupbnnbqxpxzd629gadpci3kpcm311' } });
 
   return { default: { post } };
 });
 
-vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/ipns', () => {
+vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-ipns', () => {
   const createW3NameAndEncryptKey = vi.fn().mockResolvedValue({
     name: 'test-name',
     key: 'C6pxShUFJkS5dSaXluN6O/tLqt5wpw5A88WCZiKRJ4ErD69dbe0qY7y6nBT5TMm/TyGw5ocelpnZeG6MM2V1gFBgDG/xranNsc/gj4npI3zvlGNbud3rxN3sXHKFwODgIN0rCZ2+L0DzhQaU6F/lei/XBjKsorTy89Oq/XFGARSoegDktPmku6ffIKtntTVjxQvBtU/kg2MjObeE95A1Cbbf8hlVSyOxEJWWPYq/IQ5k+3mgVaGIVPxfah9tbfbZ2E1s/patXiIhuiZO9bwfayS08juyACQ9xRDEBzr3CIHsKUmBPY3kGqBFmKHY+8SouKzHc9ir0EfZ4eJ6baDrL1GxauMS3zZCtsJQ8OvmQFrqmHZD0SilPtHNh4bziCkyK/hXeTGy3IZpRoIbpCKD8q5msFxQWSIDLmXicacdbJqAb8/Cpaxbrpvq3OKgNKlZNAFtPdRwk8HewWjyq61ovF0+wZzVmhBRJ2v0drFd89uUxyJPw1DZGpYlE21bj1ZTn0yuPaawy3ws6RpPTFU1D5AS05CAyJ/u7yqQDc+Cuusz/fC6u1YjPZUvCjQWUbj4sq9TpxtnP7SJoqKlBm8chCpbRcqUiIO5WiW1c+00A57c8IbPkpyHK/oW8qpolxK9Z+DwArQys9g2G0adc/18dMo76QZP17zweGtzlgyspRY=',
@@ -33,7 +39,16 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/ipns', () => {
   return { createW3NameAndEncryptKey, decryptKeyAndPublishW3Name: vi.fn() };
 });
 
-vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/ipns/node_modules/w3name', () => {
+vi.mock('@fleek-platform/utils-ipns', () => {
+  const createW3NameAndEncryptKey = vi.fn().mockResolvedValue({
+    name: 'test-name',
+    key: 'C6pxShUFJkS5dSaXluN6O/tLqt5wpw5A88WCZiKRJ4ErD69dbe0qY7y6nBT5TMm/TyGw5ocelpnZeG6MM2V1gFBgDG/xranNsc/gj4npI3zvlGNbud3rxN3sXHKFwODgIN0rCZ2+L0DzhQaU6F/lei/XBjKsorTy89Oq/XFGARSoegDktPmku6ffIKtntTVjxQvBtU/kg2MjObeE95A1Cbbf8hlVSyOxEJWWPYq/IQ5k+3mgVaGIVPxfah9tbfbZ2E1s/patXiIhuiZO9bwfayS08juyACQ9xRDEBzr3CIHsKUmBPY3kGqBFmKHY+8SouKzHc9ir0EfZ4eJ6baDrL1GxauMS3zZCtsJQ8OvmQFrqmHZD0SilPtHNh4bziCkyK/hXeTGy3IZpRoIbpCKD8q5msFxQWSIDLmXicacdbJqAb8/Cpaxbrpvq3OKgNKlZNAFtPdRwk8HewWjyq61ovF0+wZzVmhBRJ2v0drFd89uUxyJPw1DZGpYlE21bj1ZTn0yuPaawy3ws6RpPTFU1D5AS05CAyJ/u7yqQDc+Cuusz/fC6u1YjPZUvCjQWUbj4sq9TpxtnP7SJoqKlBm8chCpbRcqUiIO5WiW1c+00A57c8IbPkpyHK/oW8qpolxK9Z+DwArQys9g2G0adc/18dMo76QZP17zweGtzlgyspRY=',
+  });
+
+  return { createW3NameAndEncryptKey, decryptKeyAndPublishW3Name: vi.fn() };
+});
+
+vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-ipns/node_modules/w3name', () => {
   const parse = vi.fn().mockReturnValue({});
 
   const resolve = vi.fn().mockResolvedValue({ value: '/ipfs/QmRG4xcsmoZuXqKuPz3uVBgvo3GZ6k1kLZWhmvzuKtDr9s' });
@@ -41,6 +56,13 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/ipns/node_modules/
   return { parse, resolve };
 });
 
+vi.mock('@fleek-platform/utils-ipns/node_modules/w3name', () => {
+  const parse = vi.fn().mockReturnValue({});
+
+  const resolve = vi.fn().mockResolvedValue({ value: '/ipfs/QmRG4xcsmoZuXqKuPz3uVBgvo3GZ6k1kLZWhmvzuKtDr9s' });
+
+  return { parse, resolve };
+});
 
 describe('[Node.js] IpnsClient', async () => {
   const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });

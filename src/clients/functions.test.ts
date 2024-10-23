@@ -18,6 +18,10 @@ vi.mock('@fleek-platform/graphql/node_modules/@fleek-platform/utils-text', () =>
   generateSlug: vi.fn().mockReturnValue('crooked-bland-jackal'),
 }));
 
+vi.mock('@fleek-platform/utils-text', () => ({
+  generateSlug: vi.fn().mockReturnValue('crooked-bland-jackal'),
+}));
+
 describe('[Node.js] FunctionsClient', () => {
   const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });
 
