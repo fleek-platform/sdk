@@ -98,6 +98,7 @@ export class FleekSdk {
 
 	public getVersion = async () => {
 		const response = await this.graphqlClient.query({
+			__name: 'GetVersion',
 			version: { __scalar: true },
 		});
 

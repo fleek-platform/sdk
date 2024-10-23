@@ -1,0 +1,1471 @@
+datasource database {
+  provider     = "mysql"
+  url          = env("PRISMA_DB_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["darwin-arm64","debian-openssl-1.1.x","debian-openssl-3.0.x","linux-arm64-openssl-1.1.x","linux-arm64-openssl-3.0.x","native","rhel-openssl-1.0.x"]
+  output        = "generated"
+}
+
+generator lambda {
+  provider      = "prisma-client-js"
+  binaryTargets = ["rhel-openssl-1.0.x"]
+  output        = "layer/nodejs/node_modules/@fleek-platform/prisma/generated"
+}
+
+enum BillingCycleStatus {
+  FAILED_INTERNAL
+  FAILED_EXTERNAL
+  PAYMENT_FAILED
+  CLOSED
+  PAID
+  CURRENT
+}
+
+enum BillingPlanEnablementRuleType {
+  FILECOIN_BACKUP
+  ARWEAVE_BACKUP
+  SITE_STORAGE_ANALYTICS
+  FLEEK_DOMAINS
+  SDK_INTEGRATIONS
+}
+
+enum BillingPlanLevel {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+enum BillingPlanOverageRuleType {
+  IPFS_STORAGE
+  TOTAL_BANDWIDTH
+  BUILD_MINUTES
+  CONCURRENT_BUILDS
+  PROJECT_MEMBERS_COUNT
+  FLEEK_FUNCTIONS_RUNTIME_MINUTES
+  FLEEK_FUNCTIONS_REQUEST_COUNT
+}
+
+enum BillingPlanOverageType {
+  MAX
+  TOTAL
+  UNLIMITED
+  CAPPED
+}
+
+enum BillingPlanTierRuleType {
+  CUSTOMER_SUPPORT_TIER
+}
+
+enum BlocklistReason {
+  PHISHING
+}
+
+enum BuildStatus {
+  CREATED
+  QUEUED
+  INITIALISED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  CANCELLING
+}
+
+enum BunnyMetricTimeframe {
+  DAILY
+  HOURLY
+}
+
+enum DeploymentStatus {
+  CREATED
+  SOURCE_CLONE_IN_PROGRESS
+  SOURCE_CLONE_COMPLETED
+  SOURCE_CLONE_FAILED
+  CHECK_RUN_CREATING_FAILED
+  CHECK_RUN_CREATING_COMPLETED
+  BUILD_IN_PROGRESS
+  BUILD_COMPLETED
+  BUILD_FAILED
+  BUILD_CANCELLING
+  BUILD_CANCELLED
+  ARTIFACT_READY
+  UPLOAD_IN_PROGRESS
+  UPLOAD_COMPLETED
+  UPLOAD_FAILED
+  READY_CHECK_IN_PROGRESS
+  READY_CHECK_COMPLETED
+  READY_CHECK_FAILED
+  RELEASE_IN_PROGRESS
+  RELEASE_COMPLETED
+  RELEASE_FAILED
+}
+
+enum DnsConfigType {
+  CNAME
+  A
+}
+
+enum DnslinkStatus {
+  CREATED
+  VERIFICATION_FAILED
+  VERIFIED
+}
+
+enum DomainStatus {
+  CREATING
+  CREATING_FAILED
+  CREATED
+  VERIFYING
+  VERIFYING_FAILED
+  ACTIVE
+  DELETING
+  DELETING_FAILED
+}
+
+enum EnsRecordStatus {
+  CREATED
+  VERIFYING
+  VERIFYING_FAILED
+  ACTIVE
+}
+
+enum FleekFunctionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum MigrationFailedEntityType {
+  USER
+  SITE
+  DEPLOYMENT
+  ZONE
+  PRIVATE_GATEWAY
+  IPNS_ENS
+  STORAGE_PIN
+  PIN_CONTENT
+}
+
+enum MigrationSourceEnvironment {
+  DEV
+  STG
+  PRD
+}
+
+enum MigrationStatus {
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum PhishingStatus {
+  IN_PROGRESS
+  FAILED
+  VERIFIED
+  INCOMPLETE
+}
+
+enum PlanStatus {
+  ACTIVE
+  DRAFT
+  DEPRECATED
+}
+
+enum PrivateGatewayStatus {
+  CREATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum ProjectStatus {
+  CREATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum Role {
+  OWNER
+  MEMBER
+}
+
+enum SecretKeyType {
+  TWO_FACTOR_AUTH
+}
+
+enum SecretVisibility {
+  PUBLIC
+  ENCRYPTED
+}
+
+enum SiteFrameworkRecognitionStrategy {
+  NODEJS
+  FILES
+}
+
+enum SiteStatus {
+  CREATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum SitesUptimeMonitorStatus {
+  CREATING
+  CREATING_FAILED
+  CREATED
+  UPDATING
+  UPDATING_FAILED
+  UPDATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum SourceProvider {
+  GITHUB
+  GITLAB
+  BITBUCKET
+}
+
+enum StatusPageStatus {
+  OPERATIONAL
+  UNDER_MAINTENANCE
+  DEGRADED_PERFORMANCE
+  PARTIAL_OUTAGE
+  MAJOR_OUTAGE
+}
+
+enum StorageType {
+  IPFS
+}
+
+enum SubscriptionType {
+  FIAT
+  CRYPTO
+}
+
+enum TemplateReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum UserStatus {
+  CREATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum ZoneProvider {
+  BUNNY_CDN
+  FLEEK_CDN
+}
+
+enum ZoneStatus {
+  CREATING
+  CREATING_FAILED
+  CREATED
+  DELETING
+  DELETING_FAILED
+}
+
+enum ZoneType {
+  SITE
+  PRIVATE_GATEWAY
+}
+
+enum NotificationType {
+  DEPLOYMENT_COMPLETED
+  DEPLOYMENT_FAILED
+  DOMAIN_CREATED
+  DOMAIN_MISCONFIGURED
+  DOMAIN_DELETED
+  MEMBER_INVITE
+  CO_MIGRATION_COMPLETED
+  CO_MIGRATION_FAILED
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+enum SecretKeyAlgorithm {
+  SHA1
+  SHA256
+  SHA512
+}
+
+enum TwoFactorProtectedActionType {
+  DELETE_SITE
+  DELETE_PROJECT
+  INVITE_MEMBER
+  DELETE_USER
+}
+
+model AdminAccessToken {
+  id        String   @id @default(cuid())
+  hash      String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ApplicationWhitelistDomain {
+  id            String      @id @default(cuid())
+  hostname      String
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([applicationId, hostname])
+  @@index([applicationId])
+}
+
+model ApplicationWhiteLabelDomain {
+  id            String      @id @default(cuid())
+  hostname      String
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([applicationId, hostname])
+  @@index([applicationId])
+}
+
+model BillingPlanEnablementRule {
+  id            String                        @id @default(cuid())
+  name          String
+  billingPlanId String
+  billingPlan   BillingPlan                   @relation(fields: [billingPlanId], references: [id])
+  type          BillingPlanEnablementRuleType
+  isIncluded    Boolean
+  createdAt     DateTime                      @default(now())
+  updatedAt     DateTime                      @updatedAt
+}
+
+model BillingPlanTierRule {
+  id            String                  @id @default(cuid())
+  name          String
+  billingPlanId String
+  billingPlan   BillingPlan             @relation(fields: [billingPlanId], references: [id])
+  type          BillingPlanTierRuleType
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+}
+
+model BillingPlan {
+  id                         String                      @id @default(cuid())
+  name                       String
+  version                    Int                         @default(1)
+  isActive                   Boolean
+  price                      Float
+  billingPartnerId           String?
+  billingPlanOverageRules    BillingPlanOverageRule[]
+  billingPlanEnablementRules BillingPlanEnablementRule[]
+  billingPlanTierRules       BillingPlanTierRule[]
+  disabledAt                 DateTime?
+  projects                   Project[]
+  planLevel                  BillingPlanLevel            @default(FREE)
+  isPublicPlan               Boolean                     @default(true)
+  description                String                      @default("")
+  createdAt                  DateTime                    @default(now())
+  updatedAt                  DateTime                    @updatedAt
+}
+
+model BillingPlanOverageRule {
+  id                 String                     @id @default(cuid())
+  name               String
+  billingPlanId      String
+  billingPlan        BillingPlan                @relation(fields: [billingPlanId], references: [id])
+  billingCycleUsages BillingCycleUsage[]
+  type               BillingPlanOverageRuleType
+  overageType        BillingPlanOverageType
+  includedAmount     Int?
+  overagePrice       Float?
+  overageBucketSize  Int?
+  createdAt          DateTime                   @default(now())
+  updatedAt          DateTime                   @updatedAt
+}
+
+model BillingCycleUsage {
+  id                       String                 @id @default(cuid())
+  billingCycleId           String
+  billingCycle             BillingCycle           @relation(fields: [billingCycleId], references: [id])
+  billingPlanOverageRuleId String
+  billingPlanOverageRule   BillingPlanOverageRule @relation(fields: [billingPlanOverageRuleId], references: [id])
+  amount                   Float
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+}
+
+model Subscription {
+  id                           String           @id @default(cuid())
+  projectId                    String
+  project                      Project          @relation(fields: [projectId], references: [id])
+  billingPartnerSubscriptionId String?
+  billingCycles                BillingCycle[]
+  startDate                    DateTime
+  endDate                      DateTime
+  isActive                     Boolean
+  type                         SubscriptionType
+  createdAt                    DateTime         @default(now())
+  updatedAt                    DateTime         @updatedAt
+}
+
+model BillingCycle {
+  id                          String              @id @default(cuid())
+  subscriptionId              String
+  subscription                Subscription        @relation(fields: [subscriptionId], references: [id])
+  projectId                   String
+  project                     Project             @relation(fields: [projectId], references: [id])
+  billingPartnerTransactionId String?
+  billingCycleUsages          BillingCycleUsage[]
+  startDate                   DateTime
+  endDate                     DateTime
+  status                      BillingCycleStatus
+  createdAt                   DateTime            @default(now())
+  updatedAt                   DateTime            @updatedAt
+}
+
+model BuildLog {
+  id        String   @id @default(cuid())
+  text      String   @database.Text
+  buildId   String
+  build     Build    @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([buildId])
+}
+
+model Build {
+  id            String      @id @default(cuid())
+  status        BuildStatus @default(CREATED)
+  statusText    String?     @database.Text
+  deploymentId  String      @unique
+  logs          BuildLog[]
+  deployment    Deployment  @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+  image         String
+  cpu           String
+  memory        String
+  ecsTaskId     String?
+  command       String?     @database.Text
+  stoppedReason String?     @database.Text
+  deadline      String?
+  buildTime     Int?
+  memoryTime    Int?
+  cpuTime       Int?
+  stopCode      String?
+  distDirectory String?
+  baseDirectory String?
+  buildCommand  String?     @database.Text
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([ecsTaskId])
+}
+
+model ArweavePin {
+  cid       String   @id
+  pin       Pin      @relation(fields: [cid], references: [cid])
+  bundlrId  String   @unique
+  price     Decimal  @database.Decimal(8, 4)
+  createdAt DateTime @default(now())
+}
+
+model FilecoinDeal {
+  id                String      @id @default(cuid())
+  dealId            Int
+  cid               String
+  filecoinPin       FilecoinPin @relation(fields: [cid], references: [cid])
+  storageProvider   String
+  status            String
+  pieceCid          String
+  dataModelSelector String?
+  activation        DateTime
+  expiration        DateTime
+  created           DateTime
+  updated           DateTime
+  createdAt         DateTime    @default(now())
+
+  @@index([cid])
+}
+
+model FilecoinPin {
+  cid       String         @id
+  pin       Pin            @relation(fields: [cid], references: [cid])
+  deals     FilecoinDeal[]
+  createdAt DateTime       @default(now())
+}
+
+model StorageFolder {
+  id             String          @id @default(cuid())
+  childFolders   StorageFolder[] @relation(name: "childToParentFolder")
+  childPins      StoragePin[]
+  name           String
+  parentFolderId String?
+  parentFolder   StorageFolder?  @relation(fields: [parentFolderId], references: [id], onUpdate: NoAction, onDelete: NoAction, name: "childToParentFolder")
+  path           String          @database.Text
+  size           BigInt          @default(0)
+  pinCount       Int             @default(0)
+  folderCount    Int             @default(0)
+  projectId      String
+  project        Project         @relation(fields: [projectId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([projectId, parentFolderId, name])
+  @@index([projectId,parentFolderId])
+  @@index([projectId,path(length: 500)])
+}
+
+model StoragePin {
+  id               String         @id @default(cuid())
+  cid              String
+  pin              Pin            @relation(fields: [cid], references: [cid])
+  filename         String
+  fileHash         String?
+  projectId        String
+  project          Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  extension        String
+  parentFolderId   String?
+  parentFolder     StorageFolder? @relation(fields: [parentFolderId], references: [id])
+  path             String?        @database.Text
+  storedOnArweave  Boolean
+  storedOnFilecoin Boolean
+  storedOnS3       Boolean?       @default(false)
+  createdAt        DateTime       @default(now())
+
+  @@index([cid])
+  @@index([projectId])
+  @@index([cid,projectId])
+  @@index([parentFolderId])
+  @@index([projectId,parentFolderId])
+  @@unique([projectId,path(length: 500)])
+}
+
+model Pin {
+  cid         String       @id
+  /// Deprecated in favor of sizeBigInt
+  size        Int
+  sizeBigInt  BigInt?
+  arweavePin  ArweavePin?
+  filecoinPin FilecoinPin?
+  storagePins StoragePin[]
+  deployments Deployment[]
+  createdAt   DateTime     @default(now())
+}
+
+model IpnsRecord {
+  id         String      @id @default(cuid())
+  hash       String?
+  name       String      @unique
+  key        String      @database.Text
+  kmsKeyId   String
+  siteId     String?
+  site       Site?       @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  projectId  String
+  project    Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  ensRecords EnsRecord[]
+  updatedBy  String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([projectId])
+  @@index([siteId])
+}
+
+model EnsRecord {
+  id           String          @id @default(cuid())
+  name         String
+  status       EnsRecordStatus @default(CREATED)
+  siteId       String
+  site         Site            @relation(fields: [siteId], references: [id])
+  projectId    String
+  project      Project         @relation(fields: [projectId], references: [id])
+  ipnsRecordId String
+  ipnsRecord   IpnsRecord      @relation(fields: [ipnsRecordId], references: [id], onDelete: Cascade)
+  updatedBy    String?
+  errorMessage String?         @database.Text
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@unique([projectId, name])
+  @@index([projectId])
+  @@index([siteId])
+}
+
+model GithubAppInstallation {
+  id             String          @id @default(cuid())
+  hash           String          @unique
+  installationId String?
+  projectId      String
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  gitIntegration GitIntegration? @relation(name: "gitIntegration")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([installationId])
+  @@index([projectId])
+}
+
+model GithubUserAccessToken {
+  id        String   @id @default(cuid())
+  token     String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Membership {
+  id                    String           @id @default(cuid())
+  role                  Role?            @default(OWNER)
+  permissionGroupByRole PermissionGroup? @relation(name: "membershipRoleToPermissionGroup", fields: [role], references: [systemRole])
+  permissionGroupId     String?
+  permissionGroup       PermissionGroup? @relation(name: "membershipToPermissionGroup", fields: [permissionGroupId], references: [id])
+  userId                String
+  user                  User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId             String
+  project               Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  @@index([projectId])
+  @@index([userId,projectId])
+}
+
+model PermissionGroup {
+  id                String       @id @default(cuid())
+  invitationsByRole Invitation[] @relation(name: "invitationRoleToPermissionGroup")
+  invitations       Invitation[] @relation(name: "invitationToPermissionGroup")
+  membershipsByRole Membership[] @relation(name: "membershipRoleToPermissionGroup")
+  memberships       Membership[] @relation(name: "membershipToPermissionGroup")
+  name              String
+  description       String
+  projectId         String?
+  systemRole        Role?        @unique
+  permissions       String       @database.Text
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@unique([projectId, name])
+}
+
+model Invitation {
+  id                    String           @id @default(cuid())
+  hash                  String           @unique
+  email                 String?
+  role                  Role?
+  permissionGroupByRole PermissionGroup? @relation(name: "invitationRoleToPermissionGroup", fields: [role], references: [systemRole])
+  permissionGroupId     String?
+  permissionGroup       PermissionGroup? @relation(name: "invitationToPermissionGroup", fields: [permissionGroupId], references: [id])
+  projectId             String
+  project               Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy             User             @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById           String
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  @@index([email])
+}
+
+model MigrationFailedEntity {
+  id                 String                    @id @default(cuid())
+  migrationRequestId String
+  migrationRequest   MigrationRequest          @relation(fields: [migrationRequestId], references: [id], onDelete: Cascade)
+  type               MigrationFailedEntityType
+  name               String
+  coId               String
+  coParentId         String?
+  xyzParentId        String?
+  errorMessage       String                    @database.Text
+  stackTrace         String                    @database.Text
+  createdAt          DateTime                  @default(now())
+
+  @@index([migrationRequestId])
+  @@index([migrationRequestId,type])
+  @@index([migrationRequestId,coId])
+}
+
+model MigrationLog {
+  id                 String           @id @default(cuid())
+  text               String           @database.Text
+  migrationRequestId String
+  migrationRequest   MigrationRequest @relation(fields: [migrationRequestId], references: [id], onDelete: Cascade)
+  createdAt          DateTime         @default(now())
+
+  @@index([migrationRequestId,createdAt])
+}
+
+model MigrationScheduledRequest {
+  id               Int                @default(autoincrement()) @unique
+  teamId           String             @unique
+  gs1sk            String
+  name             String
+  triggerAfter     DateTime
+  migrationRequest MigrationRequest[]
+  createdAt        DateTime           @default(now())
+
+  @@index([triggerAfter])
+}
+
+model MigrationRequest {
+  id                String                     @id @default(cuid())
+  teamId            String
+  scheduledRequest  MigrationScheduledRequest? @relation(fields: [teamId], references: [teamId])
+  sourceEnvironment MigrationSourceEnvironment @default(PRD)
+  status            MigrationStatus            @default(IN_PROGRESS)
+  projectId         String?
+  project           Project?                   @relation(fields: [projectId], references: [id])
+  failedEntities    MigrationFailedEntity[]
+  logs              MigrationLog[]
+  createdBy         User?                      @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById       String?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+
+  @@index([createdById])
+  @@index([teamId])
+  @@index([projectId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  content   String           @database.Text
+  data      Json
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([userId])
+}
+
+model NotificationSettings {
+  userId              String
+  user                User                @relation(fields: [userId], references: [id])
+  notificationType    NotificationType
+  notificationChannel NotificationChannel
+  isEnabled           Boolean             @default(true)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@id([userId, notificationType, notificationChannel])
+}
+
+model PersonalAccessToken {
+  id          String   @id @default(cuid())
+  hash        String   @unique
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenSuffix String   @default("")
+  name        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model PublicKey {
+  id        String   @id @default(cuid())
+  publicKey String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([publicKey])
+  @@index([userId])
+}
+
+model SalesContactRequest {
+  id          String   @id @default(cuid())
+  email       String
+  description String   @database.Text
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([projectId])
+}
+
+model RecoveryCode {
+  id          String    @id @default(cuid())
+  code        String    @database.VarChar(256)
+  isUsed      Boolean   @default(false)
+  secretKeyId String
+  secretKey   SecretKey @relation(fields: [secretKeyId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([secretKeyId])
+}
+
+model SecretKey {
+  id            String             @id @default(cuid())
+  key           String             @unique @database.VarChar(256)
+  algorithm     SecretKeyAlgorithm @default(SHA1)
+  digits        Int                @default(6)
+  period        Int                @default(30)
+  type          SecretKeyType
+  isVerified    Boolean            @default(false)
+  isActive      Boolean            @default(false)
+  userId        String
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recoveryCodes RecoveryCode[]
+  verifiedAt    DateTime?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([userId])
+}
+
+model TemplateCategory {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  templates Template[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Template {
+  id            String               @id @default(cuid())
+  name          String               @unique
+  description   String               @database.Text
+  siteId        String               @unique
+  site          Site                 @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  reviewedAt    DateTime?
+  reviewStatus  TemplateReviewStatus @default(PENDING)
+  reviewComment String?
+  createdById   String?
+  createdBy     User?                @relation(name: "createdBy", fields: [createdById], references: [id])
+  categoryId    String
+  category      TemplateCategory     @relation(fields: [categoryId], references: [id])
+  bannerCid     String
+  usageCount    Int                  @default(0)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@index([siteId])
+  @@index([categoryId])
+  @@index([createdById])
+  @@index([reviewStatus])
+}
+
+model UserSettings {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  projectLimit Int      @default(30)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId])
+}
+
+model TwoFactorProtectedAction {
+  id             String                         @id @default(cuid())
+  name           String
+  type           TwoFactorProtectedActionType   @unique
+  protectedUsers UserTwoFactorProtectedAction[]
+  createdAt      DateTime                       @default(now())
+  updatedAt      DateTime                       @updatedAt
+}
+
+model UserTwoFactorProtectedAction {
+  id        String                   @id @default(cuid())
+  userId    String
+  user      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  actionId  String
+  action    TwoFactorProtectedAction @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  createdAt DateTime                 @default(now())
+  updatedAt DateTime                 @updatedAt
+
+  @@index([actionId])
+  @@index([userId,actionId])
+}
+
+model VerificationSession {
+  id                  String   @id @default(cuid())
+  personalAccessToken String   @unique
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model User {
+  id                    String                         @id @default(cuid())
+  email                 String?
+  firstName             String?
+  lastName              String?
+  username              String?
+  walletAddress         String?
+  walletChain           String?
+  dynamicUserId         String?
+  avatarCid             String?
+  publicKeys            PublicKey[]
+  secretKeys            SecretKey[]
+  protectedActions      UserTwoFactorProtectedAction[]
+  notifications         Notification[]
+  notificationSettings  NotificationSettings[]
+  memberships           Membership[]
+  invitations           Invitation[]
+  migrationRequests     MigrationRequest[]
+  personalAccessTokens  PersonalAccessToken[]
+  verificationSessions  VerificationSession[]
+  createdTemplates      Template[]                     @relation(name: "createdBy")
+  githubUserAccessToken GithubUserAccessToken?
+  gitUserAccessToken    GitUserAccessToken[]
+  salesContactRequests  SalesContactRequest[]
+  status                UserStatus                     @default(CREATED)
+  settings              UserSettings?
+  createdAt             DateTime                       @default(now())
+  updatedAt             DateTime                       @updatedAt
+  deletedAt             DateTime?
+
+  @@index([deletedAt])
+  @@index([username])
+  @@index([email])
+  @@index([walletAddress])
+  @@index([dynamicUserId])
+}
+
+model GitUserAccessToken {
+  id            String      @id @default(cuid())
+  token         String
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gitProviderId String
+  gitProvider   GitProvider @relation(fields: [gitProviderId], references: [id])
+  gitUserId     String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([userId, gitProviderId])
+  @@index([gitProviderId])
+}
+
+model GitProvider {
+  id                  String               @id @default(cuid())
+  name                String
+  sourceProvider      SourceProvider
+  // Store the configuration for the git provider, e.g.id, tokens
+  config              Json
+  enabled             Boolean              @default(false)
+  // Store tags as a JSON array for the git provider. Supported values are: 'sites' and 'templates'
+  tags                Json?
+  appId               String
+  gitIntegrations     GitIntegration[]
+  gitUserAccessTokens GitUserAccessToken[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@unique([sourceProvider, appId])
+}
+
+model GitIntegration {
+  id                    String                @id @default(cuid())
+  projectId             String
+  project               Project               @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  gitProviderId         String
+  gitProvider           GitProvider           @relation(fields: [gitProviderId], references: [id])
+  // The id for the git provider specific installation table, e.g. GithubAppInstallation
+  providerSpecificId    String                @unique
+  githubAppInstallation GithubAppInstallation @relation(name: "gitIntegration", fields: [providerSpecificId], references: [id], onDelete: Cascade)
+  site                  Site[]
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  @@unique([projectId, gitProviderId])
+  @@index([projectId])
+  @@index([gitProviderId])
+}
+
+model PhishingLog {
+  id                    String   @id @default(cuid())
+  automaticDetection    Boolean
+  directPhishing        Boolean
+  siteId                String
+  site                  Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  sourceProvider        String?
+  sourceRepositoryId    String?
+  sourceRepositoryOwner String?
+  sourceRepositoryName  String?
+  slug                  String?
+  projectId             String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@unique([siteId])
+}
+
+model Secret {
+  id         String           @id @default(cuid())
+  key        String
+  value      String           @database.Text
+  group      SecretGroup      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId    String
+  visibility SecretVisibility @default(PUBLIC)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([groupId, key])
+}
+
+model SecretGroup {
+  id        String   @id @default(cuid())
+  secrets   Secret[]
+  kmsKeyId  String
+  name      String?
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sites     Site[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteFramework {
+  id                  String                           @id @default(cuid())
+  slug                String                           @unique
+  name                String                           @unique
+  avatarCid           String
+  dockerImage         String
+  publishDirectory    String
+  buildScript         String
+  recognitionStrategy SiteFrameworkRecognitionStrategy
+  recognitionArgument String
+  sites               Site[]
+  createdAt           DateTime                         @default(now())
+  updatedAt           DateTime                         @updatedAt
+}
+
+model BunnyMetric {
+  id                            String               @id @default(cuid())
+  timeframe                     BunnyMetricTimeframe @default(HOURLY)
+  bandwidthUsed                 BigInt               @default(0)
+  bandwidthCached               BigInt               @default(0)
+  originShieldBandwidth         BigInt               @default(0)
+  originShieldInternalBandwidth BigInt               @default(0)
+  originTraffic                 BigInt               @default(0)
+  originResponseType            BigInt               @default(0)
+  cacheHitRate                  BigInt               @default(0)
+  requestsServed                BigInt               @default(0)
+  pullRequestsPullled           BigInt               @default(0)
+  userBalanceHistory            BigInt               @default(0)
+  error3xx                      BigInt               @default(0)
+  error4xx                      BigInt               @default(0)
+  error5xx                      BigInt               @default(0)
+  zoneId                        String
+  zone                          Zone                 @relation(name: "bunnyMetrics", fields: [zoneId], references: [id], onDelete: Cascade)
+  createdAt                     DateTime             @default(now())
+  updatedAt                     DateTime             @updatedAt
+
+  @@index([zoneId])
+}
+
+model BunnyZoneProvider {
+  id         String   @id @default(cuid())
+  hostname   String
+  pullZoneId String
+  originUrl  String
+  zoneId     String   @unique
+  zone       Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model DnsConfig {
+  id        String        @id @default(cuid())
+  type      DnsConfigType
+  name      String
+  value     String
+  domainId  String
+  domain    Domain        @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([domainId])
+  @@index([name])
+  @@index([value])
+}
+
+model Domain {
+  id            String         @id @default(cuid())
+  hostname      String
+  isVerified    Boolean        @default(false)
+  projectId     String
+  project       Project        @relation(fields: [projectId], references: [id])
+  status        DomainStatus   @default(CREATING)
+  dnslinkStatus DnslinkStatus?
+  errorMessage  String?        @database.Text
+  dnsConfigs    DnsConfig[]
+  zoneId        String
+  zone          Zone           @relation(name: "domainToZone", fields: [zoneId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  primaryZone   Zone?          @relation(name: "primaryDomainToZone")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([projectId, hostname])
+  @@index([projectId])
+  @@index([zoneId])
+}
+
+model FleekZoneProvider {
+  id        String   @id @default(cuid())
+  zoneId    String   @unique
+  zone      Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PrivateGateway {
+  id        String               @id @default(cuid())
+  name      String
+  slug      String               @unique
+  projectId String
+  project   Project              @relation(fields: [projectId], references: [id])
+  zoneId    String?              @unique
+  zone      Zone?                @relation(fields: [zoneId], references: [id])
+  status    PrivateGatewayStatus @default(CREATED)
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  deletedAt DateTime?
+
+  @@unique([projectId, name])
+  @@index([deletedAt])
+}
+
+model SitesUptimeMonitor {
+  id        String                   @id @default(cuid())
+  url       String
+  monitorId String?
+  name      String
+  zoneId    String                   @unique
+  zone      Zone                     @relation(fields: [zoneId], references: [id])
+  status    SitesUptimeMonitorStatus
+  createdAt DateTime                 @default(now())
+  updatedAt DateTime                 @updatedAt
+
+  @@index([zoneId])
+}
+
+model Zone {
+  id                 String              @id @default(cuid())
+  provider           ZoneProvider
+  type               ZoneType            @default(SITE)
+  bunnyZoneProvider  BunnyZoneProvider?
+  fleekZoneProvider  FleekZoneProvider?
+  domains            Domain[]            @relation(name: "domainToZone")
+  primaryDomainId    String?             @unique
+  primaryDomain      Domain?             @relation(name: "primaryDomainToZone", fields: [primaryDomainId], references: [id], onUpdate: SetNull, onDelete: SetNull)
+  bunnyMetrics       BunnyMetric[]       @relation(name: "bunnyMetrics")
+  sitesUptimeMonitor SitesUptimeMonitor?
+  privateGateway     PrivateGateway?
+  siteId             String?
+  site               Site?               @relation(fields: [siteId], references: [id])
+  projectId          String
+  project            Project             @relation(fields: [projectId], references: [id])
+  status             ZoneStatus          @default(CREATING)
+  originUrl          String
+  originUrlChangedBy String?
+  originUrlChangedAt DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  @@index([projectId])
+  @@index([siteId])
+}
+
+model Site {
+  id                        String          @id @default(cuid())
+  name                      String
+  slug                      String          @unique
+  avatarCid                 String?
+  sourceProvider            SourceProvider?
+  sourceRepositoryId        String?
+  sourceRepositoryOwner     String?
+  sourceRepositoryName      String?
+  sourceBranch              String?
+  enablePreviews            Boolean         @default(true)
+  baseDirectory             String?
+  buildCommand              String?         @database.Text
+  distDirectory             String?
+  dockerImage               String?
+  githubInstallationId      Int?
+  cpuLimit                  String?
+  memoryLimit               String?
+  buildDurationLimitSeconds Int?
+  storageType               StorageType
+  zones                     Zone[]
+  deployments               Deployment[]    @relation(name: "deployments")
+  currentDeploymentId       String?         @unique
+  currentDeployment         Deployment?     @relation(name: "currentDeployment", fields: [currentDeploymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ipnsRecords               IpnsRecord[]
+  ensRecords                EnsRecord[]
+  projectId                 String
+  project                   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  secretGroupId             String?
+  secretGroup               SecretGroup?    @relation(fields: [secretGroupId], references: [id])
+  frameworkId               String?
+  framework                 SiteFramework?  @relation(fields: [frameworkId], references: [id])
+  template                  Template?
+  status                    SiteStatus      @default(CREATED)
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  deletedAt                 DateTime?
+  phishingStatus            PhishingStatus  @default(INCOMPLETE)
+  phishingLog               PhishingLog?
+  gitIntegrationId          String?
+  gitIntegration            GitIntegration? @relation(fields: [gitIntegrationId], references: [id])
+
+  @@unique([projectId, name])
+  @@index([deletedAt])
+  @@index([projectId,deletedAt])
+  @@index([name])
+  @@index([sourceRepositoryId])
+  @@index([gitIntegrationId])
+}
+
+model Deployment {
+  id                       String           @id @default(cuid())
+  status                   DeploymentStatus @default(CREATED)
+  storageType              StorageType
+  cid                      String?
+  pin                      Pin?             @relation(fields: [cid], references: [cid])
+  siteId                   String
+  site                     Site             @relation(name: "deployments", fields: [siteId], references: [id], onDelete: Cascade)
+  activeSite               Site?            @relation(name: "currentDeployment")
+  projectId                String
+  project                  Project          @relation(fields: [projectId], references: [id])
+  build                    Build?
+  artifact                 String?
+  sourceProvider           SourceProvider?
+  sourceRepositoryId       String?
+  sourceRepositoryOwner    String?
+  sourceRepositoryName     String?
+  sourceBranch             String?
+  sourceRef                String?
+  githubCheckRunId         Decimal?         @database.Decimal(32, 0)
+  githubInstallationId     Int?
+  sourceMessage            String?          @database.Text
+  sourceAuthor             String?
+  previewOnly              Boolean          @default(false)
+  previewImageUrl          String?
+  previewUrlSlug           String?
+  stateMachineExecutionArn String?
+  startedAt                DateTime?
+  createdAt                DateTime         @default(now())
+  updatedAt                DateTime         @updatedAt
+
+  @@index([sourceRef])
+  @@index([siteId])
+  @@index([cid])
+  @@index([projectId,status])
+  @@index([createdAt,status])
+  @@index([previewUrlSlug])
+}
+
+model FleekFunctionDeployment {
+  id                  String         @id @default(cuid())
+  cid                 String
+  projectId           String
+  project             Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  activeFleekFunction FleekFunction? @relation(name: "currentDeployment")
+  fleekFunctionId     String
+  sgx                 Boolean        @default(false)
+  blake3Hash          String?
+  fleekFunction       FleekFunction? @relation(name: "deployments", fields: [fleekFunctionId], references: [id], onDelete: Cascade)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+}
+
+model FleekFunction {
+  id                  String                    @id @default(cuid())
+  name                String
+  invokeUrl           String
+  slug                String                    @unique
+  projectId           String
+  project             Project                   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  currentDeploymentId String?                   @unique
+  currentDeployment   FleekFunctionDeployment?  @relation(name: "currentDeployment", fields: [currentDeploymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  deployments         FleekFunctionDeployment[] @relation(name: "deployments")
+  status              FleekFunctionStatus       @default(ACTIVE)
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
+
+  @@unique([projectId, name])
+}
+
+model Plan {
+  id                   String     @id @default(cuid())
+  name                 String
+  internalName         String
+  status               PlanStatus
+  public               Boolean
+  serviceFeePercentage Float
+  validFrom            DateTime
+  validTo              DateTime
+  projects             Project[]
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+}
+
+model ProjectSettings {
+  id                       String   @id @default(cuid())
+  projectId                String
+  project                  Project  @relation(fields: [projectId], references: [id])
+  maxDeploymentConcurrency Int      @default(1)
+  siteLimit                Int      @default(30)
+  fleekFunctionLimit       Int      @default(50)
+  maxUploadTotalSizeQuota  BigInt   @default(2000000000)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@unique([projectId])
+}
+
+model Project {
+  id                           String                    @id @default(cuid())
+  name                         String
+  avatarCid                    String?
+  memberships                  Membership[]
+  applications                 Application[]
+  zones                        Zone[]
+  domains                      Domain[]
+  ipnsRecords                  IpnsRecord[]
+  ensRecords                   EnsRecord[]
+  sites                        Site[]
+  deployments                  Deployment[]
+  invitations                  Invitation[]
+  storagePins                  StoragePin[]
+  storageFolders               StorageFolder[]
+  privateGateways              PrivateGateway[]
+  settings                     ProjectSettings?
+  secretGroups                 SecretGroup[]
+  fleekFunctions               FleekFunction[]
+  fleekFunctionDeployments     FleekFunctionDeployment[]
+  githubAppInstallations       GithubAppInstallation[]
+  migrationRequest             MigrationRequest[]
+  billingCycles                BillingCycle[]
+  subscriptions                Subscription[]
+  billingPlanId                String?
+  billingPlan                  BillingPlan?              @relation(fields: [billingPlanId], references: [id])
+  planId                       String?
+  plan                         Plan?                     @relation(fields: [planId], references: [id])
+  salesContactRequests         SalesContactRequest[]
+  gitIntegrations              GitIntegration[]
+  backupStorageOnArweave       Boolean                   @default(false)
+  backupStorageOnFilecoin      Boolean                   @default(true)
+  allowAccessFromOfacCountries Boolean                   @default(true)
+  status                       ProjectStatus             @default(CREATED)
+  createdAt                    DateTime                  @default(now())
+  updatedAt                    DateTime                  @updatedAt
+  deletedAt                    DateTime?
+
+  @@index([deletedAt])
+  @@index([planId])
+}
+
+model Application {
+  id                String                        @id @default(cuid())
+  name              String
+  clientId          String                        @unique
+  whitelistDomains  ApplicationWhitelistDomain[]
+  whiteLabelDomains ApplicationWhiteLabelDomain[]
+  projectId         String
+  project           Project                       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt         DateTime                      @default(now())
+  updatedAt         DateTime                      @updatedAt
+
+  @@unique([projectId, name])
+  @@index([projectId])
+}
+
+model Blocklist {
+  id                    String          @id @default(cuid())
+  email                 String?
+  walletAddress         String?
+  walletChain           String?
+  dynamicUserId         String?
+  sourceRepositoryOwner String?
+  reason                BlocklistReason
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+}
+
+model GitUserBlocklist {
+  id             String          @id @default(cuid())
+  userId         String
+  sourceProvider SourceProvider
+  reason         BlocklistReason
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([userId, sourceProvider])
+}
+
+model NotificationTemplate {
+  notificationType    NotificationType
+  notificationChannel NotificationChannel
+  title               String
+  template            String              @database.MediumText
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@id([notificationType, notificationChannel])
+}
+
+model PlatformSettings {
+  key         String   @id @unique
+  value       Json
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model StatusPageComponent {
+  id                 String           @id @default(cuid())
+  componentId        String           @unique
+  status             StatusPageStatus @default(OPERATIONAL)
+  name               String           @unique
+  displayName        String
+  description        String?
+  startDate          String
+  groupId            String?
+  onlyShowIfDegraded Boolean          @default(false)
+  showcase           Boolean          @default(false)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([name])
+}
+
+model StatusPageComponentGroup {
+  id          String   @id @default(cuid())
+  groupId     String   @unique
+  description String?
+  name        String   @unique
+  displayName String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
+}

@@ -1,32 +1,27 @@
-import { describe, expect } from 'vitest';
+import {
+  describe,
+  expect,
+  it,
+  afterAll,
+  afterEach,
+  beforeAll,
+} from 'vitest';
+import { server } from '../src/mocks/graphql/node';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from '../src/mocks/graphql/handlers';
+import { FleekSdk } from './FleekSdk';
 
-import { mockDatabasesAndGraphqlWithBrowserSdkForEachTest } from './testTools/mockDatabasesAndGraphqlWithBrowserSdkForEachTest';
-import { mockDatabasesAndGraphqlWithNodeSdkForEachTest } from './testTools/mockDatabasesAndGraphqlWithNodeSdkForEachTest';
-
-describe('[Node.js] getVersion', () => {
-  const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });
-
-  it('should get current version info', async (context) => {
-    const response = await context.sdks.josh.getVersion();
-
-    expect(response).toMatchInlineSnapshot(`
-      Object {
-        "version": Object {
-          "__typename": "Version",
-          "commitHash": "0fabad88415cedb2c3c21548afa14a949a088954",
-        },
-      }
-    `);
+describe('FleekSDK', () => {
+  const sdk = new FleekSdk({
+    graphqlServiceApiUrl,
+    accessTokenService: {} as any,
   });
-});
 
-describe('[Chromium] getVersion', () => {
-  const { it } = mockDatabasesAndGraphqlWithBrowserSdkForEachTest({ mockIpfs: false });
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
 
-  it('should get current version info', async (context) => {
-    const response = await context.sdks.josh({
-      callback: () => window.sdk.getVersion(),
-    });
+  it('should get current version info', async () => {
+    const response = await sdk.getVersion();
 
     expect(response).toMatchInlineSnapshot(`
       Object {
