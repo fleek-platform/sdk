@@ -85,7 +85,25 @@ const queries = [
   ),
 ];
 
+const mutations = [
+  localhost.mutation('CreateApplication', () => 
+    HttpResponse.json({
+      data: {
+        "createApplication": {
+          "__typename": "Application",
+          "clientId": "client_testtesttest",
+          "createdAt": "2023-03-23T12:05:13.641Z",
+          "id": "",
+          "name": "test-application",
+          "updatedAt": "2023-03-23T12:05:13.641Z"
+        }
+      }
+    }),
+  ),
+];
+
 export const handlers = [
   ...queries,
+  ...mutations,
 ];
 

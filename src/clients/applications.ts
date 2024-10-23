@@ -83,6 +83,7 @@ export class ApplicationsClient {
 
 	public create = async ({ name, whitelistDomains }: CreateApplicationArgs) => {
 		const response = await this.graphqlClient.mutation({
+			__name: "CreateApplication",
 			createApplication: {
 				__args: {
 					data: {
@@ -96,6 +97,8 @@ export class ApplicationsClient {
 				...ApplicationsClient.APPLICATION_MAPPED_PROPERTIES,
 			},
 		});
+
+		console.log(`[debug] createApplication: ${JSON.stringify(response)}`)
 
 		return response.createApplication;
 	};

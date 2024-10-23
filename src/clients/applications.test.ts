@@ -103,4 +103,33 @@ describe('FleekSDK', () => {
       ]
     `);
   });
+
+  it('should create application', async (context) => {
+    const response = await sdk
+      .applications()
+      .create({
+        name: 'test-application',
+        whitelistDomains: [
+          'fleek.xyz',
+        ],
+      });
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+      },
+      `
+      Object {
+        "__typename": "Application",
+        "clientId": "client_testtesttest",
+        "createdAt": Anything,
+        "id": Any<String>,
+        "name": "test-application",
+        "updatedAt": Anything,
+      }
+    `
+    );
+  });
 });
