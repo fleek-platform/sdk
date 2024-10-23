@@ -56,6 +56,7 @@ export class ApplicationsClient {
 
 	public get = async ({ id }: GetApplicationArgs) => {
 		const response = await this.graphqlClient.query({
+			__name: "GetApplication",
 			application: {
 				__args: {
 					where: {

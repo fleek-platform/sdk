@@ -6,8 +6,8 @@ import {
   afterEach,
   beforeAll,
 } from 'vitest';
-import { server } from '../src/mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from '../src/mocks/graphql/handlers';
+import { server } from './mocks/graphql/node';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from './mocks/graphql/handlers';
 import { FleekSdk } from './FleekSdk';
 
 describe('FleekSDK', () => {
