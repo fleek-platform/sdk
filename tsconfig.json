@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@mocks/*": ["src/mocks/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "emitDeclarationOnly": true,
@@ -14,9 +18,11 @@
     "rootDir": "src",
     "sourceMap": true,
     "target": "es2020",
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["dist", "**/node_modules", "**/*.test.ts"],
   "extends": "@tsconfig/node16/tsconfig.json",
-  "include": ["src/index.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
