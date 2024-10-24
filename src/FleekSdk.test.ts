@@ -1,13 +1,6 @@
-import {
-  describe,
-  expect,
-  it,
-  afterAll,
-  afterEach,
-  beforeAll,
-} from 'vitest';
+import { describe, expect, it, afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from './mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from './mocks/graphql/handlers';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from './mocks/graphql/handlers';
 import { FleekSdk } from './FleekSdk';
 
 describe('FleekSDK', () => {

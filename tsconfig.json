@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@mocks/*": ["src/mocks/*"]
+      "@mocks/*": ["./src/mocks/*"]
     },
     "allowSyntheticDefaultImports": true,
     "declaration": true,

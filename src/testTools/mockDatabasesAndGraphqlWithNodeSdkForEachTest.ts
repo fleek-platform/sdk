@@ -1,5 +1,8 @@
 import { createYogaInstance } from '@fleek-platform/graphql/src/server';
-import { mockDatabasesAndGraphqlForEachTest, seeds } from '@fleek-platform/tester';
+import {
+  mockDatabasesAndGraphqlForEachTest,
+  seeds,
+} from '@fleek-platform/tester';
 import * as vitest from 'vitest';
 
 import { FleekSdk, StaticAccessTokenService } from '../index';
@@ -10,7 +13,9 @@ type MockDatabasesAndGraphqlWithNodeSdkForEachTestArgs<T extends boolean> = {
   mockIpfs: T;
 };
 
-export const mockDatabasesAndGraphqlWithNodeSdkForEachTest = <T extends boolean>({
+export const mockDatabasesAndGraphqlWithNodeSdkForEachTest = <
+  T extends boolean,
+>({
   mockIpfs,
 }: MockDatabasesAndGraphqlWithNodeSdkForEachTestArgs<T>) => {
   const yoga = createYogaInstance({});
@@ -22,11 +27,19 @@ export const mockDatabasesAndGraphqlWithNodeSdkForEachTest = <T extends boolean>
     sdkFactory: ({ url, accessToken, ipfsStorageApiUrl }) => {
       const accessTokenService = new StaticAccessTokenService({ accessToken });
 
-      return new FleekSdk({ graphqlServiceApiUrl: url, accessTokenService, ipfsStorageApiUrl });
+      return new FleekSdk({
+        graphqlServiceApiUrl: url,
+        accessTokenService,
+        ipfsStorageApiUrl,
+      });
     },
     sdkConfigs: {
       josh: {
-        auth: { userId: seeds.auth.user.josh.id, secret: secrets.SECRET_JWT_IDENTITY, projectId: seeds.auth.project.electronicCo.id },
+        auth: {
+          userId: seeds.auth.user.josh.id,
+          secret: secrets.SECRET_JWT_IDENTITY,
+          projectId: seeds.auth.project.electronicCo.id,
+        },
       },
     },
   });

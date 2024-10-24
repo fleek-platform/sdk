@@ -8,7 +8,7 @@ import {
   vi,
 } from 'vitest';
 import { server } from '../mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from '../mocks/graphql/handlers';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
 import { FleekSdk } from '../FleekSdk';
 
 vi.mock('@aws-sdk/client-sfn', () => ({
@@ -29,9 +29,7 @@ describe('Domains', () => {
   afterAll(() => server.close());
 
   it('should list domains', async () => {
-    const response = await sdk
-      .domains()
-      .list();
+    const response = await sdk.domains().list();
 
     expect(response).toMatchInlineSnapshot(`
       Array [

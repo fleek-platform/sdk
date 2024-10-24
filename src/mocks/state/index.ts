@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 const PlanStatus = {
   ACTIVE: 'ACTIVE',
   DRAFT: 'DRAFT',
-  DEPRECATED: 'DEPRECATED'
+  DEPRECATED: 'DEPRECATED',
 };
 
 const plan = {
@@ -204,7 +204,7 @@ export const auth = {
   application,
 };
 
-export const commitHash = "0fabad88415cedb2c3c21548afa14a949a088954"
+export const commitHash = '0fabad88415cedb2c3c21548afa14a949a088954';
 
 export default {
   auth,
