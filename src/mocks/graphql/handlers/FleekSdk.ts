@@ -1,31 +1,19 @@
-import { graphql as executeGraphql, buildSchema } from 'graphql'
-import { HttpResponse } from 'msw';
+import { graphql, HttpResponse } from 'msw';
 
-import { localhost } from '@mocks/graphql/config';
-import { schemaStr } from '@mocks/graphql/schema';
-import { commitHash } from '@mocks/state';
-
-const schema = buildSchema(schemaStr);
+export const mockGraphqlServiceApiUrl = 'https://fleek.mock.server/graphql';
+const localhost = graphql.link(mockGraphqlServiceApiUrl);
 
 const queries = [
-  localhost.query('GetVersion', async ({
-    query,
-  }) => {
-    const res = await executeGraphql({
-      schema,
-      source: query,
-      rootValue: {
-        version: {
-          commitHash,
+  localhost.query('GetVersion', () => 
+    HttpResponse.json({
+      data: {
+        "version": {
+          "__typename": "Version",
+          "commitHash": "0fabad88415cedb2c3c21548afa14a949a088954"
         },
-      },
-    });
-
-    return HttpResponse.json({
-      data: res.data,
-      errors: res.errors,
-    });
-  }),
+      }
+    }),
+  ),  
 ]
 
 export const handlers = [

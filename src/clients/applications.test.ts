@@ -1,13 +1,6 @@
-import {
-  describe,
-  expect,
-  it,
-  afterAll,
-  afterEach,
-  beforeAll,
-} from 'vitest';
+import { describe, expect, it, afterAll, afterEach, beforeAll } from 'vitest';
 import { server } from '../mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl  } from '../mocks/graphql/handlers';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
 import { FleekSdk } from '../FleekSdk';
 import state from '../mocks/state';
 
@@ -22,11 +15,9 @@ describe('Applications', () => {
   afterAll(() => server.close());
 
   it('should get application', async () => {
-    const response = await sdk
-      .applications()
-      .get({
-        id: state.auth.application.electronicCoMobileApp.id,
-      });
+    const response = await sdk.applications().get({
+      id: state.auth.application.electronicCoMobileApp.id,
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Object {
@@ -105,15 +96,16 @@ describe('Applications', () => {
   });
 
   it('should create application', async () => {
-    const response = await sdk
-      .applications()
-      .create({
-        name: 'test-application',
-        whitelistDomains: [
-          'fleek.xyz',
-        ],
-      });
+    const response = await sdk.applications().create({
+      name: 'test-application',
+      whitelistDomains: ['fleek.xyz'],
+    });
 
+    // TODO: This mandates returning whitelistDomains
+    // and whiteLabelDomains, while the non-schema version
+    // does not requires it for some reason.
+    // Do a test in runtime to check
+    // see handler
     expect(response).toMatchInlineSnapshot(
       {
         createdAt: expect.anything(),
@@ -122,27 +114,27 @@ describe('Applications', () => {
       },
       `
       Object {
-        "__typename": "Application",
         "clientId": "client_testtesttest",
         "createdAt": Anything,
         "id": Any<String>,
         "name": "test-application",
         "updatedAt": Anything,
+        "whiteLabelDomains": Array [],
+        "whitelistDomains": Array [],
       }
-    `
+    `,
     );
   });
 
   it('should update application', async () => {
-    const response = await sdk
-      .applications()
-      .update({
-        id: state.auth.application.electronicCoMobileApp.id, 
-        name: 'new-mobile-app-name',
-      });
+    const response = await sdk.applications().update({
+      id: state.auth.application.electronicCoMobileApp.id,
+      name: 'new-mobile-app-name',
+    });
 
     expect(response).toMatchInlineSnapshot(
-      { updatedAt: expect.anything() }, `
+      { updatedAt: expect.anything() },
+      `
       Object {
         "clientId": "client_SCmayempJ1d953yjn1yx",
         "createdAt": "2023-03-23T12:05:13.641Z",
@@ -170,15 +162,14 @@ describe('Applications', () => {
           },
         ],
       }
-    `);
+    `,
+    );
   });
 
   it('should delete application', async () => {
-    const response = await sdk
-      .applications()
-      .delete({
-        id: state.auth.application.electronicCoMobileApp.id,
-      });
+    const response = await sdk.applications().delete({
+      id: state.auth.application.electronicCoMobileApp.id,
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Object {
