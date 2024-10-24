@@ -46,8 +46,8 @@ importers:
         specifier: ^2.27.6
         version: 2.27.8
       '@fleek-platform/errors':
-        specifier: ^2.5.1
-        version: 2.5.1
+        specifier: ^2.7.0
+        version: 2.7.0
       '@fleek-platform/tester':
         specifier: ^2.11.0
         version: 2.11.0(encoding@0.1.13)(graphql@15.9.0)
@@ -420,6 +420,9 @@ packages:
 
   '@fleek-platform/errors@2.5.1':
     resolution: {integrity: sha512-yjShUD0bLzSceq61FyWj7ygc2RG0xdr3dqr43mRfwLF92c3YkZ2abDAq2CxriPbB8OhGKLASjrLzQQx6jQ/lcQ==}
+
+  '@fleek-platform/errors@2.7.0':
+    resolution: {integrity: sha512-56moPR+V6bW6l+8KopmK4vfx0XU3i2s9UHNgAXXgGn/tBvgFN5bjHe4uT/K6i9Q/S3f5kAOgul6KseV1sucDKQ==}
 
   '@fleek-platform/tester@2.11.0':
     resolution: {integrity: sha512-qJO5PfyxrguQkwdvPGLDYRIAilPVxiRXeIf0NY4TvIp0rPYZJHaBmig+jJKB6R4iivhZjpBw/v0E9aXXhvIvOw==}
@@ -3215,6 +3218,10 @@ snapshots:
   '@fastify/busboy@2.1.1': {}
 
   '@fleek-platform/errors@2.5.1':
+    dependencies:
+      nanoid: 3.3.7
+
+  '@fleek-platform/errors@2.7.0':
     dependencies:
       nanoid: 3.3.7
 
