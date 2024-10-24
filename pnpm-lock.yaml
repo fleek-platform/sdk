@@ -50,10 +50,10 @@ importers:
         version: 2.5.1
       '@fleek-platform/tester':
         specifier: ^2.11.0
-        version: 2.11.0(encoding@0.1.13)(graphql@15.9.0)
+        version: 2.11.0(encoding@0.1.13)(graphql@16.9.0)
       '@fleek-platform/utils-genql-client':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.2.1
+        version: 0.2.1
       '@fleek-platform/utils-token':
         specifier: ^0.2.0
         version: 0.2.0
@@ -102,6 +102,9 @@ importers:
       esbuild-plugins-node-modules-polyfill:
         specifier: ^1.6.4
         version: 1.6.6(esbuild@0.21.5)
+      graphql:
+        specifier: ^16.9.0
+        version: 16.9.0
       import-meta-resolve:
         specifier: ^4.1.0
         version: 4.1.0
@@ -436,8 +439,8 @@ packages:
   '@fleek-platform/tester@2.11.0':
     resolution: {integrity: sha512-qJO5PfyxrguQkwdvPGLDYRIAilPVxiRXeIf0NY4TvIp0rPYZJHaBmig+jJKB6R4iivhZjpBw/v0E9aXXhvIvOw==}
 
-  '@fleek-platform/utils-genql-client@0.1.1':
-    resolution: {integrity: sha512-0xXiTYmYl0sTSZgXX0xDMtTssFTJF83PzVmQ8izjEHe0lCx2VkaziDFiohAd4+87NNeoYsTP+5408vhHgi3vdA==}
+  '@fleek-platform/utils-genql-client@0.2.1':
+    resolution: {integrity: sha512-q2MtlgH4QkMnHh+1OBuBi0klZIn5UpBnM9VNO3n25EAh/91ppWxdjCV3kNALi/hNV2B+lOeoQDjeiE922lMiBA==}
 
   '@fleek-platform/utils-token@0.2.0':
     resolution: {integrity: sha512-vEFonU2lMMgxIA4qcyPppZc3PxgFde3KA2UJKPhIsL0lu5UT8v7LsNsWbc/ovJJ7klV+iQBlkREM2Mwx5qd3Dw==}
@@ -1141,7 +1144,6 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -3373,9 +3375,9 @@ snapshots:
     dependencies:
       nanoid: 3.3.7
 
-  '@fleek-platform/tester@2.11.0(encoding@0.1.13)(graphql@15.9.0)':
+  '@fleek-platform/tester@2.11.0(encoding@0.1.13)(graphql@16.9.0)':
     dependencies:
-      graphql-yoga: 5.1.1(graphql@15.9.0)
+      graphql-yoga: 5.1.1(graphql@16.9.0)
       lodash: 4.17.21
       luxon: 3.5.0
       mockipfs: 0.3.2(mockttp@3.15.3(encoding@0.1.13))
@@ -3393,9 +3395,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@fleek-platform/utils-genql-client@0.1.1':
-    dependencies:
-      graphql: 16.9.0
+  '@fleek-platform/utils-genql-client@0.2.1': {}
 
   '@fleek-platform/utils-token@0.2.0':
     dependencies:
@@ -3404,12 +3404,12 @@ snapshots:
       jscrypto: 1.0.3
       nanoid: 3.3.7
 
-  '@graphql-tools/executor@1.3.1(graphql@15.9.0)':
+  '@graphql-tools/executor@1.3.1(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.5.4(graphql@15.9.0)
-      '@graphql-typed-document-node/core': 3.2.0(graphql@15.9.0)
+      '@graphql-tools/utils': 10.5.4(graphql@16.9.0)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       '@repeaterjs/repeater': 3.0.6
-      graphql: 15.9.0
+      graphql: 16.9.0
       tslib: 2.7.0
       value-or-promise: 1.0.12
 
@@ -3419,17 +3419,17 @@ snapshots:
       graphql: 15.9.0
       tslib: 2.7.0
 
-  '@graphql-tools/merge@9.0.7(graphql@15.9.0)':
+  '@graphql-tools/merge@9.0.7(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/utils': 10.5.4(graphql@15.9.0)
-      graphql: 15.9.0
+      '@graphql-tools/utils': 10.5.4(graphql@16.9.0)
+      graphql: 16.9.0
       tslib: 2.7.0
 
-  '@graphql-tools/schema@10.0.6(graphql@15.9.0)':
+  '@graphql-tools/schema@10.0.6(graphql@16.9.0)':
     dependencies:
-      '@graphql-tools/merge': 9.0.7(graphql@15.9.0)
-      '@graphql-tools/utils': 10.5.4(graphql@15.9.0)
-      graphql: 15.9.0
+      '@graphql-tools/merge': 9.0.7(graphql@16.9.0)
+      '@graphql-tools/utils': 10.5.4(graphql@16.9.0)
+      graphql: 16.9.0
       tslib: 2.7.0
       value-or-promise: 1.0.12
 
@@ -3441,12 +3441,12 @@ snapshots:
       tslib: 2.7.0
       value-or-promise: 1.0.11
 
-  '@graphql-tools/utils@10.5.4(graphql@15.9.0)':
+  '@graphql-tools/utils@10.5.4(graphql@16.9.0)':
     dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@15.9.0)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       cross-inspect: 1.0.1
       dset: 3.1.4
-      graphql: 15.9.0
+      graphql: 16.9.0
       tslib: 2.7.0
 
   '@graphql-tools/utils@8.13.1(graphql@15.9.0)':
@@ -3459,9 +3459,9 @@ snapshots:
       graphql: 15.9.0
       tslib: 2.7.0
 
-  '@graphql-typed-document-node/core@3.2.0(graphql@15.9.0)':
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.9.0)':
     dependencies:
-      graphql: 15.9.0
+      graphql: 16.9.0
 
   '@graphql-yoga/logger@2.0.0':
     dependencies:
@@ -4863,18 +4863,18 @@ snapshots:
       graphql: 15.9.0
       tslib: 2.7.0
 
-  graphql-yoga@5.1.1(graphql@15.9.0):
+  graphql-yoga@5.1.1(graphql@16.9.0):
     dependencies:
       '@envelop/core': 5.0.2
-      '@graphql-tools/executor': 1.3.1(graphql@15.9.0)
-      '@graphql-tools/schema': 10.0.6(graphql@15.9.0)
-      '@graphql-tools/utils': 10.5.4(graphql@15.9.0)
+      '@graphql-tools/executor': 1.3.1(graphql@16.9.0)
+      '@graphql-tools/schema': 10.0.6(graphql@16.9.0)
+      '@graphql-tools/utils': 10.5.4(graphql@16.9.0)
       '@graphql-yoga/logger': 2.0.0
       '@graphql-yoga/subscription': 5.0.1
       '@whatwg-node/fetch': 0.9.21
       '@whatwg-node/server': 0.9.49
       dset: 3.1.4
-      graphql: 15.9.0
+      graphql: 16.9.0
       lru-cache: 10.4.3
       tslib: 2.7.0
 

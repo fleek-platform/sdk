@@ -1,3 +1,5 @@
+// TODO: Make a reusable package
+// as the data's originally from the monorepo
 import { DateTime } from 'luxon';
 
 const PlanStatus = {
@@ -201,6 +203,8 @@ export const auth = {
   project,
   application,
 };
+
+export const commitHash = "0fabad88415cedb2c3c21548afa14a949a088954"
 
 export default {
   auth,
