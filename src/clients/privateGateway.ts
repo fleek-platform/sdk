@@ -134,6 +134,7 @@ export class PrivateGatewayClient {
 
   public delete = async ({ id }: DeletePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeletePrivateGateway',
       deletePrivateGateway: {
         __args: {
           where: {

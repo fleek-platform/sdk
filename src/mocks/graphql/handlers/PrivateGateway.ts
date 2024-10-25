@@ -192,6 +192,32 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('DeletePrivateGateway', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deletePrivateGateway: {
+          __typename: 'PrivateGateway',
+          createdAt: '2023-04-25T09:05:13.641Z',
+          id: 'clj76l893000108l2dsuegrz9',
+          name: 'electronic.co photos',
+          slug: 'fish-blue-one',
+          updatedAt: '2023-03-23T09:05:13.641Z',
+          // TODO: check expected ds
+          project: {
+            id: ''
+          }
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries, ...mutations];

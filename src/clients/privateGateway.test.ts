@@ -180,4 +180,28 @@ describe('PrivateGateway', () => {
     `,
     );
   });
+
+  it('delete private gateway', async () => {
+    const response = await sdk
+      .privateGateways()
+      .delete({ id: state.storageIpfs.privateGateways.electronicCoPhotos.id });
+
+    expect(response).toMatchInlineSnapshot(
+      { updatedAt: expect.any(String) }, `
+      Object {
+        "__typename": "PrivateGateway",
+        "createdAt": "2023-04-25T09:05:13.641Z",
+        "id": "clj76l893000108l2dsuegrz9",
+        "name": "electronic.co photos",
+        "primaryDomain": null,
+        "project": Object {
+          "__typename": "Project",
+          "id": "",
+        },
+        "slug": "fish-blue-one",
+        "updatedAt": Any<String>,
+        "zone": null,
+      }
+    `);
+  });
 });
