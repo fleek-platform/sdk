@@ -121,4 +121,28 @@ describe('ENS', () => {
     `,
     );
   });
+
+  it('should delete ENS record', async (context) => {
+    const response = await sdk
+      .ens()
+      .delete({ id: state.ipns.ensRecord['ens.eth'].id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "createdAt": "2023-03-24T08:05:13.641Z",
+        "id": "af470cc1-08d8-4d39-be6f-b0eebc0a6480",
+        "ipnsRecord": Object {
+          "hash": "QmW73w6jvat7zDpFkYHft8eB88LiU6fPyV9LUX9et7XRUy",
+          "id": "clgkj9pfa000308meh73d8nff",
+          "name": "k51qzi5uqu5dipwqop5kj5na30qlwqbyyn54g8y3jcm3sdc02t9tjlec2a46ci",
+        },
+        "name": "ens.eth",
+        "site": Object {
+          "id": "clgove94b000208mlhq685zgh",
+        },
+        "status": "ACTIVE",
+        "updatedAt": "2023-03-24T08:05:13.641Z",
+      }
+    `);
+  });
 });

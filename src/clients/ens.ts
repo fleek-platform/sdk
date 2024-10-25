@@ -119,6 +119,7 @@ export class EnsClient {
 
   public delete = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteEnsRecord',
       deleteEnsRecord: {
         __args: {
           where: {
