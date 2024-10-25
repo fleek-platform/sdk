@@ -6,6 +6,31 @@ import { schemaStr } from '@mocks/graphql/schema';
 
 const schema = buildSchema(schemaStr);
 
+const queries = [
+  localhost.query('GetProject', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        project: {
+          avatar: null,
+          backupStorageOnArweave: false,
+          backupStorageOnFilecoin: false,
+          createdAt: '2023-03-23T08:05:13.641Z',
+          id: 'clgkiwjd8000c08mefyco2eoo',
+          name: 'electronicCo',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+];
+
 const mutations = [
   localhost.mutation('CreateProject', async ({ query, variables }) => {
     const res = await executeGraphql({
@@ -31,4 +56,4 @@ const mutations = [
   }),
 ];
 
-export const handlers = [...mutations];
+export const handlers = [...mutations, ...queries];

@@ -79,6 +79,7 @@ export class ProjectsClient {
 
   public get = async ({ id }: GetProjectArgs): Promise<Project> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetProject',
       project: {
         __args: {
           where: {

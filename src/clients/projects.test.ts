@@ -1,4 +1,6 @@
 import { describe, expect, it, afterAll, afterEach, beforeAll } from 'vitest';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 import { server } from '../mocks/graphql/node';
 import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
 import { FleekSdk } from '../FleekSdk';
@@ -30,5 +32,49 @@ describe('Projects', () => {
       }
     `,
     );
+  });
+
+  it.todo('should update project', async (context) => {
+    const testImage = await readFile(
+      join(__dirname, '../../assets/test-image.png'),
+    );
+
+    const response = await sdk.projects().update({
+      where: { id: state.auth.project.electronicCo.id },
+      data: {
+        name: 'renamed-project',
+        avatar: new File([testImage], 'logo'),
+        backupStorageOnArweave: true,
+        backupStorageOnFilecoin: true,
+      },
+    });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "avatar": "https://secret-asset-url/cid?token=eyJhbGciOiJIUzI1NiJ9.eyJjaWQiOiJRbVNOWHVIckpIUW03QTNlbjh5YjR6ZHZwWGdDYzFVRVc3Z1FVSFM5dmRnWEYxIiwiZXhwIjoxNzI3Nzk3OTA3fQ.UBUUQ2sk0-b60SbyoAKOXsFSgOJ_uJh_IA85-V9JU2E",
+        "backupStorageOnArweave": true,
+        "backupStorageOnFilecoin": true,
+        "createdAt": "2023-03-23T08:05:13.641Z",
+        "id": "clgkiwjd8000c08mefyco2eoo",
+        "name": "renamed-project",
+      }
+    `);
+  });
+
+  it('should get project', async () => {
+    const response = await sdk
+      .projects()
+      .get({ id: state.auth.project.electronicCo.id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "avatar": null,
+        "backupStorageOnArweave": false,
+        "backupStorageOnFilecoin": false,
+        "createdAt": "2023-03-23T08:05:13.641Z",
+        "id": "clgkiwjd8000c08mefyco2eoo",
+        "name": "electronicCo",
+      }
+    `);
   });
 });
