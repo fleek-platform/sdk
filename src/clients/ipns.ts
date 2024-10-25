@@ -57,6 +57,7 @@ export class IpnsClient {
 
   public publishSignedName = async ({ key, input }: PublishSignedNameArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'PublishSignedIpnsName',
       publishSignedIpnsName: {
         __args: {
           data: {
@@ -89,6 +90,7 @@ export class IpnsClient {
     id,
   }: PublishRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'PublishIpnsRecord',
       publishIpnsRecord: {
         __args: {
           where: {
@@ -107,6 +109,7 @@ export class IpnsClient {
 
   public createRecord = async (): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateIpnsRecord',
       createIpnsRecord: IpnsClient.RECORD_MAPPED_PROPERTIES,
     });
 
@@ -117,6 +120,7 @@ export class IpnsClient {
     siteId,
   }: CreateRecordForSiteArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateIpnsRecordForSite',
       createIpnsRecordForSite: {
         __args: {
           where: {
@@ -134,6 +138,7 @@ export class IpnsClient {
     id,
   }: DeleteRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteIpnsRecord',
       deleteIpnsRecord: {
         __args: {
           where: {
@@ -149,6 +154,7 @@ export class IpnsClient {
 
   public listRecords = async (): Promise<IpnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetIpnsRecords',
       ipnsRecords: { data: IpnsClient.RECORD_MAPPED_PROPERTIES },
     });
 
@@ -157,6 +163,7 @@ export class IpnsClient {
 
   public getRecord = async ({ name }: GetRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetIpnsRecordByName',
       ipnsRecord: {
         __args: {
           where: {

@@ -52,6 +52,7 @@ export class PrivateGatewayClient {
 
   public get = async ({ id }: GetPrivateGatewayArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPrivateGateway',
       privateGateway: {
         __args: {
           where: {
@@ -76,6 +77,7 @@ export class PrivateGatewayClient {
 
   public getBySlug = async ({ slug }: GetPrivateGatewayBySlugArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPrivateGatewayBySlug',
       privateGatewayBySlug: {
         __args: {
           where: {
@@ -95,6 +97,7 @@ export class PrivateGatewayClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPrivateGateways',
       privateGateways: {
         data: {
           ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
@@ -112,6 +115,7 @@ export class PrivateGatewayClient {
 
   public create = async ({ name, zoneId }: CreatePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreatePrivateGateway',
       createPrivateGateway: {
         __args: {
           where: {
@@ -130,6 +134,7 @@ export class PrivateGatewayClient {
 
   public delete = async ({ id }: DeletePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeletePrivateGateway',
       deletePrivateGateway: {
         __args: {
           where: {
@@ -145,6 +150,7 @@ export class PrivateGatewayClient {
 
   public update = async ({ id, name }: UpdatePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'UpdatePrivateGateway',
       updatePrivateGateway: {
         __args: {
           where: {

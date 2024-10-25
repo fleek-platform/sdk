@@ -77,6 +77,7 @@ export class SitesClient {
 
   public get = async ({ id }: GetSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetSiteById',
       site: {
         __args: {
           where: {
@@ -96,6 +97,7 @@ export class SitesClient {
 
   public getBySlug = async ({ slug }: GetBySlugArgs): Promise<Site> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetSiteBySlug',
       siteBySlug: {
         __args: {
           where: {
@@ -115,6 +117,7 @@ export class SitesClient {
 
   public list = async (): Promise<Site[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetSites',
       sites: {
         __args: {
           where: {},
@@ -135,6 +138,7 @@ export class SitesClient {
 
   public create = async ({ name }: CreateSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateSite',
       createSite: {
         __args: {
           data: {
@@ -154,6 +158,7 @@ export class SitesClient {
 
   public delete = async ({ id }: DeleteSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteSite',
       deleteSite: {
         __args: {
           where: {
@@ -176,6 +181,7 @@ export class SitesClient {
     cid,
   }: CreateCustomIpfsDeploymentArgs): Promise<Deployment> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateCustomIpfsDeployment',
       createCustomIpfsDeployment: {
         __args: {
           data: {
@@ -194,6 +200,7 @@ export class SitesClient {
     id,
   }: GetDeploymentArgs): Promise<Deployment> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDeploymentById',
       deployment: {
         __args: {
           where: {

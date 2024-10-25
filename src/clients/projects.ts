@@ -46,6 +46,7 @@ export class ProjectsClient {
 
   public create = async ({ name }: CreateProjectArgs): Promise<Project> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateProject',
       createProject: {
         __args: {
           data: {
@@ -78,6 +79,7 @@ export class ProjectsClient {
 
   public get = async ({ id }: GetProjectArgs): Promise<Project> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetProject',
       project: {
         __args: {
           where: {
@@ -93,6 +95,7 @@ export class ProjectsClient {
 
   public list = async (): Promise<Project[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetProjects',
       projects: { data: ProjectsClient.PROJECT_MAPPED_PROPERTIES },
     });
 
