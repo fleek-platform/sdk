@@ -97,6 +97,7 @@ export class SitesClient {
 
   public getBySlug = async ({ slug }: GetBySlugArgs): Promise<Site> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetSiteBySlug',
       siteBySlug: {
         __args: {
           where: {
