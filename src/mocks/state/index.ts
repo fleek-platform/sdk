@@ -354,6 +354,7 @@ const user = {
   },
 };
 
+<<<<<<< HEAD
 const personalAccessToken = {
   joshOwnedToken: {
     id: 'clgkiwxl9000e08meh1z64f5l',
@@ -377,11 +378,16 @@ const personalAccessToken = {
   },
 };
 
+=======
+>>>>>>> origin/develop
 export const auth = {
   project,
   application,
   user,
+<<<<<<< HEAD
   personalAccessToken,
+=======
+>>>>>>> origin/develop
 };
 
 export const commitHash = '0fabad88415cedb2c3c21548afa14a949a088954';
