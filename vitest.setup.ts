@@ -1,3 +1,4 @@
+// TODO: Keep only the required environment variables
 import { vi } from 'vitest';
 
 vi.stubEnv('SECRET_JWT_IDENTITY', 'oAAAKKKKacbdcbdbcd8778767778889AAAAAAA99999');
