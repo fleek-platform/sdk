@@ -143,6 +143,39 @@ const queries = [
       errors: res.errors,
     });
   }),
+  localhost.query('GetEnsRecordsByIpnsId', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        ensRecordsByIpnsId: {
+          data: [
+            {
+              createdAt: '2023-03-24T08:05:13.641Z',
+              id: '40767ba9-eb85-439b-9369-489459a9376b',
+              ipnsRecord: {
+                hash: 'QmX7WyiLtbvmfbUzN2eJuvmDuGZSDjavuauwaJL4bFC5SJ',
+                id: 'clgkj9ipf000208me9yzre1cn',
+                name: 'k51qzi5uqu5dh2c8ec00yowiapopchxdvnwh6iy2xoxc51inldruqh4yvzgez5',
+              },
+              name: 'vitalik.eth',
+              site: {
+                id: 'clgma7mmh000108jzd13c50ol',
+              },
+              status: 'CREATED',
+              updatedAt: '2023-03-24T08:05:13.641Z',
+            },
+          ],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 const mutations = [

@@ -150,6 +150,7 @@ export class EnsClient {
     ipnsRecordId,
   }: { ipnsRecordId: string }): Promise<EnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecordsByIpnsId',
       ensRecordsByIpnsId: {
         __args: {
           where: {
