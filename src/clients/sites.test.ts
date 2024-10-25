@@ -398,4 +398,31 @@ describe('Sites', () => {
       }
     `);
   });
+
+  it('should create custom ipfs deployment', async () => {
+    const response = await sdk.sites().createCustomIpfsDeployment({
+      siteId: state.sites.site.electronicCoBlog.id,
+      cid: 'QmcZhtEFcTJfa1UPhVgHNp5i2YzjzB4tckaMnyVd5SgSqs',
+    });
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+      },
+      `
+      Object {
+        "__typename": "Deployment",
+        "cid": "bafybeigtlpa4nljtqlhagceubl3xidofy6iriovqr55ex7pqnpq5eq5fxy",
+        "createdAt": Anything,
+        "id": Any<String>,
+        "siteId": "clgma7mmh000108jzd13c50ol",
+        "status": "UPLOAD_COMPLETED",
+        "storageType": "IPFS",
+        "updatedAt": Anything,
+      }
+    `,
+    );
+  });
 });

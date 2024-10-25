@@ -181,6 +181,7 @@ export class SitesClient {
     cid,
   }: CreateCustomIpfsDeploymentArgs): Promise<Deployment> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateCustomIpfsDeployment',
       createCustomIpfsDeployment: {
         __args: {
           data: {

@@ -421,6 +421,33 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation(
+    'CreateCustomIpfsDeployment',
+    async ({ query, variables }) => {
+      const res = await executeGraphql({
+        schema,
+        source: query,
+        variableValues: variables,
+        rootValue: {
+          createCustomIpfsDeployment: {
+            __typename: 'Deployment',
+            cid: 'bafybeigtlpa4nljtqlhagceubl3xidofy6iriovqr55ex7pqnpq5eq5fxy',
+            id: 'clgmajwf7000208mo67lnhgu0',
+            siteId: 'clgma7mmh000108jzd13c50ol',
+            status: 'UPLOAD_COMPLETED',
+            storageType: 'IPFS',
+            updatedAt: '2023-03-24T10:06:13.641Z',
+            createdAt: '2023-03-24T10:06:13.641Z',
+          },
+        },
+      });
+
+      return HttpResponse.json({
+        data: res.data,
+        errors: res.errors,
+      });
+    },
+  ),
 ];
 
 export const handlers = [...queries, ...mutations];
