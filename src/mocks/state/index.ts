@@ -2931,4 +2931,5 @@ export default {
   sites,
   ipns,
   fleekFunctions,
+  storageIpfs,
 };

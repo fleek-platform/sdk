@@ -80,8 +80,6 @@ const queries = [
       },
     });
 
-    console.log(`[debug] ${JSON.stringify(res)}`);
-
     return HttpResponse.json({
       data: res.data,
       errors: res.errors,
