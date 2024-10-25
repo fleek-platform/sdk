@@ -474,4 +474,22 @@ describe('Domains', () => {
       ]
     `);
   });
+
+  it('should get zone by its id', async (context) => {
+    const response = await sdk
+      .domains()
+      .getZone({ id: state.domains.zone.electronicCoEshop.id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "__typename": "Zone",
+        "createdAt": "2022-12-24T09:04:13.641Z",
+        "id": "clgmfj874000208lc2e9ccglf",
+        "originUrl": "https://ipfs.io/ipfs/QmXYsy8xLYRaDbgDNeSthWSNneKM13Vb1FHV8LC4DghHy2",
+        "status": "CREATED",
+        "type": "SITE",
+        "updatedAt": "2022-12-24T09:04:13.641Z",
+      }
+    `);
+  });
 });

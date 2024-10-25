@@ -233,6 +233,7 @@ export class DomainsClient {
 
   public getZone = async ({ id }: { id: string }): Promise<Zone> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetZone',
       zone: {
         __args: {
           where: {
