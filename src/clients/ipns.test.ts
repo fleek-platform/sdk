@@ -41,12 +41,10 @@ describe('IPNS', () => {
   });
 
   it('should publish IPNS record', async () => {
-    const response = await sdk
-      .ipns()
-      .publishRecord({
-        id: state.ipns.ipnsRecord.electronicCoEshop.id,
-        hash: 'QmRG4xcsmoZuXqKuPz3uVBgvo3GZ6k1kLZWhmvzuKtDr9s',
-      });
+    const response = await sdk.ipns().publishRecord({
+      id: state.ipns.ipnsRecord.electronicCoEshop.id,
+      hash: 'QmRG4xcsmoZuXqKuPz3uVBgvo3GZ6k1kLZWhmvzuKtDr9s',
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Object {
@@ -63,5 +61,21 @@ describe('IPNS', () => {
         "name": "k51qzi5uqu5dhrupvn0ru1c6el43rhimh95cuiwqy0ofo8bgomvq296b49v9r7",
       }
     `);
+  });
+
+  it('should create IPNS record', async () => {
+    const response = await sdk.ipns().createRecord();
+
+    expect(response).toMatchInlineSnapshot(
+      { id: expect.any(String) },
+      `
+      Object {
+        "ensRecords": Array [],
+        "hash": null,
+        "id": Any<String>,
+        "name": "test-name",
+      }
+    `,
+    );
   });
 });

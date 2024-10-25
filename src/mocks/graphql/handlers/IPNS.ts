@@ -50,6 +50,26 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('CreateIpnsRecord', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createIpnsRecord: {
+          ensRecords: [],
+          hash: null,
+          id: 'clgmg76ch000208mid5o30du0',
+          name: 'test-name',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...mutations];

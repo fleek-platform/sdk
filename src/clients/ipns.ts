@@ -109,6 +109,7 @@ export class IpnsClient {
 
   public createRecord = async (): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateIpnsRecord',
       createIpnsRecord: IpnsClient.RECORD_MAPPED_PROPERTIES,
     });
 
