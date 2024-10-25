@@ -192,6 +192,7 @@ export class DomainsClient {
 
   public deleteDomain = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteDomain',
       deleteDomain: {
         __args: {
           where: {

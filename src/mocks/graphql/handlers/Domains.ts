@@ -359,7 +359,33 @@ const mutations = [
       },
     });
 
-    console.log(`[debug] ${JSON.stringify(res)}`)
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+  localhost.mutation('DeleteDomain', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deleteDomain: {
+          __typename: 'Domain',
+          createdAt: '2023-03-24T10:05:13.641Z',
+          dnsConfigs: [],
+          hostname: 'eshop-electronic.co',
+          id: 'clgmfj874000208lc2e9ccglf',
+          isVerified: false,
+          status: 'DELETING',
+          updatedAt: '2023-03-23T12:05:13.641Z',
+          zone: {
+            __typename: 'Zone',
+            id: 'clgmfj874000208lc2e9ccglf',
+          },
+        },
+      },
+    });
 
     return HttpResponse.json({
       data: res.data,
