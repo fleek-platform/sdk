@@ -224,6 +224,7 @@ export class DomainsClient {
 
   public listZones = async (): Promise<Zone[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'ListZones',
       zones: { data: DomainsClient.ZONE_MAPPED_PROPERTIES },
     });
 

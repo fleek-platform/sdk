@@ -336,6 +336,82 @@ const queries = [
       errors: res.errors,
     });
   }),
+  localhost.query('ListZones', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        zones: {
+          data: [
+            {
+              __typename: 'Zone',
+              createdAt: '2022-12-24T09:04:13.641Z',
+              id: 'clgmfj874000208lc2e9ccglf',
+              originUrl:
+                'https://ipfs.io/ipfs/QmXYsy8xLYRaDbgDNeSthWSNneKM13Vb1FHV8LC4DghHy2',
+              status: 'CREATED',
+              type: 'SITE',
+              updatedAt: '2022-12-24T09:04:13.641Z',
+            },
+            {
+              __typename: 'Zone',
+              createdAt: '2022-12-28T10:04:13.641Z',
+              id: 'clgow7wob000508jog5gfanj9',
+              originUrl:
+                'https://bafybeifyvm5aa2z35jnpehvg3hfflazesjfma53yekmhz7dckqn4buvr7q.ipfs.gateway-ipfs.fleeksandbox.xyz',
+              status: 'CREATED',
+              type: 'SITE',
+              updatedAt: '2022-12-28T10:04:13.641Z',
+            },
+            {
+              __typename: 'Zone',
+              createdAt: '2022-04-25T09:04:13.641Z',
+              id: 'clj76kw6i000008l2ekmz6ahd',
+              originUrl:
+                'https://bafybeib5qbrx6xdrdvuxt2wsvfsrwwvu42bfh6pycm677qjkl66heelc2e.ipfs.gateway-ipfs.fleeksandbox.xyz',
+              status: 'CREATED',
+              type: 'PRIVATE_GATEWAY',
+              updatedAt: '2022-04-25T10:04:13.641Z',
+            },
+            {
+              __typename: 'Zone',
+              createdAt: '2022-12-30T11:04:13.641Z',
+              id: 'clje357cc000108jse08c2t6m',
+              originUrl:
+                'https://ipfs.io/ipfs/QmdG8HaQAYccz22zLgJ33trzu8g6wjF6e48YbBEZhbz342',
+              status: 'CREATING_FAILED',
+              type: 'SITE',
+              updatedAt: '2022-12-30T11:04:13.641Z',
+            },
+            {
+              __typename: 'Zone',
+              createdAt: '2022-12-24T09:04:13.641Z',
+              id: 'cljfq6n2y000008lb4oy403bc',
+              originUrl: 'https://dedicated-gateway-ipfs.fleeksandbox.xyz',
+              status: 'CREATED',
+              type: 'PRIVATE_GATEWAY',
+              updatedAt: '2022-12-24T09:04:13.641Z',
+            },
+            {
+              __typename: 'Zone',
+              createdAt: '2023-02-28T10:04:13.641Z',
+              id: 'cljfqzrcg000208jy6677aqv1',
+              originUrl: 'https://dedicated-gateway-ipfs.fleeksandbox.xyz',
+              status: 'CREATED',
+              type: 'PRIVATE_GATEWAY',
+              updatedAt: '2023-02-28T10:04:13.641Z',
+            },
+          ],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 const mutations = [
