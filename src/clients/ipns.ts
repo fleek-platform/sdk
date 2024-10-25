@@ -57,6 +57,7 @@ export class IpnsClient {
 
   public publishSignedName = async ({ key, input }: PublishSignedNameArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'PublishSignedIpnsName',
       publishSignedIpnsName: {
         __args: {
           data: {
