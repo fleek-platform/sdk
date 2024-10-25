@@ -103,6 +103,7 @@ export class EnsClient {
 
   public verify = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'VerifyEnsRecord',
       verifyEnsRecord: {
         __args: {
           where: {

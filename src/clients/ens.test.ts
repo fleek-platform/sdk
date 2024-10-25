@@ -94,4 +94,31 @@ describe('ENS', () => {
       }
     `);
   });
+
+  it('should verify ENS record', async () => {
+    const response = await sdk
+      .ens()
+      .verify({ id: state.ipns.ensRecord['vitalik.eth'].id });
+
+    expect(response).toMatchInlineSnapshot(
+      { updatedAt: expect.anything() },
+      `
+      Object {
+        "createdAt": "2023-03-24T08:05:13.641Z",
+        "id": "40767ba9-eb85-439b-9369-489459a9376b",
+        "ipnsRecord": Object {
+          "hash": "QmX7WyiLtbvmfbUzN2eJuvmDuGZSDjavuauwaJL4bFC5SJ",
+          "id": "clgkj9ipf000208me9yzre1cn",
+          "name": "k51qzi5uqu5dh2c8ec00yowiapopchxdvnwh6iy2xoxc51inldruqh4yvzgez5",
+        },
+        "name": "vitalik.eth",
+        "site": Object {
+          "id": "clgma7mmh000108jzd13c50ol",
+        },
+        "status": "VERIFYING",
+        "updatedAt": Anything,
+      }
+    `,
+    );
+  });
 });
