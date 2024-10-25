@@ -271,6 +271,71 @@ const queries = [
       errors: res.errors,
     });
   }),
+  localhost.query('GetDomainsByZoneId', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        domainsByZoneId: {
+          data: [
+            {
+              __typename: 'Domain',
+              createdAt: '2023-03-24T09:05:13.641Z',
+              dnsConfigs: [
+                {
+                  __typename: 'DnsConfig',
+                  createdAt: '2023-03-23T09:05:13.641Z',
+                  id: 'clgmg76ch000208mid5o30du0',
+                  name: 'hostname',
+                  type: 'CNAME',
+                  updatedAt: '2023-03-23T09:05:13.641Z',
+                  value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+                },
+                {
+                  __typename: 'DnsConfig',
+                  createdAt: '2023-03-23T10:05:13.641Z',
+                  id: 'clgmgbj4h000308mi8aai0pli',
+                  name: 'hostname',
+                  type: 'CNAME',
+                  updatedAt: '2023-03-23T10:05:13.641Z',
+                  value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+                },
+              ],
+              hostname: 'electronic.co',
+              id: 'clgmfj1pa000108lc0g5i7d32',
+              isVerified: true,
+              status: 'ACTIVE',
+              updatedAt: '2023-03-24T09:05:13.641Z',
+              zone: {
+                __typename: 'Zone',
+                id: 'clgmfj874000208lc2e9ccglf',
+              },
+            },
+            {
+              __typename: 'Domain',
+              createdAt: '2023-03-24T10:05:13.641Z',
+              dnsConfigs: [],
+              hostname: 'eshop-electronic.co',
+              id: 'clgmfj874000208lc2e9ccglf',
+              isVerified: false,
+              status: 'VERIFYING_FAILED',
+              updatedAt: '2023-03-24T10:05:13.641Z',
+              zone: {
+                __typename: 'Zone',
+                id: 'clgmfj874000208lc2e9ccglf',
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries];

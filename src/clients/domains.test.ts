@@ -273,4 +273,62 @@ describe('Domains', () => {
         }
       `);
   });
+
+  it('should list domains by the zone id', async (context) => {
+    const response = await sdk
+      .domains()
+      .listByZoneId({ zoneId: state.domains.zone.electronicCoEshop.id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "__typename": "Domain",
+          "createdAt": "2023-03-24T09:05:13.641Z",
+          "dnsConfigs": Array [
+            Object {
+              "__typename": "DnsConfig",
+              "createdAt": "2023-03-23T09:05:13.641Z",
+              "id": "clgmg76ch000208mid5o30du0",
+              "name": "hostname",
+              "type": "CNAME",
+              "updatedAt": "2023-03-23T09:05:13.641Z",
+              "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+            },
+            Object {
+              "__typename": "DnsConfig",
+              "createdAt": "2023-03-23T10:05:13.641Z",
+              "id": "clgmgbj4h000308mi8aai0pli",
+              "name": "hostname",
+              "type": "CNAME",
+              "updatedAt": "2023-03-23T10:05:13.641Z",
+              "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+            },
+          ],
+          "hostname": "electronic.co",
+          "id": "clgmfj1pa000108lc0g5i7d32",
+          "isVerified": true,
+          "status": "ACTIVE",
+          "updatedAt": "2023-03-24T09:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "clgmfj874000208lc2e9ccglf",
+          },
+        },
+        Object {
+          "__typename": "Domain",
+          "createdAt": "2023-03-24T10:05:13.641Z",
+          "dnsConfigs": Array [],
+          "hostname": "eshop-electronic.co",
+          "id": "clgmfj874000208lc2e9ccglf",
+          "isVerified": false,
+          "status": "VERIFYING_FAILED",
+          "updatedAt": "2023-03-24T10:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "clgmfj874000208lc2e9ccglf",
+          },
+        },
+      ]
+    `);
+  });
 });

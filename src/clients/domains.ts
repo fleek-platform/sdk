@@ -144,6 +144,7 @@ export class DomainsClient {
 
   public listByZoneId = async ({ zoneId }: { zoneId: string }) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainsByZoneId',
       domainsByZoneId: {
         __args: {
           where: {
