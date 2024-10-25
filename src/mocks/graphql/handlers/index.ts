@@ -3,6 +3,7 @@ import { handlers as FleekSdkHandlers } from './FleekSdk';
 import { handlers as ApplicationHandlers } from './Applications';
 import { handlers as DomainsHandlers } from './Domains';
 import { handlers as EnsHandlers } from './ENS';
+import { handlers as FunctionsHandlers } from './Functions';
 
 export const mockGraphqlServiceApiUrl = 'https://fleek.mock.server/graphql';
 export const localhost = graphql.link(mockGraphqlServiceApiUrl);
@@ -12,4 +13,5 @@ export const handlers = [
   ...ApplicationHandlers,
   ...DomainsHandlers,
   ...EnsHandlers,
+  ...FunctionsHandlers,
 ];

@@ -70,6 +70,7 @@ export class FunctionsClient {
 
   public get = async ({ name }: GetFleekFunctionArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetFleekFunctionByName',
       fleekFunctionByName: {
         __args: {
           where: {

@@ -216,11 +216,9 @@ describe('ENS', () => {
   });
 
   it('should list ENS records by IPNS record id', async () => {
-    const response = await sdk
-      .ens()
-      .listByIpnsRecordId({
-        ipnsRecordId: state.ipns.ipnsRecord.electronicCoBlog.id,
-      });
+    const response = await sdk.ens().listByIpnsRecordId({
+      ipnsRecordId: state.ipns.ipnsRecord.electronicCoBlog.id,
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Array [
