@@ -354,10 +354,34 @@ const user = {
   },
 };
 
+const personalAccessToken = {
+  joshOwnedToken: {
+    id: 'clgkiwxl9000e08meh1z64f5l',
+    tokenSuffix: 'SuB',
+    name: 'mobile',
+    _secretToken: 'pat_BqRN12qYDST6Oii0IQtW',
+    hash: 'nMoyv64NXsssWNpkY3jks9aJmAhpXcAq3RyF5s2+jLg=',
+    userId: user.josh.id,
+    createdAt: DateTime.fromISO('2023-03-21T08:05:13.641Z').toJSDate(),
+    updatedAt: DateTime.fromISO('2023-03-21T08:05:13.641Z').toJSDate(),
+  },
+  jackOwnedToken: {
+    id: 'clmjei5za000908lacpf05zeg',
+    tokenSuffix: 'Adb',
+    name: 'macbook',
+    _secretToken: 'pat_RZ2ZWeofv6axLohbqbWZ',
+    hash: '62/SPgYw0ermsgZ4fojTDbq+5siUa5S18D3nWh203t4=',
+    userId: user.jack.id,
+    createdAt: DateTime.fromISO('2023-02-23T08:05:13.641Z').toJSDate(),
+    updatedAt: DateTime.fromISO('2023-02-23T08:05:13.641Z').toJSDate(),
+  },
+};
+
 export const auth = {
   project,
   application,
   user,
+  personalAccessToken,
 };
 
 export const commitHash = '0fabad88415cedb2c3c21548afa14a949a088954';

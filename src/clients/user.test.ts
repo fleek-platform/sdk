@@ -28,4 +28,23 @@ describe('User', () => {
       ]
     `);
   });
+
+  it('should delete personal access token', async () => {
+    const response = await sdk
+      .user()
+      .deletePersonalAccessToken({
+        id: state.auth.personalAccessToken.joshOwnedToken.id,
+      });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "__typename": "PersonalAccessToken",
+        "createdAt": "2023-03-21T08:05:13.641Z",
+        "id": "clgkiwxl9000e08meh1z64f5l",
+        "maskedToken": "pat_*******SuB",
+        "name": "mobile",
+        "updatedAt": "2023-03-21T08:05:13.641Z",
+      }
+    `);
+  });
 });

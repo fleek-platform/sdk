@@ -29,6 +29,7 @@ export class UserClient {
 
   public deletePersonalAccessToken = async ({ id }: { id: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeletePersonalAccessToken',
       deletePersonalAccessToken: {
         __args: {
           where: {

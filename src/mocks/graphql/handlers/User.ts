@@ -33,4 +33,32 @@ const queries = [
   }),
 ];
 
-export const handlers = [...queries];
+const mutations = [
+  localhost.mutation(
+    'DeletePersonalAccessToken',
+    async ({ query, variables }) => {
+      const res = await executeGraphql({
+        schema,
+        source: query,
+        variableValues: variables,
+        rootValue: {
+          deletePersonalAccessToken: {
+            __typename: 'PersonalAccessToken',
+            createdAt: '2023-03-21T08:05:13.641Z',
+            id: 'clgkiwxl9000e08meh1z64f5l',
+            maskedToken: 'pat_*******SuB',
+            name: 'mobile',
+            updatedAt: '2023-03-21T08:05:13.641Z',
+          },
+        },
+      });
+
+      return HttpResponse.json({
+        data: res.data,
+        errors: res.errors,
+      });
+    },
+  ),
+];
+
+export const handlers = [...queries, ...mutations];
