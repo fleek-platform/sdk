@@ -89,9 +89,9 @@ const fetchWithValidStatus = async ({
         });
 
       if (error.code === 'DailyUploadedTotalSizeQuotaExceeded') {
-        throw new StorageUploadTotalSizeQuotaExceededError();
+        throw new StorageUploadTotalSizeQuotaExceededError(error.data);
       } else if (error.code === 'DailyUploadedFilesQuotaExceeded') {
-        throw new StorageUploadFileCountQuotaExceededError();
+        throw new StorageUploadFileCountQuotaExceededError(error.data);
       } else if (error.code === 'FolderNotFoundError' && parentFolderId) {
         throw new FolderNotFoundError({ folder: { id: parentFolderId } });
       } else {

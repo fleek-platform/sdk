@@ -1,22 +1,8 @@
-import { describe, expect, it, afterAll, afterEach, beforeAll } from 'vitest';
-import { server } from './mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from './mocks/graphql/handlers';
-import { FleekSdk } from './FleekSdk';
+import { describe, expect } from 'vitest';
 
-describe('FleekSDK', () => {
-  const sdk = new FleekSdk({
-    graphqlServiceApiUrl,
-    accessTokenService: {} as any,
-  });
+import { mockDatabasesAndGraphqlWithBrowserSdkForEachTest } from './testTools/mockDatabasesAndGraphqlWithBrowserSdkForEachTest';
+import { mockDatabasesAndGraphqlWithNodeSdkForEachTest } from './testTools/mockDatabasesAndGraphqlWithNodeSdkForEachTest';
 
-<<<<<<< HEAD
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
-  it('should get current version info', async () => {
-    const response = await sdk.getVersion();
-=======
 describe('[Node.js] getVersion', () => {
   const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({
     mockIpfs: false,
@@ -45,7 +31,6 @@ describe('[Chromium] getVersion', () => {
     const response = await context.sdks.josh({
       callback: () => window.sdk.getVersion(),
     });
->>>>>>> origin/develop
 
     expect(response).toMatchInlineSnapshot(`
       Object {
