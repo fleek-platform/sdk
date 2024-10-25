@@ -97,6 +97,7 @@ export class PrivateGatewayClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPrivateGateways',
       privateGateways: {
         data: {
           ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,

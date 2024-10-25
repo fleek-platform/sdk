@@ -44,11 +44,9 @@ describe('PrivateGateway', () => {
   });
 
   it('get private gateway by its slug', async () => {
-    const response = await sdk
-      .privateGateways()
-      .getBySlug({
-        slug: state.storageIpfs.privateGateways.electronicCoEshop.slug,
-      });
+    const response = await sdk.privateGateways().getBySlug({
+      slug: state.storageIpfs.privateGateways.electronicCoEshop.slug,
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Object {
@@ -71,6 +69,75 @@ describe('PrivateGateway', () => {
           "id": "cljfq6n2y000008lb4oy403bc",
         },
       }
+    `);
+  });
+
+  it('list private gateways', async () => {
+    const response = await sdk.privateGateways().list();
+
+    expect(response).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "__typename": "PrivateGateway",
+          "createdAt": "2023-03-24T09:05:13.641Z",
+          "id": "clhruz26u000108mbdb2zaft0",
+          "name": "electronic.co eshop",
+          "primaryDomain": Object {
+            "__typename": "Domain",
+            "id": "clmhwwted000108mnajduel68",
+          },
+          "project": Object {
+            "__typename": "Project",
+            "id": "clgkiwjd8000c08mefyco2eoo",
+          },
+          "slug": "blue-fox-two",
+          "updatedAt": "2023-04-24T09:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "cljfq6n2y000008lb4oy403bc",
+          },
+        },
+        Object {
+          "__typename": "PrivateGateway",
+          "createdAt": "2023-04-25T09:05:13.641Z",
+          "id": "clj76l893000108l2dsuegrz9",
+          "name": "electronic.co photos",
+          "primaryDomain": Object {
+            "__typename": "Domain",
+            "id": "clmhwwted000108mnajduel68",
+          },
+          "project": Object {
+            "__typename": "Project",
+            "id": "clgkiwjd8000c08mefyco2eoo",
+          },
+          "slug": "fish-blue-one",
+          "updatedAt": "2023-04-25T11:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "clj76kw6i000008l2ekmz6ahd",
+          },
+        },
+        Object {
+          "__typename": "PrivateGateway",
+          "createdAt": "2023-03-24T09:05:13.641Z",
+          "id": "clu6w5g44000108labn6eai20",
+          "name": "electronic.co documents",
+          "primaryDomain": Object {
+            "__typename": "Domain",
+            "id": "clmhwwted000108mnajduel68",
+          },
+          "project": Object {
+            "__typename": "Project",
+            "id": "clgkiwjd8000c08mefyco2eoo",
+          },
+          "slug": "blue-dog-seven",
+          "updatedAt": "2023-04-24T09:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "cljfqzrcg000208jy6677aqv1",
+          },
+        },
+      ]
     `);
   });
 });
