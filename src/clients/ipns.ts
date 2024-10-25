@@ -154,6 +154,7 @@ export class IpnsClient {
 
   public listRecords = async (): Promise<IpnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetIpnsRecords',
       ipnsRecords: { data: IpnsClient.RECORD_MAPPED_PROPERTIES },
     });
 

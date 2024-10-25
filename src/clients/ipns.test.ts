@@ -112,4 +112,46 @@ describe('IPNS', () => {
       }
     `);
   });
+
+  it('should list IPNS records', async () => {
+    const response = await sdk.ipns().listRecords();
+
+    expect(response).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "ensRecords": Array [
+            Object {
+              "id": "8d3ad502-ec4d-489e-858e-d112656f3511",
+            },
+            Object {
+              "id": "clm0mhccs000108ma34jn6ed3",
+            },
+          ],
+          "hash": "QmcvfRw5WDutRzvRNq2matcJWW2nKWFGDbqxaaTxnWksME",
+          "id": "clgkj995t000108med7gb2w4v",
+          "name": "k51qzi5uqu5dhrupvn0ru1c6el43rhimh95cuiwqy0ofo8bgomvq296b49v9r7",
+        },
+        Object {
+          "ensRecords": Array [
+            Object {
+              "id": "40767ba9-eb85-439b-9369-489459a9376b",
+            },
+          ],
+          "hash": "QmX7WyiLtbvmfbUzN2eJuvmDuGZSDjavuauwaJL4bFC5SJ",
+          "id": "clgkj9ipf000208me9yzre1cn",
+          "name": "k51qzi5uqu5dh2c8ec00yowiapopchxdvnwh6iy2xoxc51inldruqh4yvzgez5",
+        },
+        Object {
+          "ensRecords": Array [
+            Object {
+              "id": "af470cc1-08d8-4d39-be6f-b0eebc0a6480",
+            },
+          ],
+          "hash": "QmW73w6jvat7zDpFkYHft8eB88LiU6fPyV9LUX9et7XRUy",
+          "id": "clgkj9pfa000308meh73d8nff",
+          "name": "k51qzi5uqu5dipwqop5kj5na30qlwqbyyn54g8y3jcm3sdc02t9tjlec2a46ci",
+        },
+      ]
+    `);
+  });
 });
