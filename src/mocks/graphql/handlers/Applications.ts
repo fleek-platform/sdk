@@ -116,7 +116,7 @@ const mutations = [
       variableValues: variables,
       rootValue: {
         createApplication: {
-          __typename: "Application",
+          __typename: 'Application',
           clientId: 'client_testtesttest',
           createdAt: '2023-03-23T12:05:13.641Z',
           id: '',
