@@ -200,6 +200,7 @@ export class SitesClient {
     id,
   }: GetDeploymentArgs): Promise<Deployment> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDeploymentById',
       deployment: {
         __args: {
           where: {

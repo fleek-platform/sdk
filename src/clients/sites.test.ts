@@ -425,4 +425,23 @@ describe('Sites', () => {
     `,
     );
   });
+
+  it('get deployment by its id', async () => {
+    const response = await sdk
+      .sites()
+      .getDeployment({ id: state.sites.deployment.electronicCoEshopV2.id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "__typename": "Deployment",
+        "cid": "bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva",
+        "createdAt": "2023-03-24T10:05:13.641Z",
+        "id": "clgmajwf7000208mo67lnhgu0",
+        "siteId": "clgma7ilu000008jzdlwhb76a",
+        "status": "BUILD_IN_PROGRESS",
+        "storageType": "IPFS",
+        "updatedAt": "2023-03-24T10:06:13.641Z",
+      }
+    `);
+  });
 });

@@ -366,6 +366,30 @@ const queries = [
       errors: res.errors,
     });
   }),
+  localhost.query('GetDeploymentById', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deployment: {
+          __typename: 'Deployment',
+          cid: 'bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva',
+          createdAt: '2023-03-24T10:05:13.641Z',
+          id: 'clgmajwf7000208mo67lnhgu0',
+          siteId: 'clgma7ilu000008jzdlwhb76a',
+          status: 'BUILD_IN_PROGRESS',
+          storageType: 'IPFS',
+          updatedAt: '2023-03-24T10:06:13.641Z',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 const mutations = [
