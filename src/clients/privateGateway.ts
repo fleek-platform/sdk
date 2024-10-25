@@ -1,21 +1,21 @@
 import {
-	PrivateGatewayNotFoundError,
-	PrivateGatewaysNotFoundError,
-} from "@fleek-platform/errors";
+  PrivateGatewayNotFoundError,
+  PrivateGatewaysNotFoundError,
+} from '@fleek-platform/errors';
 import {
-	Client,
-	PrivateGateway as PrivateGatewayWithRelations,
-	PrivateGatewayGenqlSelection,
-	Project,
-} from "@fleek-platform/utils-genql-client";
+  Client,
+  PrivateGateway as PrivateGatewayWithRelations,
+  PrivateGatewayGenqlSelection,
+  Project,
+} from '@fleek-platform/utils-genql-client';
 
 import {
-	isPrivateGatewayResponseQuery,
-	isPrivateGatewaysResponseQuery,
-} from "../utils/graphql";
+  isPrivateGatewayResponseQuery,
+  isPrivateGatewaysResponseQuery,
+} from '../utils/graphql';
 
 type PrivateGatewayClientOptions = {
-	graphqlClient: Client;
+  graphqlClient: Client;
 };
 
 export type GetPrivateGatewayArgs = { id: string };
@@ -24,140 +24,140 @@ export type DeletePrivateGatewayArgs = { id: string };
 export type UpdatePrivateGatewayArgs = { id: string; name: string };
 export type GetPrivateGatewayBySlugArgs = { slug: string };
 export type PrivateGateway = Omit<
-	PrivateGatewayWithRelations,
-	"project" | "domains" | "domainsPaginated" | "primaryDomain"
+  PrivateGatewayWithRelations,
+  'project' | 'domains' | 'domainsPaginated' | 'primaryDomain'
 > & {
-	project: Pick<Project, "id">;
+  project: Pick<Project, 'id'>;
 };
 
 export class PrivateGatewayClient {
-	private graphqlClient: Client;
+  private graphqlClient: Client;
 
-	private static PRIVATE_GATEWAY_MAPPED_PROPERTIES: PrivateGatewayGenqlSelection =
-		{
-			id: true,
-			slug: true,
-			primaryDomain: { id: true, __typename: true },
-			name: true,
-			project: { id: true, __typename: true },
-			zone: { id: true, __typename: true },
-			updatedAt: true,
-			createdAt: true,
-			__typename: true,
-		};
+  private static PRIVATE_GATEWAY_MAPPED_PROPERTIES: PrivateGatewayGenqlSelection =
+    {
+      id: true,
+      slug: true,
+      primaryDomain: { id: true, __typename: true },
+      name: true,
+      project: { id: true, __typename: true },
+      zone: { id: true, __typename: true },
+      updatedAt: true,
+      createdAt: true,
+      __typename: true,
+    };
 
-	constructor(options: PrivateGatewayClientOptions) {
-		this.graphqlClient = options.graphqlClient;
-	}
+  constructor(options: PrivateGatewayClientOptions) {
+    this.graphqlClient = options.graphqlClient;
+  }
 
-	public get = async ({ id }: GetPrivateGatewayArgs) => {
-		const response = await this.graphqlClient.query({
-			privateGateway: {
-				__args: {
-					where: {
-						id,
-					},
-				},
-				...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-			},
-		});
+  public get = async ({ id }: GetPrivateGatewayArgs) => {
+    const response = await this.graphqlClient.query({
+      privateGateway: {
+        __args: {
+          where: {
+            id,
+          },
+        },
+        ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+      },
+    });
 
-		// TODO: The genql generator provides the `isPrivateGateway`
-		// utility. But the concurrent `isPrivateGatewayWithRelations`
-		// would throw a false negative. It's important to investigate
-		// why the util provided by the generator doesn't work.
-		// The reason is that the following custom util `isPrivateGatewayResponseQuery` requires manual updates on data field change
-		if (!isPrivateGatewayResponseQuery(response.privateGateway)) {
-			throw new PrivateGatewayNotFoundError({ privateGateway: { id } });
-		}
+    // TODO: The genql generator provides the `isPrivateGateway`
+    // utility. But the concurrent `isPrivateGatewayWithRelations`
+    // would throw a false negative. It's important to investigate
+    // why the util provided by the generator doesn't work.
+    // The reason is that the following custom util `isPrivateGatewayResponseQuery` requires manual updates on data field change
+    if (!isPrivateGatewayResponseQuery(response.privateGateway)) {
+      throw new PrivateGatewayNotFoundError({ privateGateway: { id } });
+    }
 
-		return response.privateGateway;
-	};
+    return response.privateGateway;
+  };
 
-	public getBySlug = async ({ slug }: GetPrivateGatewayBySlugArgs) => {
-		const response = await this.graphqlClient.query({
-			privateGatewayBySlug: {
-				__args: {
-					where: {
-						slug,
-					},
-				},
-				...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-			},
-		});
+  public getBySlug = async ({ slug }: GetPrivateGatewayBySlugArgs) => {
+    const response = await this.graphqlClient.query({
+      privateGatewayBySlug: {
+        __args: {
+          where: {
+            slug,
+          },
+        },
+        ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+      },
+    });
 
-		if (!isPrivateGatewayResponseQuery(response.privateGatewayBySlug)) {
-			throw new PrivateGatewayNotFoundError({ privateGateway: { slug } });
-		}
+    if (!isPrivateGatewayResponseQuery(response.privateGatewayBySlug)) {
+      throw new PrivateGatewayNotFoundError({ privateGateway: { slug } });
+    }
 
-		return response.privateGatewayBySlug;
-	};
+    return response.privateGatewayBySlug;
+  };
 
-	public list = async () => {
-		const response = await this.graphqlClient.query({
-			privateGateways: {
-				data: {
-					...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-				},
-				__typename: true,
-			},
-		});
+  public list = async () => {
+    const response = await this.graphqlClient.query({
+      privateGateways: {
+        data: {
+          ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+        },
+        __typename: true,
+      },
+    });
 
-		if (!isPrivateGatewaysResponseQuery(response.privateGateways.data)) {
-			throw new PrivateGatewaysNotFoundError({});
-		}
+    if (!isPrivateGatewaysResponseQuery(response.privateGateways.data)) {
+      throw new PrivateGatewaysNotFoundError({});
+    }
 
-		return response.privateGateways.data;
-	};
+    return response.privateGateways.data;
+  };
 
-	public create = async ({ name, zoneId }: CreatePrivateGatewayArgs) => {
-		const response = await this.graphqlClient.mutation({
-			createPrivateGateway: {
-				__args: {
-					where: {
-						zoneId,
-					},
-					data: {
-						name,
-					},
-				},
-				...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-			},
-		});
+  public create = async ({ name, zoneId }: CreatePrivateGatewayArgs) => {
+    const response = await this.graphqlClient.mutation({
+      createPrivateGateway: {
+        __args: {
+          where: {
+            zoneId,
+          },
+          data: {
+            name,
+          },
+        },
+        ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+      },
+    });
 
-		return response.createPrivateGateway;
-	};
+    return response.createPrivateGateway;
+  };
 
-	public delete = async ({ id }: DeletePrivateGatewayArgs) => {
-		const response = await this.graphqlClient.mutation({
-			deletePrivateGateway: {
-				__args: {
-					where: {
-						id,
-					},
-				},
-				...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-			},
-		});
+  public delete = async ({ id }: DeletePrivateGatewayArgs) => {
+    const response = await this.graphqlClient.mutation({
+      deletePrivateGateway: {
+        __args: {
+          where: {
+            id,
+          },
+        },
+        ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+      },
+    });
 
-		return response.deletePrivateGateway;
-	};
+    return response.deletePrivateGateway;
+  };
 
-	public update = async ({ id, name }: UpdatePrivateGatewayArgs) => {
-		const response = await this.graphqlClient.mutation({
-			updatePrivateGateway: {
-				__args: {
-					where: {
-						id,
-					},
-					data: {
-						name,
-					},
-				},
-				...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
-			},
-		});
+  public update = async ({ id, name }: UpdatePrivateGatewayArgs) => {
+    const response = await this.graphqlClient.mutation({
+      updatePrivateGateway: {
+        __args: {
+          where: {
+            id,
+          },
+          data: {
+            name,
+          },
+        },
+        ...PrivateGatewayClient.PRIVATE_GATEWAY_MAPPED_PROPERTIES,
+      },
+    });
 
-		return response.updatePrivateGateway;
-	};
+    return response.updatePrivateGateway;
+  };
 }

@@ -4,7 +4,9 @@ import { mockDatabasesAndGraphqlWithBrowserSdkForEachTest } from './testTools/mo
 import { mockDatabasesAndGraphqlWithNodeSdkForEachTest } from './testTools/mockDatabasesAndGraphqlWithNodeSdkForEachTest';
 
 describe('[Node.js] getVersion', () => {
-  const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({ mockIpfs: false });
+  const { it } = mockDatabasesAndGraphqlWithNodeSdkForEachTest({
+    mockIpfs: false,
+  });
 
   it('should get current version info', async (context) => {
     const response = await context.sdks.josh.getVersion();
@@ -21,7 +23,9 @@ describe('[Node.js] getVersion', () => {
 });
 
 describe('[Chromium] getVersion', () => {
-  const { it } = mockDatabasesAndGraphqlWithBrowserSdkForEachTest({ mockIpfs: false });
+  const { it } = mockDatabasesAndGraphqlWithBrowserSdkForEachTest({
+    mockIpfs: false,
+  });
 
   it('should get current version info', async (context) => {
     const response = await context.sdks.josh({
