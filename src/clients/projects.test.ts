@@ -77,4 +77,47 @@ describe('Projects', () => {
       }
     `);
   });
+
+  it('should list projects', async () => {
+    const response = await sdk.projects().list();
+
+    expect(response).toMatchInlineSnapshot(
+      `
+      Array [
+        Object {
+          "avatar": null,
+          "backupStorageOnArweave": false,
+          "backupStorageOnFilecoin": false,
+          "createdAt": "2024-01-04T12:05:13.641Z",
+          "id": "clt5ter6y000008jxd9lp8vez",
+          "name": "dreamTeam",
+        },
+        Object {
+          "avatar": null,
+          "backupStorageOnArweave": false,
+          "backupStorageOnFilecoin": false,
+          "createdAt": "2023-03-23T08:05:13.641Z",
+          "id": "clgkiwjd8000c08mefyco2eoo",
+          "name": "electronicCo",
+        },
+        Object {
+          "avatar": null,
+          "backupStorageOnArweave": false,
+          "backupStorageOnFilecoin": false,
+          "createdAt": "2023-03-30T08:05:13.641Z",
+          "id": "clgukvjww000108kw2h8n09nx",
+          "name": "electronicLtd",
+        },
+        Object {
+          "avatar": "d.png",
+          "backupStorageOnArweave": false,
+          "backupStorageOnFilecoin": false,
+          "createdAt": "2023-03-20T08:05:13.641Z",
+          "id": "clgkivku7000a08me9coi0civ",
+          "name": "vegetableCo",
+        },
+      ]
+    `,
+    );
+  });
 });

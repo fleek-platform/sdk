@@ -95,6 +95,7 @@ export class ProjectsClient {
 
   public list = async (): Promise<Project[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetProjects',
       projects: { data: ProjectsClient.PROJECT_MAPPED_PROPERTIES },
     });
 
