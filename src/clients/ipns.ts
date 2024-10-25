@@ -90,6 +90,7 @@ export class IpnsClient {
     id,
   }: PublishRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'PublishIpnsRecord',
       publishIpnsRecord: {
         __args: {
           where: {
