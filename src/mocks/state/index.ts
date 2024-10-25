@@ -2401,4 +2401,5 @@ export const domains = { zone, bunnyZoneProvider, domain, dnsConfig } as const;
 export default {
   auth,
   domains,
+  sites,
 };

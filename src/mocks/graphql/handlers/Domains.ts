@@ -520,6 +520,58 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('CreateZoneForSite', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createZoneForSite: {
+          __typename: 'Zone',
+          createdAt: '2023-03-23T12:05:13.641Z',
+          id: 'clgmg76ch000208mid5o30du0',
+          originUrl:
+            'https://bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva.ipfs.gateway-ipfs.fleeksandbox.xyz',
+          originUrlChangedAt: null,
+          status: 'CREATING',
+          type: 'SITE',
+          updatedAt: '2023-03-23T12:05:13.641Z',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+  localhost.mutation(
+    'CreateZoneForPrivateGateway',
+    async ({ query, variables }) => {
+      const res = await executeGraphql({
+        schema,
+        source: query,
+        variableValues: variables,
+        rootValue: {
+          createZoneForPrivateGateway: {
+            __typename: 'Zone',
+            createdAt: '2023-03-23T12:05:13.641Z',
+
+            id: 'clgmg76ch000208mid5o30du0',
+            originUrl: 'https://storage.dev.on-fleek-test.app',
+            status: 'CREATING',
+            type: 'PRIVATE_GATEWAY',
+            updatedAt: '2023-03-23T12:05:13.641Z',
+          },
+        },
+      });
+
+      return HttpResponse.json({
+        data: res.data,
+        errors: res.errors,
+      });
+    },
+  ),
 ];
 
 export const handlers = [...queries, ...mutations];

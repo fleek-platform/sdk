@@ -492,4 +492,53 @@ describe('Domains', () => {
       }
     `);
   });
+
+  it('should create zone for site', async (context) => {
+    const response = await sdk
+      .domains()
+      .createZoneForSite({ siteId: state.sites.site.electronicCoEshop.id });
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+      },
+      `
+      Object {
+        "__typename": "Zone",
+        "createdAt": Anything,
+        "id": Any<String>,
+        "originUrl": "https://bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva.ipfs.gateway-ipfs.fleeksandbox.xyz",
+        "originUrlChangedAt": null,
+        "status": "CREATING",
+        "type": "SITE",
+        "updatedAt": Anything,
+      }
+    `,
+    );
+  });
+
+  it('should create zone for private gateway', async (context) => {
+    const response = await sdk.domains().createZoneForPrivateGateway();
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+      },
+      `
+      Object {
+        "__typename": "Zone",
+        "createdAt": Anything,
+        "id": Any<String>,
+        "originUrl": "https://storage.dev.on-fleek-test.app",
+        "status": "CREATING",
+        "type": "PRIVATE_GATEWAY",
+        "updatedAt": Anything,
+      }
+    `,
+    );
+  });
 });

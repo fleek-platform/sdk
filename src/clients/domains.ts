@@ -251,6 +251,7 @@ export class DomainsClient {
     siteId,
   }: { siteId: string }): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateZoneForSite',
       createZoneForSite: {
         __args: {
           where: {
@@ -269,6 +270,7 @@ export class DomainsClient {
 
   public createZoneForPrivateGateway = async (): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateZoneForPrivateGateway',
       createZoneForPrivateGateway: DomainsClient.ZONE_MAPPED_PROPERTIES,
     });
 
