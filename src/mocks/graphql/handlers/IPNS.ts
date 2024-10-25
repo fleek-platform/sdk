@@ -70,6 +70,29 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation(
+    'CreateIpnsRecordForSite',
+    async ({ query, variables }) => {
+      const res = await executeGraphql({
+        schema,
+        source: query,
+        variableValues: variables,
+        rootValue: {
+          createIpnsRecordForSite: {
+            ensRecords: [],
+            hash: 'bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva',
+            id: 'clgmg76ch000208mid5o30du0',
+            name: 'test-name',
+          },
+        },
+      });
+
+      return HttpResponse.json({
+        data: res.data,
+        errors: res.errors,
+      });
+    },
+  ),
 ];
 
 export const handlers = [...mutations];

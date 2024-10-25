@@ -120,6 +120,7 @@ export class IpnsClient {
     siteId,
   }: CreateRecordForSiteArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateIpnsRecordForSite',
       createIpnsRecordForSite: {
         __args: {
           where: {

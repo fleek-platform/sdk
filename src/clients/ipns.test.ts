@@ -78,4 +78,23 @@ describe('IPNS', () => {
     `,
     );
   });
+
+  it('should create IPNS record for site', async () => {
+    const response = await sdk
+      .ipns()
+      .createRecordForSite({ siteId: state.sites.site.electronicCoEshop.id });
+
+    // TODO: Investigate why the hash changed here
+    expect(response).toMatchInlineSnapshot(
+      { id: expect.any(String) },
+      `
+      Object {
+        "ensRecords": Array [],
+        "hash": "bafybeibtme5hmkjxsryerf6pihhfbhifwnsz7gmhnfqglg2r326m4glzva",
+        "id": Any<String>,
+        "name": "test-name",
+      }
+    `,
+    );
+  });
 });
