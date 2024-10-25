@@ -51,6 +51,7 @@ export class EnsClient {
     ipnsRecordId: string;
   }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateEnsRecord',
       createEnsRecord: {
         __args: {
           where: {
