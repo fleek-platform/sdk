@@ -15,13 +15,13 @@ async function textToCidV0(text: string): Promise<string> {
 const text = process.argv[2];
 
 if (!text) {
-  console.error('Please provide some text/content');
+  console.error('👹 Oops! Please provide some text/content');
   process.exit(1);
 }
 
 textToCidV0(text).then(cidString => {
-  console.log('CIDv0:', cidString);
+  console.log('✅ CIDv0:', cidString);
 }).catch(error => {
-  console.error('Error:', error);
+  console.error('👹 Oops! found error:', error);
   process.exit(1);
 });
