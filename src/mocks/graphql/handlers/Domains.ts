@@ -3,7 +3,6 @@ import { HttpResponse } from 'msw';
 
 import { localhost } from '@mocks/graphql/config';
 import { schemaStr } from '@mocks/graphql/schema';
-import { commitHash } from '@mocks/state';
 
 const schema = buildSchema(schemaStr);
 
@@ -169,6 +168,100 @@ const queries = [
               },
             },
           ],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+  localhost.query('GetDomainById', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        domain: {
+          __typename: 'Domain',
+          createdAt: '2023-03-24T09:05:13.641Z',
+          dnsConfigs: [
+            {
+              __typename: 'DnsConfig',
+              createdAt: '2023-03-23T09:05:13.641Z',
+              id: 'clgmg76ch000208mid5o30du0',
+              name: 'hostname',
+              type: 'CNAME',
+              updatedAt: '2023-03-23T09:05:13.641Z',
+              value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+            },
+            {
+              __typename: 'DnsConfig',
+              createdAt: '2023-03-23T10:05:13.641Z',
+              id: 'clgmgbj4h000308mi8aai0pli',
+              name: 'hostname',
+              type: 'CNAME',
+              updatedAt: '2023-03-23T10:05:13.641Z',
+              value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+            },
+          ],
+          hostname: 'electronic.co',
+          id: 'clgmfj1pa000108lc0g5i7d32',
+          isVerified: true,
+          status: 'ACTIVE',
+          updatedAt: '2023-03-24T09:05:13.641Z',
+          zone: {
+            __typename: 'Zone',
+            id: 'clgmfj874000208lc2e9ccglf',
+          },
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+  localhost.query('GetDomainByHostname', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        domainByHostname: {
+          __typename: 'Domain',
+          createdAt: '2023-03-24T09:05:13.641Z',
+          dnsConfigs: [
+            {
+              __typename: 'DnsConfig',
+              createdAt: '2023-03-23T09:05:13.641Z',
+              id: 'clgmg76ch000208mid5o30du0',
+              name: 'hostname',
+              type: 'CNAME',
+              updatedAt: '2023-03-23T09:05:13.641Z',
+              value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+            },
+            {
+              __typename: 'DnsConfig',
+              createdAt: '2023-03-23T10:05:13.641Z',
+              id: 'clgmgbj4h000308mi8aai0pli',
+              name: 'hostname',
+              type: 'CNAME',
+              updatedAt: '2023-03-23T10:05:13.641Z',
+              value: 'clgmfj874000208lc2e9ccglf.b-cdn.net',
+            },
+          ],
+          hostname: 'electronic.co',
+          id: 'clgmfj1pa000108lc0g5i7d32',
+          isVerified: true,
+          status: 'ACTIVE',
+          updatedAt: '2023-03-24T09:05:13.641Z',
+          zone: {
+            __typename: 'Zone',
+            id: 'clgmfj874000208lc2e9ccglf',
+          },
         },
       },
     });

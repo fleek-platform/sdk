@@ -10,6 +10,7 @@ import {
 import { server } from '../mocks/graphql/node';
 import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
 import { FleekSdk } from '../FleekSdk';
+import state from '../mocks/state';
 
 vi.mock('@aws-sdk/client-sfn', () => ({
   SFNClient: vi.fn(() => ({
@@ -187,5 +188,89 @@ describe('Domains', () => {
         },
       ]
     `);
+  });
+
+  it('should get domain by its id', async (context) => {
+    const response = await sdk.domains().get({
+      domainId: state.domains.domain.electronicCoPrimary.id,
+    });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "__typename": "Domain",
+        "createdAt": "2023-03-24T09:05:13.641Z",
+        "dnsConfigs": Array [
+          Object {
+            "__typename": "DnsConfig",
+            "createdAt": "2023-03-23T09:05:13.641Z",
+            "id": "clgmg76ch000208mid5o30du0",
+            "name": "hostname",
+            "type": "CNAME",
+            "updatedAt": "2023-03-23T09:05:13.641Z",
+            "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+          },
+          Object {
+            "__typename": "DnsConfig",
+            "createdAt": "2023-03-23T10:05:13.641Z",
+            "id": "clgmgbj4h000308mi8aai0pli",
+            "name": "hostname",
+            "type": "CNAME",
+            "updatedAt": "2023-03-23T10:05:13.641Z",
+            "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+          },
+        ],
+        "hostname": "electronic.co",
+        "id": "clgmfj1pa000108lc0g5i7d32",
+        "isVerified": true,
+        "status": "ACTIVE",
+        "updatedAt": "2023-03-24T09:05:13.641Z",
+        "zone": Object {
+          "__typename": "Zone",
+          "id": "clgmfj874000208lc2e9ccglf",
+        },
+      }
+    `);
+  });
+
+  it('should get domains by its hostname', async () => {
+    const response = await sdk.domains().getByHostname({
+      hostname: state.domains.domain.electronicCoPrimary.hostname,
+    });
+
+    expect(response).toMatchInlineSnapshot(`
+        Object {
+          "__typename": "Domain",
+          "createdAt": "2023-03-24T09:05:13.641Z",
+          "dnsConfigs": Array [
+            Object {
+              "__typename": "DnsConfig",
+              "createdAt": "2023-03-23T09:05:13.641Z",
+              "id": "clgmg76ch000208mid5o30du0",
+              "name": "hostname",
+              "type": "CNAME",
+              "updatedAt": "2023-03-23T09:05:13.641Z",
+              "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+            },
+            Object {
+              "__typename": "DnsConfig",
+              "createdAt": "2023-03-23T10:05:13.641Z",
+              "id": "clgmgbj4h000308mi8aai0pli",
+              "name": "hostname",
+              "type": "CNAME",
+              "updatedAt": "2023-03-23T10:05:13.641Z",
+              "value": "clgmfj874000208lc2e9ccglf.b-cdn.net",
+            },
+          ],
+          "hostname": "electronic.co",
+          "id": "clgmfj1pa000108lc0g5i7d32",
+          "isVerified": true,
+          "status": "ACTIVE",
+          "updatedAt": "2023-03-24T09:05:13.641Z",
+          "zone": Object {
+            "__typename": "Zone",
+            "id": "clgmfj874000208lc2e9ccglf",
+          },
+        }
+      `);
   });
 });

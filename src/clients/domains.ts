@@ -102,6 +102,7 @@ export class DomainsClient {
 
   public get = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainById',
       domain: {
         __args: {
           where: {
@@ -123,6 +124,7 @@ export class DomainsClient {
     hostname,
   }: { hostname: string }): Promise<DomainWithRelations> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainByHostname',
       domainByHostname: {
         __args: {
           where: {
