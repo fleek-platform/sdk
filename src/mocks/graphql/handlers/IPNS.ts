@@ -58,6 +58,35 @@ const queries = [
       errors: res.errors,
     });
   }),
+  localhost.query('GetIpnsRecordByName', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        ipnsRecord: {
+          ensRecords: [
+            {
+              id: '8d3ad502-ec4d-489e-858e-d112656f3511',
+            },
+            {
+              id: 'clm0mhccs000108ma34jn6ed3',
+            },
+          ],
+          hash: 'QmcvfRw5WDutRzvRNq2matcJWW2nKWFGDbqxaaTxnWksME',
+          id: 'clgkj995t000108med7gb2w4v',
+          name: 'k51qzi5uqu5dhrupvn0ru1c6el43rhimh95cuiwqy0ofo8bgomvq296b49v9r7',
+        },
+      },
+    });
+
+    console.log(`[debug] ${JSON.stringify(res)}`);
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 const mutations = [

@@ -163,6 +163,7 @@ export class IpnsClient {
 
   public getRecord = async ({ name }: GetRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetIpnsRecordByName',
       ipnsRecord: {
         __args: {
           where: {
