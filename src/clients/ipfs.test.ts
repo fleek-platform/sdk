@@ -12,11 +12,14 @@ import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graph
 import { FleekSdk } from '../FleekSdk';
 
 type MockFileNames = 'HelloWorld' | 'Lyrics';
-type MockFiles = Record<MockFileNames, {
-  path: string;
-  content: Buffer;
-  cid: string;
-}>;
+type MockFiles = Record<
+  MockFileNames,
+  {
+    path: string;
+    content: Buffer;
+    cid: string;
+  }
+>;
 
 const mockFiles: MockFiles = {
   HelloWorld: {
@@ -29,14 +32,14 @@ const mockFiles: MockFiles = {
     content: Buffer.from('My favourite song lyrics'),
     cid: 'QmQtQq4iofjT8vgD75G3UPF3v4caatuFw3YnU2mhn17BUf',
   },
-}
+};
 
 const mockUploadContent = vi.fn().mockImplementation(async ({ basename }) => {
   if (basename === 'HelloWorld.txt') {
     return {
       pin: {
         cid: mockFiles.HelloWorld.cid,
-        size: 100
+        size: 100,
       },
       duplicate: false,
     };
@@ -46,18 +49,58 @@ const mockUploadContent = vi.fn().mockImplementation(async ({ basename }) => {
     return {
       pin: {
         cid: mockFiles.HelloWorld.cid,
-        size: 100
+        size: 100,
+      },
+      duplicate: false,
+    };
+  }
+
+  if (basename === 'src') {
+    return {
+      pin: {
+        // TODO: Missing CID
+        cid: mockFiles.HelloWorld.cid,
+        size: 10000,
       },
       duplicate: false,
     };
   }
 });
-  
+
 vi.mock('./uploadProxy', () => {
   return {
     UploadProxyClient: vi.fn().mockImplementation(() => ({
-      uploadContent: mockUploadContent
-    }))
+      uploadContent: mockUploadContent,
+    })),
+  };
+});
+
+vi.mock('@web3-storage/upload-client', () => {
+  return {
+    UnixFS: {
+      createFileEncoderStream: vi.fn(),
+      createDirectoryEncoderStream: vi.fn(),
+    }
+  };
+});
+
+vi.mock('files-from-path', () => {
+  return {
+    filesFromPaths: vi.fn(),
+  };
+});
+
+vi.mock('fs', async () => {
+  const actual = await vi.importActual<typeof import('fs')>('fs');
+  return {
+    ...actual,
+    promises: {
+      ...actual.promises,
+      stat: vi.fn().mockResolvedValue({
+        isDirectory: () => true,
+        size: 1024,
+      })
+    }
   };
 });
 
@@ -73,7 +116,7 @@ describe('FleekSDK', () => {
 
   it('should add file to ipfs', async () => {
     const { path, content } = mockFiles.HelloWorld;
-    
+
     const response = await sdk.ipfs().add({
       path,
       content,
@@ -130,10 +173,7 @@ describe('FleekSDK', () => {
   it('should add all files to ipfs', async () => {
     const { HelloWorld, Lyrics } = mockFiles;
 
-    const response = await sdk.ipfs().addAll([
-      HelloWorld,
-      Lyrics,
-    ]);
+    const response = await sdk.ipfs().addAll([HelloWorld, Lyrics]);
 
     expect(response).toMatchInlineSnapshot(`
       Array [
@@ -229,5 +269,11 @@ describe('FleekSDK', () => {
     `);
   });
 
-  it.todo('should add files by path', async () => {});
+  it.todo('should add files by path', async () => {
+    const response = await sdk
+      .ipfs()
+      .addFromPath('./src');
+
+    expect(response).toMatchInlineSnapshot(`{}`);
+  });
 });

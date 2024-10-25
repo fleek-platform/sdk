@@ -12,8 +12,7 @@ const queries = [
       schema,
       source: query,
       variableValues: variables,
-      rootValue: {
-      },
+      rootValue: {},
     });
 
     return HttpResponse.json({
