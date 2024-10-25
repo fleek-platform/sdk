@@ -77,6 +77,7 @@ export class PrivateGatewayClient {
 
   public getBySlug = async ({ slug }: GetPrivateGatewayBySlugArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPrivateGatewayBySlug',
       privateGatewayBySlug: {
         __args: {
           where: {
