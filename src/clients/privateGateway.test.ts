@@ -208,12 +208,10 @@ describe('PrivateGateway', () => {
   });
 
   it('update private gateway', async () => {
-    const response = await sdk
-      .privateGateways()
-      .update({
-        id: state.storageIpfs.privateGateways.electronicCoEshop.id,
-        name: 'new electronic.co eshop',
-      });
+    const response = await sdk.privateGateways().update({
+      id: state.storageIpfs.privateGateways.electronicCoEshop.id,
+      name: 'new electronic.co eshop',
+    });
 
     expect(response).toMatchInlineSnapshot(
       { updatedAt: expect.anything() },

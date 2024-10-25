@@ -46,6 +46,7 @@ export class ProjectsClient {
 
   public create = async ({ name }: CreateProjectArgs): Promise<Project> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateProject',
       createProject: {
         __args: {
           data: {
