@@ -13,6 +13,7 @@ export class UserClient {
 
   public listPersonalAccessTokens = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetPersonalAccessTokens',
       personalAccessTokens: {
         data: {
           id: true,
