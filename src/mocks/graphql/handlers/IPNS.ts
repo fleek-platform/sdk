@@ -93,6 +93,26 @@ const mutations = [
       });
     },
   ),
+  localhost.mutation('DeleteIpnsRecord', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deleteIpnsRecord: {
+          ensRecords: [],
+          hash: 'QmcvfRw5WDutRzvRNq2matcJWW2nKWFGDbqxaaTxnWksME',
+          id: 'clgkj995t000108med7gb2w4v',
+          name: 'k51qzi5uqu5dhrupvn0ru1c6el43rhimh95cuiwqy0ofo8bgomvq296b49v9r7',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...mutations];

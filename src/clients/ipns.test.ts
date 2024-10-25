@@ -97,4 +97,19 @@ describe('IPNS', () => {
     `,
     );
   });
+
+  it('should delete IPNS record', async () => {
+    const response = await sdk
+      .ipns()
+      .deleteRecord({ id: state.ipns.ipnsRecord.electronicCoEshop.id });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "ensRecords": Array [],
+        "hash": "QmcvfRw5WDutRzvRNq2matcJWW2nKWFGDbqxaaTxnWksME",
+        "id": "clgkj995t000108med7gb2w4v",
+        "name": "k51qzi5uqu5dhrupvn0ru1c6el43rhimh95cuiwqy0ofo8bgomvq296b49v9r7",
+      }
+    `);
+  });
 });

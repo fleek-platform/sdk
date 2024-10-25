@@ -138,6 +138,7 @@ export class IpnsClient {
     id,
   }: DeleteRecordArgs): Promise<IpnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteIpnsRecord',
       deleteIpnsRecord: {
         __args: {
           where: {
