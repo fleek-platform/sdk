@@ -135,6 +135,7 @@ export class EnsClient {
 
   public list = async (): Promise<EnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecords',
       ensRecords: {
         data: {
           ...EnsClient.ENS_MAPPED_PROPERTIES,
