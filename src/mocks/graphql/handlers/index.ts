@@ -7,6 +7,7 @@ import { handlers as FunctionsHandlers } from './Functions';
 import { handlers as IpnsHandlers } from './IPNS';
 import { handlers as PrivateGatewayHandlers } from './PrivateGateway';
 import { handlers as ProjectsHandlers } from './Projects';
+import { handlers as SitesHandlers } from './Sites';
 
 export const mockGraphqlServiceApiUrl = 'https://fleek.mock.server/graphql';
 export const localhost = graphql.link(mockGraphqlServiceApiUrl);
@@ -20,4 +21,5 @@ export const handlers = [
   ...IpnsHandlers,
   ...PrivateGatewayHandlers,
   ...ProjectsHandlers,
+  ...SitesHandlers,
 ];

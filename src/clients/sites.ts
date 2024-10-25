@@ -77,6 +77,7 @@ export class SitesClient {
 
   public get = async ({ id }: GetSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetSiteById',
       site: {
         __args: {
           where: {
