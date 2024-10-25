@@ -140,4 +140,44 @@ describe('PrivateGateway', () => {
       ]
     `);
   });
+
+  it('create private gateway', async () => {
+    const name = 'new-gateway';
+    const response = await sdk.privateGateways().create({
+      name,
+      zoneId: state.domains.zone.electronicCoBackupDocuments.id,
+    });
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+        slug: expect.any(String),
+        name,
+      },
+      `
+      Object {
+        "__typename": "PrivateGateway",
+        "createdAt": Anything,
+        "id": Any<String>,
+        "name": "new-gateway",
+        "primaryDomain": Object {
+          "__typename": "Domain",
+          "id": "clmhwwted000108mnajduel68",
+        },
+        "project": Object {
+          "__typename": "Project",
+          "id": "clgkiwjd8000c08mefyco2eoo",
+        },
+        "slug": Any<String>,
+        "updatedAt": Anything,
+        "zone": Object {
+          "__typename": "Zone",
+          "id": "clu71yju0000008ji67mzdyzb",
+        },
+      }
+    `,
+    );
+  });
 });

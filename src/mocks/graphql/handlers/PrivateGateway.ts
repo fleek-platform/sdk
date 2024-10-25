@@ -155,4 +155,43 @@ const queries = [
   }),
 ];
 
-export const handlers = [...queries];
+const mutations = [
+  localhost.mutation('CreatePrivateGateway', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createPrivateGateway: {
+          __typename: 'PrivateGateway',
+          createdAt: '2023-03-23T09:05:13.641Z',
+
+          id: 'clgmfj874000208lc2e9ccglf',
+
+          name: 'new-gateway',
+          primaryDomain: {
+            __typename: 'Domain',
+            id: 'clmhwwted000108mnajduel68',
+          },
+          project: {
+            __typename: 'Project',
+            id: 'clgkiwjd8000c08mefyco2eoo',
+          },
+          slug: '',
+          updatedAt: '2023-03-23T09:05:13.641Z',
+          zone: {
+            __typename: 'Zone',
+            id: 'clu71yju0000008ji67mzdyzb',
+          },
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+];
+
+export const handlers = [...queries, ...mutations];

@@ -115,6 +115,7 @@ export class PrivateGatewayClient {
 
   public create = async ({ name, zoneId }: CreatePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreatePrivateGateway',
       createPrivateGateway: {
         __args: {
           where: {
