@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@mocks/*": ["./src/mocks/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
-    "lib": ["es2020","dom"],
+    "lib": ["es2020", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noErrorTruncation": true,
     "noImplicitAny": true,
     "outDir": "dist",
     "resolveJsonModule": true,
@@ -14,9 +19,10 @@
     "sourceMap": true,
     "target": "es2020",
     "useUnknownInCatchVariables": true,
-    "noErrorTruncation": true
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/index.ts"],
   "exclude": ["dist", "**/node_modules", "**/*.test.ts"],
   "extends": "@tsconfig/node16/tsconfig.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

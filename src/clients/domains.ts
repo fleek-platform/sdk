@@ -77,6 +77,7 @@ export class DomainsClient {
   // Promise<DomainsWithAggregation["data"]> fails for some reason
   public list = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomains',
       domains: {
         data: {
           ...DomainsClient.DOMAIN_MAPPED_PROPERTIES,
@@ -101,6 +102,7 @@ export class DomainsClient {
 
   public get = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainById',
       domain: {
         __args: {
           where: {
@@ -122,6 +124,7 @@ export class DomainsClient {
     hostname,
   }: { hostname: string }): Promise<DomainWithRelations> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainByHostname',
       domainByHostname: {
         __args: {
           where: {
@@ -141,6 +144,7 @@ export class DomainsClient {
 
   public listByZoneId = async ({ zoneId }: { zoneId: string }) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetDomainsByZoneId',
       domainsByZoneId: {
         __args: {
           where: {
@@ -166,6 +170,7 @@ export class DomainsClient {
     hostname,
   }: { zoneId: string; hostname: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateDomain',
       createDomain: {
         __args: {
           where: {
@@ -187,6 +192,7 @@ export class DomainsClient {
 
   public deleteDomain = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteDomain',
       deleteDomain: {
         __args: {
           where: {
@@ -202,6 +208,7 @@ export class DomainsClient {
 
   public verifyDomain = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'VerifyDomain',
       verifyDomain: {
         __args: {
           where: {
@@ -217,6 +224,7 @@ export class DomainsClient {
 
   public listZones = async (): Promise<Zone[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'ListZones',
       zones: { data: DomainsClient.ZONE_MAPPED_PROPERTIES },
     });
 
@@ -225,6 +233,7 @@ export class DomainsClient {
 
   public getZone = async ({ id }: { id: string }): Promise<Zone> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetZone',
       zone: {
         __args: {
           where: {
@@ -242,6 +251,7 @@ export class DomainsClient {
     siteId,
   }: { siteId: string }): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateZoneForSite',
       createZoneForSite: {
         __args: {
           where: {
@@ -260,6 +270,7 @@ export class DomainsClient {
 
   public createZoneForPrivateGateway = async (): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateZoneForPrivateGateway',
       createZoneForPrivateGateway: DomainsClient.ZONE_MAPPED_PROPERTIES,
     });
 
@@ -268,6 +279,7 @@ export class DomainsClient {
 
   public deleteZone = async ({ id }: { id: string }): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteZone',
       deleteZone: {
         __args: {
           where: {

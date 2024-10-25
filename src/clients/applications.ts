@@ -56,6 +56,7 @@ export class ApplicationsClient {
 
   public get = async ({ id }: GetApplicationArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetApplication',
       application: {
         __args: {
           where: {
@@ -71,7 +72,10 @@ export class ApplicationsClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
-      applications: { data: ApplicationsClient.APPLICATION_MAPPED_PROPERTIES },
+      __name: 'GetApplications',
+      applications: {
+        data: ApplicationsClient.APPLICATION_MAPPED_PROPERTIES,
+      },
     });
 
     return response.applications.data;
@@ -79,6 +83,7 @@ export class ApplicationsClient {
 
   public create = async ({ name, whitelistDomains }: CreateApplicationArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateApplication',
       createApplication: {
         __args: {
           data: {
@@ -102,6 +107,7 @@ export class ApplicationsClient {
     whitelistDomains,
   }: UpdateApplicationArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'UpdateApplication',
       updateApplication: {
         __args: {
           where: { id },
@@ -122,6 +128,7 @@ export class ApplicationsClient {
 
   public delete = async ({ id }: DeleteApplicationArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteApplication',
       deleteApplication: {
         __args: {
           where: {

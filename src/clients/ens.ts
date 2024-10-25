@@ -51,6 +51,7 @@ export class EnsClient {
     ipnsRecordId: string;
   }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateEnsRecord',
       createEnsRecord: {
         __args: {
           where: {
@@ -70,6 +71,7 @@ export class EnsClient {
 
   public get = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecord',
       ensRecord: {
         __args: {
           where: {
@@ -85,6 +87,7 @@ export class EnsClient {
 
   public getByName = async ({ name }: { name: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecordByName',
       ensRecordByName: {
         __args: {
           where: {
@@ -100,6 +103,7 @@ export class EnsClient {
 
   public verify = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'VerifyEnsRecord',
       verifyEnsRecord: {
         __args: {
           where: {
@@ -115,6 +119,7 @@ export class EnsClient {
 
   public delete = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteEnsRecord',
       deleteEnsRecord: {
         __args: {
           where: {
@@ -130,6 +135,7 @@ export class EnsClient {
 
   public list = async (): Promise<EnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecords',
       ensRecords: {
         data: {
           ...EnsClient.ENS_MAPPED_PROPERTIES,
@@ -144,6 +150,7 @@ export class EnsClient {
     ipnsRecordId,
   }: { ipnsRecordId: string }): Promise<EnsRecord[]> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecordsByIpnsId',
       ensRecordsByIpnsId: {
         __args: {
           where: {

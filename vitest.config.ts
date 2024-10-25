@@ -1,22 +1,22 @@
-import { vitestConfig } from '@fleek-platform/tester';
-import { merge } from 'lodash';
-import { defineConfig, UserConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
+import path from 'path';
 
-export default defineConfig(
-  merge(vitestConfig, {
-    test: {
-      setupFiles: ['vitest.setup.ts'],
-      globalSetup: ['vitest.globalSetup.ts'],
-      server: {
-        deps: {
-          // Because of https://github.com/vitest-dev/vitest/issues/2806
-          inline: [/^(?!.*vitest).*$/],
-        },
-      },
+export default defineConfig({
+  test: {
+    coverage: {
+      include: ['src/**'],
+      all: true,
+      reporter: ['text', 'json-summary'],
     },
-    resolve: {
-      // Because vitest cannot mock modules if they are called via `require()`
-      mainFields: ['module'],
+    snapshotFormat: {
+      printBasicPrototype: true,
     },
-  } satisfies UserConfig)
-);
+    setupFiles: ['vitest.setup.ts'],
+    clearMocks: true,
+  },
+  resolve: {
+    alias: {
+      '@mocks': path.resolve(__dirname, './src/mocks')
+    },
+  },
+});
