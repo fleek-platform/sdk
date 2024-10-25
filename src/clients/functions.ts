@@ -86,6 +86,7 @@ export class FunctionsClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetFleekFunctions',
       fleekFunctions: {
         __args: {},
         data: {
