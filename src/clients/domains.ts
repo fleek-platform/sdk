@@ -208,6 +208,7 @@ export class DomainsClient {
 
   public verifyDomain = async ({ domainId }: { domainId: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'VerifyDomain',
       verifyDomain: {
         __args: {
           where: {

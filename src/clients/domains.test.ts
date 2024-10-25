@@ -385,4 +385,30 @@ describe('Domains', () => {
     `,
     );
   });
+
+  it('should verify domain', async () => {
+    const response = await sdk
+      .domains()
+      .verifyDomain({ domainId: state.domains.domain.electronicCoEshop.id });
+
+    expect(response).toMatchInlineSnapshot(
+      { updatedAt: expect.anything() },
+      `
+      Object {
+        "__typename": "Domain",
+        "createdAt": "2023-03-24T10:05:13.641Z",
+        "dnsConfigs": Array [],
+        "hostname": "eshop-electronic.co",
+        "id": "clgmfj874000208lc2e9ccglf",
+        "isVerified": false,
+        "status": "VERIFYING",
+        "updatedAt": Anything,
+        "zone": Object {
+          "__typename": "Zone",
+          "id": "clgmfj874000208lc2e9ccglf",
+        },
+      }
+    `,
+    );
+  });
 });

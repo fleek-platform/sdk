@@ -392,6 +392,34 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('VerifyDomain', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        verifyDomain: {
+          __typename: 'Domain',
+          createdAt: '2023-03-24T10:05:13.641Z',
+          dnsConfigs: [],
+          hostname: 'eshop-electronic.co',
+          id: 'clgmfj874000208lc2e9ccglf',
+          isVerified: false,
+          status: 'VERIFYING',
+          updatedAt: '2023-03-23T12:05:13.641Z',
+          zone: {
+            __typename: 'Zone',
+            id: 'clgmfj874000208lc2e9ccglf',
+          },
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries, ...mutations];
