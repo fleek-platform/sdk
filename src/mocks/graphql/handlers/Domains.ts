@@ -572,6 +572,30 @@ const mutations = [
       });
     },
   ),
+  localhost.mutation('DeleteZone', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deleteZone: {
+          __typename: 'Zone',
+          createdAt: '2022-12-30T11:04:13.641Z',
+          id: 'clje357cc000108jse08c2t6m',
+          originUrl:
+            'https://ipfs.io/ipfs/QmdG8HaQAYccz22zLgJ33trzu8g6wjF6e48YbBEZhbz342',
+          status: 'DELETING',
+          type: 'SITE',
+          updatedAt: '2023-03-23T12:05:13.641Z',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries, ...mutations];

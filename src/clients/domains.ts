@@ -279,6 +279,7 @@ export class DomainsClient {
 
   public deleteZone = async ({ id }: { id: string }): Promise<Zone> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteZone',
       deleteZone: {
         __args: {
           where: {
