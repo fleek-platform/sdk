@@ -157,6 +157,7 @@ export class FunctionsClient {
 
   public delete = async ({ id }: DeleteFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteFleekFunction',
       deleteFleekFunction: {
         __args: {
           where: {

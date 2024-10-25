@@ -132,6 +132,30 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('DeleteFleekFunction', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deleteFleekFunction: {
+          currentDeployment: null,
+          currentDeploymentId: null,
+          id: 'clje32iwx000008js9rjb5uoo',
+          invokeUrl: 'green-gold-silver.functions.on-fleek.app',
+          name: 'electronic-co-videos',
+          projectId: 'clgkiwjd8000c08mefyco2eoo',
+          slug: 'green-gold-silver',
+          status: 'ACTIVE',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries, ...mutations];
