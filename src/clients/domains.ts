@@ -170,6 +170,7 @@ export class DomainsClient {
     hostname,
   }: { zoneId: string; hostname: string }) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateDomain',
       createDomain: {
         __args: {
           where: {

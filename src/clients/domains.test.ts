@@ -331,4 +331,32 @@ describe('Domains', () => {
       ]
     `);
   });
+
+  it('should create domain', async () => {
+    const response = await sdk.domains().createDomain({
+      hostname: 'super-eshop.xyz',
+      zoneId: state.domains.zone.electronicCoEshop.id,
+    });
+
+    expect(response).toMatchInlineSnapshot(
+      {
+        createdAt: expect.anything(),
+        id: expect.any(String),
+        updatedAt: expect.anything(),
+      },
+      `
+      Object {
+        "__typename": "Domain",
+        "createdAt": Anything,
+        "dnslinkStatus": null,
+        "errorMessage": null,
+        "hostname": "super-eshop.xyz",
+        "id": Any<String>,
+        "isVerified": false,
+        "status": "CREATING",
+        "updatedAt": Anything,
+      }
+    `,
+    );
+  });
 });

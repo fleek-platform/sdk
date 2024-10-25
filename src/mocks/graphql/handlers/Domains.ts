@@ -338,4 +338,34 @@ const queries = [
   }),
 ];
 
-export const handlers = [...queries];
+const mutations = [
+  localhost.mutation('CreateDomain', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createDomain: {
+          __typename: 'Domain',
+          createdAt: '2023-03-23T12:05:13.641Z',
+          dnslinkStatus: null,
+          errorMessage: null,
+          hostname: 'super-eshop.xyz',
+          id: 'cli2ymypd000208l86gjd6p17',
+          isVerified: false,
+          status: 'CREATING',
+          updatedAt: '2023-03-23T12:05:13.641Z',
+        },
+      },
+    });
+
+    console.log(`[debug] ${JSON.stringify(res)}`)
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+];
+
+export const handlers = [...queries, ...mutations];
