@@ -158,6 +158,7 @@ export class SitesClient {
 
   public delete = async ({ id }: DeleteSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteSite',
       deleteSite: {
         __args: {
           where: {

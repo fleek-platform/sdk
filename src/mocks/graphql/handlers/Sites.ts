@@ -392,6 +392,35 @@ const mutations = [
       errors: res.errors,
     });
   }),
+  localhost.mutation('DeleteSite', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        deleteSite: {
+          deployments: [],
+          domains: [],
+          id: 'clje32iwx000008js9rjb5uoo',
+          ipnsRecords: [],
+          name: 'electronic-co-videos',
+          slug: 'green-gold-silver',
+          zones: [
+            {
+              __typename: 'SiteZone',
+              id: 'clje357cc000108jse08c2t6m',
+              status: 'CREATING_FAILED',
+            },
+          ],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
 ];
 
 export const handlers = [...queries, ...mutations];

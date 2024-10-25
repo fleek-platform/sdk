@@ -374,4 +374,28 @@ describe('Sites', () => {
     `,
     );
   });
+
+  it('should delete site', async () => {
+    const response = await sdk.sites().delete({
+      id: state.sites.site.electronicCoVideos.id,
+    });
+
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "deployments": Array [],
+        "domains": Array [],
+        "id": "clje32iwx000008js9rjb5uoo",
+        "ipnsRecords": Array [],
+        "name": "electronic-co-videos",
+        "slug": "green-gold-silver",
+        "zones": Array [
+          Object {
+            "__typename": "SiteZone",
+            "id": "clje357cc000108jse08c2t6m",
+            "status": "CREATING_FAILED",
+          },
+        ],
+      }
+    `);
+  });
 });
