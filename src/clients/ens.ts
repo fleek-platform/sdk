@@ -87,6 +87,7 @@ export class EnsClient {
 
   public getByName = async ({ name }: { name: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecordByName',
       ensRecordByName: {
         __args: {
           where: {
