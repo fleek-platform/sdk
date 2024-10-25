@@ -368,4 +368,30 @@ const queries = [
   }),
 ];
 
-export const handlers = [...queries];
+const mutations = [
+  localhost.mutation('CreateSite', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createSite: {
+          deployments: [],
+          domains: [],
+          id: 'clgmajwf7000208mo67lnhgu0',
+          ipnsRecords: [],
+          name: 'new-site',
+          slug: 'crooked-bland-jackal',
+          zones: [],
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+];
+
+export const handlers = [...queries, ...mutations];

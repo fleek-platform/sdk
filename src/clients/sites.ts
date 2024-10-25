@@ -138,6 +138,7 @@ export class SitesClient {
 
   public create = async ({ name }: CreateSiteArgs): Promise<Site> => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateSite',
       createSite: {
         __args: {
           data: {

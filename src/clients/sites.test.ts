@@ -353,4 +353,25 @@ describe('Sites', () => {
       ]
     `);
   });
+
+  it('should create site', async () => {
+    const response = await sdk.sites().create({
+      name: 'new-site',
+    });
+
+    expect(response).toMatchInlineSnapshot(
+      { id: expect.any(String) },
+      `
+      Object {
+        "deployments": Array [],
+        "domains": Array [],
+        "id": Any<String>,
+        "ipnsRecords": Array [],
+        "name": "new-site",
+        "slug": "crooked-bland-jackal",
+        "zones": Array [],
+      }
+    `,
+    );
+  });
 });
