@@ -119,6 +119,7 @@ export class FunctionsClient {
 
   public create = async ({ name }: CreateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateFleekFunction',
       createFleekFunction: {
         __args: {
           data: {

@@ -119,4 +119,26 @@ describe('FleekSDK', () => {
       ]
     `);
   });
+
+  it('should create function', async () => {
+    const response = await sdk.functions().create({
+      name: 'new-function',
+    });
+
+    expect(response).toMatchInlineSnapshot(
+      { id: expect.any(String) },
+      `
+      Object {
+        "currentDeployment": null,
+        "currentDeploymentId": null,
+        "id": Any<String>,
+        "invokeUrl": "https://crooked-bland-jackal.dev.on-fleek-functions.app",
+        "name": "new-function",
+        "projectId": "clgkiwjd8000c08mefyco2eoo",
+        "slug": "crooked-bland-jackal",
+        "status": "ACTIVE",
+      }
+    `,
+    );
+  });
 });

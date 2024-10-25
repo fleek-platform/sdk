@@ -107,4 +107,31 @@ const queries = [
   }),
 ];
 
-export const handlers = [...queries];
+const mutations = [
+  localhost.mutation('CreateFleekFunction', async ({ query, variables }) => {
+    const res = await executeGraphql({
+      schema,
+      source: query,
+      variableValues: variables,
+      rootValue: {
+        createFleekFunction: {
+          currentDeployment: null,
+          currentDeploymentId: null,
+          id: 'clgmg76ch000208mid5o30du0',
+          invokeUrl: 'https://crooked-bland-jackal.dev.on-fleek-functions.app',
+          name: 'new-function',
+          projectId: 'clgkiwjd8000c08mefyco2eoo',
+          slug: 'crooked-bland-jackal',
+          status: 'ACTIVE',
+        },
+      },
+    });
+
+    return HttpResponse.json({
+      data: res.data,
+      errors: res.errors,
+    });
+  }),
+];
+
+export const handlers = [...queries, ...mutations];
