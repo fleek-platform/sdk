@@ -80,7 +80,7 @@ vi.mock('@web3-storage/upload-client', () => {
     UnixFS: {
       createFileEncoderStream: vi.fn(),
       createDirectoryEncoderStream: vi.fn(),
-    }
+    },
   };
 });
 
@@ -99,8 +99,8 @@ vi.mock('fs', async () => {
       stat: vi.fn().mockResolvedValue({
         isDirectory: () => true,
         size: 1024,
-      })
-    }
+      }),
+    },
   };
 });
 
@@ -270,9 +270,7 @@ describe('FleekSDK', () => {
   });
 
   it.todo('should add files by path', async () => {
-    const response = await sdk
-      .ipfs()
-      .addFromPath('./src');
+    const response = await sdk.ipfs().addFromPath('./src');
 
     expect(response).toMatchInlineSnapshot(`{}`);
   });
