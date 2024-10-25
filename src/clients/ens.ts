@@ -71,6 +71,7 @@ export class EnsClient {
 
   public get = async ({ id }: { id: string }): Promise<EnsRecord> => {
     const response = await this.graphqlClient.query({
+      __name: 'GetEnsRecord',
       ensRecord: {
         __args: {
           where: {
