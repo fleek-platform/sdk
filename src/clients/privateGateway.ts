@@ -150,6 +150,7 @@ export class PrivateGatewayClient {
 
   public update = async ({ id, name }: UpdatePrivateGatewayArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'UpdatePrivateGateway',
       updatePrivateGateway: {
         __args: {
           where: {

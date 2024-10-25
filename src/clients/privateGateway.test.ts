@@ -187,7 +187,8 @@ describe('PrivateGateway', () => {
       .delete({ id: state.storageIpfs.privateGateways.electronicCoPhotos.id });
 
     expect(response).toMatchInlineSnapshot(
-      { updatedAt: expect.any(String) }, `
+      { updatedAt: expect.any(String) },
+      `
       Object {
         "__typename": "PrivateGateway",
         "createdAt": "2023-04-25T09:05:13.641Z",
@@ -202,6 +203,42 @@ describe('PrivateGateway', () => {
         "updatedAt": Any<String>,
         "zone": null,
       }
-    `);
+    `,
+    );
+  });
+
+  it('update private gateway', async () => {
+    const response = await sdk
+      .privateGateways()
+      .update({
+        id: state.storageIpfs.privateGateways.electronicCoEshop.id,
+        name: 'new electronic.co eshop',
+      });
+
+    expect(response).toMatchInlineSnapshot(
+      { updatedAt: expect.anything() },
+      `
+      Object {
+        "__typename": "PrivateGateway",
+        "createdAt": "2023-03-24T09:05:13.641Z",
+        "id": "clhruz26u000108mbdb2zaft0",
+        "name": "new electronic.co eshop",
+        "primaryDomain": Object {
+          "__typename": "Domain",
+          "id": "clmhwwted000108mnajduel68",
+        },
+        "project": Object {
+          "__typename": "Project",
+          "id": "clgkiwjd8000c08mefyco2eoo",
+        },
+        "slug": "blue-fox-two",
+        "updatedAt": Anything,
+        "zone": Object {
+          "__typename": "Zone",
+          "id": "cljfq6n2y000008lb4oy403bc",
+        },
+      }
+    `,
+    );
   });
 });
