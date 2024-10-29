@@ -30,11 +30,9 @@ describe('User', () => {
   });
 
   it('should delete personal access token', async () => {
-    const response = await sdk
-      .user()
-      .deletePersonalAccessToken({
-        id: state.auth.personalAccessToken.joshOwnedToken.id,
-      });
+    const response = await sdk.user().deletePersonalAccessToken({
+      id: state.auth.personalAccessToken.joshOwnedToken.id,
+    });
 
     expect(response).toMatchInlineSnapshot(`
       Object {
