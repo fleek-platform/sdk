@@ -55,6 +55,7 @@
     "@fleek-platform/errors": "workspace:*",
     "@fleek-platform/utils-genql-client": "workspace:*",
     "@fleek-platform/utils-token": "workspace:*",
+    "@fleek-platform/env-guards": "workspace:*",
     "@jspm/core": "^2.0.1",
     "@tsconfig/node16": "^16.1.3",
     "@types/detect-node": "^2.0.0",
