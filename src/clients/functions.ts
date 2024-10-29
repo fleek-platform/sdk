@@ -33,6 +33,7 @@ export type DeployFleekFunctionArgs = {
   cid: string;
   sgx?: boolean;
   blake3Hash?: string;
+  assetsCid?: string;
 };
 export type ListFleekFunctionArgs = {
   functionId: string;
@@ -41,28 +42,26 @@ export type ListFleekFunctionArgs = {
 export class FunctionsClient {
   private graphqlClient: Client;
 
-  private static Deployment_MAPPED_PROPERTIES: FleekFunctionDeploymentGenqlSelection =
-    {
-      id: true,
-      fleekFunctionId: true,
-      cid: true,
-      updatedAt: true,
-      createdAt: true,
-    };
+  private static Deployment_MAPPED_PROPERTIES: FleekFunctionDeploymentGenqlSelection = {
+    id: true,
+    fleekFunctionId: true,
+    cid: true,
+    updatedAt: true,
+    createdAt: true,
+  };
 
-  private static FleekFunction_MAPPED_PROPERTIES: FleekFunctionGenqlSelection =
-    {
-      id: true,
-      name: true,
-      slug: true,
-      invokeUrl: true,
-      projectId: true,
-      currentDeploymentId: true,
-      currentDeployment: {
-        cid: true,
-      },
-      status: true,
-    };
+  private static FleekFunction_MAPPED_PROPERTIES: FleekFunctionGenqlSelection = {
+    id: true,
+    name: true,
+    slug: true,
+    invokeUrl: true,
+    projectId: true,
+    currentDeploymentId: true,
+    currentDeployment: {
+      cid: true,
+    },
+    status: true,
+  };
 
   constructor(options: FunctionsClientOptions) {
     this.graphqlClient = options.graphqlClient;
@@ -70,7 +69,6 @@ export class FunctionsClient {
 
   public get = async ({ name }: GetFleekFunctionArgs) => {
     const response = await this.graphqlClient.query({
-      __name: 'GetFleekFunctionByName',
       fleekFunctionByName: {
         __args: {
           where: {
@@ -86,7 +84,6 @@ export class FunctionsClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
-      __name: 'GetFleekFunctions',
       fleekFunctions: {
         __args: {},
         data: {
@@ -98,9 +95,7 @@ export class FunctionsClient {
     return response.fleekFunctions.data;
   };
 
-  public listDeployments = async ({
-    functionId,
-  }: ListFleekFunctionArgs): Promise<FleekFunctionDeployment[]> => {
+  public listDeployments = async ({ functionId }: ListFleekFunctionArgs): Promise<FleekFunctionDeployment[]> => {
     const response = await this.graphqlClient.query({
       fleekFunctionDeployments: {
         __args: {
@@ -119,7 +114,6 @@ export class FunctionsClient {
 
   public create = async ({ name }: CreateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
-      __name: 'CreateFleekFunction',
       createFleekFunction: {
         __args: {
           data: {
@@ -133,12 +127,7 @@ export class FunctionsClient {
     return response.createFleekFunction;
   };
 
-  public deploy = async ({
-    functionId,
-    cid,
-    sgx,
-    blake3Hash,
-  }: DeployFleekFunctionArgs): Promise<FleekFunctionDeployment> => {
+  public deploy = async ({ functionId, cid, sgx, blake3Hash, assetsCid }: DeployFleekFunctionArgs): Promise<FleekFunctionDeployment> => {
     const response = await this.graphqlClient.mutation({
       triggerFleekFunctionDeployment: {
         __args: {
@@ -146,7 +135,7 @@ export class FunctionsClient {
             functionId,
             cid,
           },
-          data: { sgx, blake3Hash },
+          data: { sgx, blake3Hash, assetsCid },
         },
         ...FunctionsClient.Deployment_MAPPED_PROPERTIES,
       },
@@ -157,7 +146,6 @@ export class FunctionsClient {
 
   public delete = async ({ id }: DeleteFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
-      __name: 'DeleteFleekFunction',
       deleteFleekFunction: {
         __args: {
           where: {
@@ -171,12 +159,7 @@ export class FunctionsClient {
     return response.deleteFleekFunction;
   };
 
-  public update = async ({
-    id,
-    slug,
-    name,
-    status,
-  }: UpdateFleekFunctionArgs) => {
+  public update = async ({ id, slug, name, status }: UpdateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
       updateFleekFunction: {
         __args: {
