@@ -52,8 +52,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1
       '@fleek-platform/utils-token':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.2.2
+        version: 0.2.2
       '@jspm/core':
         specifier: ^2.0.1
         version: 2.0.1
@@ -422,17 +422,14 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fleek-platform/errors@2.5.1':
-    resolution: {integrity: sha512-yjShUD0bLzSceq61FyWj7ygc2RG0xdr3dqr43mRfwLF92c3YkZ2abDAq2CxriPbB8OhGKLASjrLzQQx6jQ/lcQ==}
-
   '@fleek-platform/errors@2.7.0':
     resolution: {integrity: sha512-56moPR+V6bW6l+8KopmK4vfx0XU3i2s9UHNgAXXgGn/tBvgFN5bjHe4uT/K6i9Q/S3f5kAOgul6KseV1sucDKQ==}
 
   '@fleek-platform/utils-genql-client@0.2.1':
     resolution: {integrity: sha512-q2MtlgH4QkMnHh+1OBuBi0klZIn5UpBnM9VNO3n25EAh/91ppWxdjCV3kNALi/hNV2B+lOeoQDjeiE922lMiBA==}
 
-  '@fleek-platform/utils-token@0.2.0':
-    resolution: {integrity: sha512-vEFonU2lMMgxIA4qcyPppZc3PxgFde3KA2UJKPhIsL0lu5UT8v7LsNsWbc/ovJJ7klV+iQBlkREM2Mwx5qd3Dw==}
+  '@fleek-platform/utils-token@0.2.2':
+    resolution: {integrity: sha512-BpaXpgHIi13IcI8Yog+RgFVFv66bCYU9+jEqgQV4g4FiWS4x4Vn/crtquPdt4iXFRogJTvSI5tkCkrTNgsmgNQ==}
     engines: {node: '>=18.18.2'}
 
   '@inquirer/confirm@4.0.1':
@@ -934,7 +931,6 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -2387,19 +2383,15 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fleek-platform/errors@2.5.1':
-    dependencies:
-      nanoid: 3.3.7
-
   '@fleek-platform/errors@2.7.0':
     dependencies:
       nanoid: 3.3.7
 
   '@fleek-platform/utils-genql-client@0.2.1': {}
 
-  '@fleek-platform/utils-token@0.2.0':
+  '@fleek-platform/utils-token@0.2.2':
     dependencies:
-      '@fleek-platform/errors': 2.5.1
+      '@fleek-platform/errors': 2.7.0
       jose: 4.11.2
       jscrypto: 1.0.3
       nanoid: 3.3.7
