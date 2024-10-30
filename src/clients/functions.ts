@@ -18,6 +18,7 @@ export type GetFleekFunctionArgs = {
 };
 export type CreateFleekFunctionArgs = {
   name: string;
+  siteId?: string;
 };
 export type DeleteFleekFunctionArgs = {
   id: string;
@@ -118,13 +119,14 @@ export class FunctionsClient {
     return response.fleekFunctionDeployments.data;
   };
 
-  public create = async ({ name }: CreateFleekFunctionArgs) => {
+  public create = async ({ name, siteId }: CreateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
       __name: 'CreateFleekFunction',
       createFleekFunction: {
         __args: {
           data: {
             name,
+            siteId,
           },
         },
         ...FunctionsClient.FleekFunction_MAPPED_PROPERTIES,
