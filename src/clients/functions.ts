@@ -71,6 +71,7 @@ export class FunctionsClient {
 
   public get = async ({ name }: GetFleekFunctionArgs) => {
     const response = await this.graphqlClient.query({
+      __name: 'GetFleekFunctionByName',
       fleekFunctionByName: {
         __args: {
           where: {
@@ -86,6 +87,7 @@ export class FunctionsClient {
 
   public list = async () => {
     const response = await this.graphqlClient.query({
+      __name: 'GetFleekFunctions',
       fleekFunctions: {
         __args: {},
         data: {
@@ -118,6 +120,7 @@ export class FunctionsClient {
 
   public create = async ({ name }: CreateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'CreateFleekFunction',
       createFleekFunction: {
         __args: {
           data: {
@@ -156,6 +159,7 @@ export class FunctionsClient {
 
   public delete = async ({ id }: DeleteFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
+      __name: 'DeleteFleekFunction',
       deleteFleekFunction: {
         __args: {
           where: {
