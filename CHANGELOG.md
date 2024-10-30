@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0
+
+### Minor Changes
+
+- 2eeec07: Introduced a new test suit, Fleek Functions assets and revised dependencies. It also marks of source-code to its own public repository.
+
 ## 3.4.0
 
 ### Minor Changes
