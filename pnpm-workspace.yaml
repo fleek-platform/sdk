@@ -1,4 +1,0 @@
-packages:
-  - '@fleek-platform/sdk'
-  - '!examples'
-  - '!examples/**'
