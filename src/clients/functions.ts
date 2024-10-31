@@ -5,6 +5,9 @@ import {
   FleekFunctionDeploymentGenqlSelection,
   FleekFunctionGenqlSelection,
   FleekFunctionStatus,
+  FleekFunctionsWithAggregationGenqlSelection,
+  isFleekFunction,
+  isFleekFunctionsWithAggregation,
 } from '@fleek-platform/utils-genql-client';
 
 type FunctionsClientOptions = {
@@ -43,34 +46,45 @@ export type ListFleekFunctionArgs = {
 export class FunctionsClient {
   private graphqlClient: Client;
 
-  private static Deployment_MAPPED_PROPERTIES: FleekFunctionDeploymentGenqlSelection =
-    {
-      id: true,
-      fleekFunctionId: true,
-      cid: true,
-      updatedAt: true,
-      createdAt: true,
-    };
+  private static Deployment_MAPPED_PROPERTIES: FleekFunctionDeploymentGenqlSelection = {
+    id: true,
+    fleekFunctionId: true,
+    cid: true,
+    updatedAt: true,
+    createdAt: true,
+  };
 
-  private static FleekFunction_MAPPED_PROPERTIES: FleekFunctionGenqlSelection =
-    {
-      id: true,
-      name: true,
-      slug: true,
-      invokeUrl: true,
-      projectId: true,
-      currentDeploymentId: true,
-      currentDeployment: {
-        cid: true,
-      },
-      status: true,
-    };
+  private static FleekFunction_MAPPED_PROPERTIES: FleekFunctionGenqlSelection = {
+    id: true,
+    name: true,
+    slug: true,
+    invokeUrl: true,
+    projectId: true,
+    currentDeploymentId: true,
+    currentDeployment: {
+      cid: true,
+    },
+    status: true,
+  };
+
+  private static FleekFunctionsWithAggregation_MAPPED_PROPERTIES: FleekFunctionsWithAggregationGenqlSelection = {
+    currentPage: true,
+    isFirstPage: true,
+    isLastPage: true,
+    nextPage: true,
+    pageCount: true,
+    previousPage: true,
+    totalCount: true,
+    data: {
+      ...FunctionsClient.FleekFunction_MAPPED_PROPERTIES,
+    },
+  };
 
   constructor(options: FunctionsClientOptions) {
     this.graphqlClient = options.graphqlClient;
   }
 
-  public get = async ({ name }: GetFleekFunctionArgs) => {
+  public get = async ({ name }: GetFleekFunctionArgs): Promise<FleekFunction | undefined> => {
     const response = await this.graphqlClient.query({
       __name: 'GetFleekFunctionByName',
       fleekFunctionByName: {
@@ -83,26 +97,30 @@ export class FunctionsClient {
       },
     });
 
+    if (!isFleekFunction(response.fleekFunctionByName)) {
+      return undefined;
+    }
+
     return response.fleekFunctionByName;
   };
 
-  public list = async () => {
+  public list = async (): Promise<FleekFunction[]> => {
     const response = await this.graphqlClient.query({
       __name: 'GetFleekFunctions',
       fleekFunctions: {
         __args: {},
-        data: {
-          ...FunctionsClient.FleekFunction_MAPPED_PROPERTIES,
-        },
+        ...FunctionsClient.FleekFunctionsWithAggregation_MAPPED_PROPERTIES,
       },
     });
+
+    if (!isFleekFunctionsWithAggregation(response.fleekFunctions)) {
+      return [];
+    }
 
     return response.fleekFunctions.data;
   };
 
-  public listDeployments = async ({
-    functionId,
-  }: ListFleekFunctionArgs): Promise<FleekFunctionDeployment[]> => {
+  public listDeployments = async ({ functionId }: ListFleekFunctionArgs): Promise<FleekFunctionDeployment[]> => {
     const response = await this.graphqlClient.query({
       fleekFunctionDeployments: {
         __args: {
@@ -136,13 +154,7 @@ export class FunctionsClient {
     return response.createFleekFunction;
   };
 
-  public deploy = async ({
-    functionId,
-    cid,
-    sgx,
-    blake3Hash,
-    assetsCid,
-  }: DeployFleekFunctionArgs): Promise<FleekFunctionDeployment> => {
+  public deploy = async ({ functionId, cid, sgx, blake3Hash, assetsCid }: DeployFleekFunctionArgs): Promise<FleekFunctionDeployment> => {
     const response = await this.graphqlClient.mutation({
       triggerFleekFunctionDeployment: {
         __args: {
@@ -175,12 +187,7 @@ export class FunctionsClient {
     return response.deleteFleekFunction;
   };
 
-  public update = async ({
-    id,
-    slug,
-    name,
-    status,
-  }: UpdateFleekFunctionArgs) => {
+  public update = async ({ id, slug, name, status }: UpdateFleekFunctionArgs) => {
     const response = await this.graphqlClient.mutation({
       updateFleekFunction: {
         __args: {
