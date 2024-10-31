@@ -17,6 +17,11 @@
       "default": "./dist/browser/index.js"
     }
   },
+  "files": [
+    "dist",
+    "dist/**/*",
+    "README.md"
+  ],
   "scripts": {
     "build": "pnpm clean:dist && pnpm transpile && bun run ./build.ts",
     "build:ci": "pnpm run build",
