@@ -1,20 +1,12 @@
-import {
-  describe,
-  expect,
-  it,
-  vi,
-  afterAll,
-  afterEach,
-  beforeAll,
-} from 'vitest';
-import { server } from '../mocks/graphql/node';
-import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+
 import { FleekSdk } from '../FleekSdk';
+import { mockGraphqlServiceApiUrl as graphqlServiceApiUrl } from '../mocks/graphql/handlers';
+import { server } from '../mocks/graphql/node';
 import state from '../mocks/state';
 
 vi.mock('@fleek-platform/utils-token', async (importOriginal) => {
-  const original =
-    await importOriginal<typeof import('@fleek-platform/utils-token')>();
+  const original = await importOriginal<typeof import('@fleek-platform/utils-token')>();
 
   return {
     ...original,
@@ -51,6 +43,7 @@ describe('FleekSDK', () => {
         "invokeUrl": "blue-green-yellow.functions.on-fleek.app",
         "name": "electronic-co-shop",
         "projectId": "clgkiwjd8000c08mefyco2eoo",
+        "siteId": null,
         "slug": "blue-green-yellow",
         "status": "ACTIVE",
       }
@@ -71,6 +64,7 @@ describe('FleekSDK', () => {
           "invokeUrl": "red-green-blue.functions.on-fleek.app",
           "name": "electronicCoLanding",
           "projectId": "clgkiwjd8000c08mefyco2eoo",
+          "siteId": null,
           "slug": "red-green-blue",
           "status": "ACTIVE",
         },
@@ -81,6 +75,7 @@ describe('FleekSDK', () => {
           "invokeUrl": "white-black-silver.functions.on-fleek.app",
           "name": "electronic-co-blog",
           "projectId": "clgkiwjd8000c08mefyco2eoo",
+          "siteId": null,
           "slug": "white-black-silver",
           "status": "ACTIVE",
         },
@@ -91,6 +86,7 @@ describe('FleekSDK', () => {
           "invokeUrl": "green-gold-silver.functions.on-fleek.app",
           "name": "electronic-co-videos",
           "projectId": "clgkiwjd8000c08mefyco2eoo",
+          "siteId": null,
           "slug": "green-gold-silver",
           "status": "ACTIVE",
         },
@@ -103,6 +99,7 @@ describe('FleekSDK', () => {
           "invokeUrl": "blue-green-yellow.functions.on-fleek.app",
           "name": "electronic-co-shop",
           "projectId": "clgkiwjd8000c08mefyco2eoo",
+          "siteId": null,
           "slug": "blue-green-yellow",
           "status": "ACTIVE",
         },
@@ -113,6 +110,7 @@ describe('FleekSDK', () => {
           "invokeUrl": "blue-gold-yellow.functions.on-fleek.app",
           "name": "electronic-co-deprecated",
           "projectId": "clgkiwjd8000c08mefyco2eoo",
+          "siteId": null,
           "slug": "blue-gold-yellow",
           "status": "ACTIVE",
         },
@@ -135,10 +133,11 @@ describe('FleekSDK', () => {
         "invokeUrl": "https://crooked-bland-jackal.dev.on-fleek-functions.app",
         "name": "new-function",
         "projectId": "clgkiwjd8000c08mefyco2eoo",
+        "siteId": null,
         "slug": "crooked-bland-jackal",
         "status": "ACTIVE",
       }
-    `,
+    `
     );
   });
 
@@ -155,6 +154,7 @@ describe('FleekSDK', () => {
         "invokeUrl": "green-gold-silver.functions.on-fleek.app",
         "name": "electronic-co-videos",
         "projectId": "clgkiwjd8000c08mefyco2eoo",
+        "siteId": null,
         "slug": "green-gold-silver",
         "status": "ACTIVE",
       }
