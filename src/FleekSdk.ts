@@ -8,7 +8,6 @@ import { EnvNotSetError } from '@fleek-platform/errors';
 import { ApplicationsClient } from './clients/applications';
 import { DomainsClient } from './clients/domains';
 import { EnsClient } from './clients/ens';
-import { FunctionsClient } from './clients/functions';
 import { IpfsClient } from './clients/ipfs';
 import { IpnsClient } from './clients/ipns';
 import { PrivateGatewayClient } from './clients/privateGateway';
@@ -51,18 +50,12 @@ export class FleekSdk {
   private graphqlServiceApiUrl: string;
 
   private ipfsClient?: IpfsClient;
-  private ipfsStorageApiUrl: string;
-  private functionsClient?: FunctionsClient;
 
   constructor({
     graphqlServiceApiUrl = getDefined('SDK__GRAPHQL_API_URL'),
-    ipfsStorageApiUrl = getDefined('SDK__IPFS__STORAGE_API_URL'),
     uploadProxyApiUrl = getDefined('SDK__UPLOAD_PROXY_API_URL'),
     accessTokenService,
   }: FleekSdkOptions) {
-    if (!ipfsStorageApiUrl) {
-      throw new EnvNotSetError('SDK__IPFS__STORAGE_API_URL');
-    }
 
     if (!uploadProxyApiUrl) {
       throw new EnvNotSetError('SDK__UPLOAD_PROXY_API_URL');
@@ -87,7 +80,6 @@ export class FleekSdk {
     });
 
     this.graphqlServiceApiUrl = graphqlServiceApiUrl;
-    this.ipfsStorageApiUrl = ipfsStorageApiUrl;
     this.uploadProxyApiUrl = uploadProxyApiUrl;
 
     this.uploadProxyClient = new UploadProxyClient({
@@ -200,16 +192,6 @@ export class FleekSdk {
     }
 
     return this.storageClient;
-  };
-
-  public functions = (): FunctionsClient => {
-    if (!this.functionsClient) {
-      this.functionsClient = new FunctionsClient({
-        graphqlClient: this.graphqlClient,
-      });
-    }
-
-    return this.functionsClient;
   };
 
   private getAuthenticationHeaders = async () => {
